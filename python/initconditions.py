@@ -28,9 +28,21 @@ Hd = 35     # Salty deep mixed layer depth (35 m)
 
 def write(ndarray):
     """saves an ndarray as tuples (x1, x2, ...)"""
-    data = np.zeros((np.prod(ndarray.shape), ndarray.ndim))
-    for ax in range(ndim):
-        axis = (ndim-1) - ax
+    data, ndarray = strip(ndarray)
+    while ndarray.ndim >1:
+        col, ndarray = strip(ndarray)
+        data = stitch(col, data)
+
+    return data
+
+
+def stitch(col, arr):
+    """stitch appends column col onto array arr, assuming compatible shapes"""
+    return np.append(arr, col, axis = 1)
+
+def strip(arr):
+    """Returns the flattened values of first axis, and rest of array"""
+    return (np.vstack(arr[0].flatten()), arr[1:]) # wrong, need to remove this dimension!
 
 
 def set_ic(size, basename):
@@ -73,4 +85,4 @@ def main():
     set_ic(size, args.filename)
 
 if __name__ == "__main__":
-    main()
+    print(write(np.random.random((4, 4, 4))))
