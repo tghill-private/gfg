@@ -14,9 +14,9 @@ class MITgcmNC:
 		Z = np.array(self.nc4['z'])
 
 		Xgrid, Ygrid = np.meshgrid(X,Y)
-		zlevel = Z[-1]
+		zlevel = Z[0]
 
-		Tslice = np.array(self.nc4['T'][:, :, -1])
+		Tslice = np.array(self.nc4['T'][:, :, 0])
 
 		fig, ax = plt.subplots()
 
