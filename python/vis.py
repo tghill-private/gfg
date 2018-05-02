@@ -1,42 +1,68 @@
+"""
+    vis.py
+
+    Python script for visualizing MIT gcm model output.
+
+    Currently set to create pseudo-color plot of surface temperature for
+    a single netCDF4 input file
+
+
+    Takes the input .nc file as its only command line argument
+"""
+
+
 import argparse
 
 import netCDF4
 import numpy as np
 from matplotlib import pyplot as plt
 
-class MITgcmNC:
-	def __init__(self, nc4file):
-		self.nc4 = netCDF4.Dataset(nc4file, 'r')
+def surf_2d_slice(data):
+    """Plots a pseudo-color plot of surface temperature for the given data.
 
-	def surf_2d_slice(self):
-		X = np.array(self.nc4['x'])
-		Y = np.array(self.nc4['y'])
-		Z = np.array(self.nc4['z'])
+    Input:
+        *   data: a netCDF4 Dataset
 
-		Xgrid, Ygrid = np.meshgrid(X,Y)
-		zlevel = Z[0]
+    Output:
+        *   Saves png pseudocolor plot of surface temperature as MITgcmpyvis.png
+    """
+    X = np.array(data['x'])
+    Y = np.array(data['y'])
+    Z = np.array(data['z'])
 
-		Tslice = np.array(self.nc4['T'][0,:, :])
+    Xgrid, Ygrid = np.meshgrid(X,Y)
+    zlevel = Z[0]
 
-		fig, ax = plt.subplots()
+    Tslice = np.array(data['T'][0,:, :])
 
-		pcolor = ax.pcolormesh(Xgrid, Ygrid, Tslice)
+    fig, ax = plt.subplots()
 
-		fig.colorbar(pcolor)
+    Tslice = np.ma.masked_less_equal(Tslice, 11.001)
+    pcolor = ax.imshow(Tslice, vmin = 11, vmax = 13.5,
+                interpolation = 'bilinear', origin = 'lower', cmap = 'Blues',
+                extent = (X[0]/1000., X[-1]/1000., Y[0]/1000., Y[-1]/1000.))
 
-		fig.savefig('MITgcmpyvis.png',dpi = 500)
+    ax.set_xlabel('x [km]')
+    ax.set_ylabel('y [km]')
+
+
+    fig.colorbar(pcolor)
+
+    fig.savefig('MITgcmpyvis.png',dpi = 500)
 
 
 def main():
-	parser = argparse.ArgumentParser()
-	parser.add_argument("file",help = "netCDF4 file to visualize")
-	args = parser.parse_args()
+    """Setup command line interface, open file, and call plot functions"""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("file",help = "netCDF4 file to visualize")
+    args = parser.parse_args()
 
-	print("Visualizing file %s" % args.file)
+    print("Visualizing file %s" % args.file)
 
-	data = MITgcmNC(args.file)
+    # open data in read mode
+    data = netCDF4.Dataset(args.file, 'r')
 
-	data.surf_2d_slice()
+    surf_2d_slice(data)
 
 if __name__== "__main__":
-	main()
+    main()
