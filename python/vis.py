@@ -16,13 +16,13 @@ class MITgcmNC:
 		Xgrid, Ygrid = np.meshgrid(X,Y)
 		zlevel = Z[-1]
 
-		Tslice = np.array(self.nc4['T'][:, :, -1])
+		Tslice = np.array(self.nc4['T'][-1,:, :])
 
 		fig, ax = plt.subplots()
 
-		ax.pcolormesh(Xgrid, Ygrid, Tslice)
+		pcolor = ax.pcolormesh(Xgrid, Ygrid, Tslice)
 
-		fig.colorbar()
+		fig.colorbar(pcolor)
 
 		fig.savefig('MITgcmpyvis.png',dpi = 500)
 		
