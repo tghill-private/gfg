@@ -14,7 +14,7 @@ class MITgcmNC:
 		Z = np.array(self.nc4['z'])
 
 		Xgrid, Ygrid = np.meshgrid(X,Y)
-		zlevel = Z[-1]
+		zlevel = Z[0]
 
 		Tslice = np.array(self.nc4['T'][-1,:, :])
 
@@ -25,7 +25,7 @@ class MITgcmNC:
 		fig.colorbar(pcolor)
 
 		fig.savefig('MITgcmpyvis.png',dpi = 500)
-		
+
 
 def main():
 	parser = argparse.ArgumentParser()
