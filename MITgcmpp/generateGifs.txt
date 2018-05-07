@@ -1,0 +1,72 @@
+# Use this file to generate multiple gifs of cross sections of the data created by a model run. For each gif you want created, set the following variables:
+# cut_var: the coordinate to produce the cross section at. Must be 'x', 'y', or 'z'
+# cut_val: the value at which to produce the cross section at
+# name_var: the prefix of the .data and .meta files. Example 'T' or 'rho'
+# movie_name: the desired name of the generated movie
+#
+# Optional parameters:
+# vmin and vmax: Desired minimum and maximum for the colour map scale. If not given, scale will likely be inconsistent. Not required for temperature
+# file_type: The file type to save the images in. By default, saves as a png. Options are 'emf', 'eps', 'pdf', 'png', 'ps', 'raw', 'rgba', 'svg', and 'svgz'
+# stitch_gif: Boolean controlling whether or not to stitch the images into a gif. By defualt True
+# iter_start, iter_end: the range of iterations to plot, inclusive. By default, the entire runtime is plotted
+# x_axis_start, x_axis_end: the range of the x-axis coordinate to plot, in meters and inclusive. By default, entire range is plotted
+# y_axis_start, y_axis_end: the range of the y-axis coordinate to plot, in meters and inclusive. By default, entire range is plotted
+# image_folder_name: name of the folder to save images in. By defualt, "PNG_IMAGES"
+# gif_folder_name: name of the folder to save gifs in. By default, "GIF_MOVIES"
+#
+# End each set of variables with a '&' (no quotes) on its own lines
+####################
+cut_var = 'z'
+cut_val = 0
+name_var = 'T'
+movie_name = ''
+&
+cut_var = 'z'
+cut_val = 2
+name_var = 'T'
+movie_name =''
+&
+cut_var = 'x'
+cut_val = 4300
+name_var = 'T'
+movie_name = ''
+&
+cut_var = 'x'
+cut_val = 4800
+name_var = 'T'
+movie_name = ''
+&
+cut_var = 'x'
+cut_val = 5100
+name_var = 'T'
+movie_name = ''
+&
+cut_var = 'x'
+cut_val = 5500
+name_var = 'T'
+movie_name = ''
+&
+cut_var = 'y'
+cut_val = 500
+name_var = 'T'
+movie_name = ''
+& 
+cut_var = 'y'
+cut_val = 5400
+name_var = 'T'
+movie_name = ''
+&
+cut_var = 'z'
+cut_val = 1
+name_var = 'V'
+movie_name = ''
+vmin = 
+vmax = 
+&
+cut_var = 'z'
+cut_val = 1
+name_var = 'U'
+movie_name = ''
+vmin = 
+vmax = 
+&
