@@ -34,67 +34,58 @@ requireds = ['cut_var', 'cut_val' ,'data_var', 'movie_name']
 params = list(defaults.keys())
 params.extend(requireds)
 
-# This function checks that the required arguments were given and are valid
 def check_requireds(gif_args):
+    """
+    check_requireds validates the arguments given to [what function].
 
-    # Exit if cut_val is not initialized or is not a number
-    try:
-        if type(gif_args['cut_val']) not in [int, float]:
-            print ("Error: cut_val must be a number. Make sure it is not surrounded in quotes")
-            sys.exit(1)
-    except KeyError:
-        print ("Error: cut_val is a required parameter but was not initialized")
-        sys.exit(1)
+    Requires following keys to be of these types/values
+    Key:            Type/Value
+    'cut_val'       Numeric
+    'cut_var'       one of 'x', 'y', 'z'
+    'movie_name'    Nonempty string
 
-    # Exit if cut_var is not initialized or is not an allowed option
-    try:
-        if gif_args['cut_var'] not in ['x', 'y', 'z']:
-            print ("Error: cut_var must be one of 'x', 'y', 'z'")
-            sys.exit(1)
-    except KeyError:
-        print ("Error: cut_var is a required parameter but was not initialized")
-        sys.exit(1)
+    Implicitly raises KeyError for missing keys, and explicitly raises
+    ValueError if the value is inconsistent with above requirements
+    """
+    # make sure cut_val is numeric. This line used to be
+    """if type(gif_args['cut_val']) not in [int, float]:
+        print ("Error: cut_val must be a number. Make sure it is not surrounded in quotes")
+        sys.exit(1)"""
+    gif_args['cut_val'] = float(gif_args['cut_val'])
 
-    # Exit if movie_name is not initialized or is not a string
-    try:
-        if type(gif_args['movie_name']) is not str:
-            print ("Error: movie_name must be a string")
-            sys.exit(1)
-        if gif_args['movie_name'] == '':
-            print ("Error: movie_name is a required parameter but was not initialized")
-            sys.exit(1)
-    except KeyError:
-        print ("Error: movie_name is a required parameter but was not initialized")
-        sys.exit(1)
+    if gif_args['cut_var'] not in ['x', 'y', 'z']:
+        raise ValueError('"cut_var" must be one of "x", "y", or "z"')
 
-    # Exit if data_var is not initialized or is not a string
-    try:
-        if type(gif_args['data_var']) is not str:
-            print ("Error: data_var must be a string")
-            sys.exit(1)
-        if gif_args['data_var'] == '':
-            print ("Error: data_var is a required parameter but was not initialized")
-            sys.exit(1)
-    except KeyError:
-            print ("Error: data_var is a required parameter but was not initialized")
-            sys.exit(1)
+    gif_args['movie_name'] = str(gif_args['movie_name'])
+    if gif_args['movie_name'] = '':
+        raise ValueError('"movie_name" must be a non-empty string')
+
+    gif_args['data_var'] = str(gif_args['data_var'])
+    if gif_args['data_var'] = '':
+        raise ValueError('"data_var" must be a non-empty string')
+
 
 # This functions sets default values of optional arguments and returns the new dictionary
 def set_default(gif_args):
+    """set_default sets the default values of optional parameters in dictionary.
 
+    Raises KeyError if a key is specified in gif_args that is
+    not in parameter list params
+    """
+    new_args = defaults.copy()
+    for key, val in gif_args.items():
+        if key not in params:
+            raise KeyError('Unrecognized key "%s"' % key)
+        else:
+            new_args[key] = val
 
-    for k in defaults.keys():
-        try:
-            gif_args[k]
-        except KeyError:
-            gif_args[k] = defaults[k]
+    return new_args
 
-    return gif_args
-
-# This function checks the type of the optional arguments and exits if they are invalid
 def check_types (gif_args):
+    """check_types verifies the types of all optional arguments.
 
-
+    Raises Exceptions for any invalid types..
+    """
     for k in types.keys():
         if types[k] == 'number':
             if type(gif_args[k]) not in [int, float]:
