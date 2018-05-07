@@ -1,8 +1,8 @@
 from twodimensionalgif import twodimensionalgif
 def plot(gif_args):
-	d = global_gif_args.copy()
-	d.update(gif_args)
-	twodimensionalgif(d)
+    d = global_gif_args.copy()
+    d.update(gif_args)
+    twodimensionalgif(d)
 
 # Use this file to generate multiple gifs of cross sections of the data created by a model run. For each gif you want created, set the following variables:
 # cut_var: the coordinate to produce the cross section at. Must be 'x', 'y', or 'z'
@@ -27,41 +27,41 @@ def plot(gif_args):
 #####
 
 global_gif_args = {
-	
+
 }
 
 #####
 
 gif_args = {
-	'cut_var' : 'z',
-	'cut_val' : 0,
-	'data_var' : 'T',
-	'movie_name' : 'T_0_xy_interp'
+    'cut_var' : 'z',
+    'cut_val' : 0,
+    'data_var' : 'T',
+    'movie_name' : 'T_0_xy_interp'
 }
 plot(gif_args)
 
 
 gif_args = {
-	'cut_var' : 'x',
-	'cut_val' : 4825,
-	'data_var' : 'T',
-	'movie_name' : 'T_4825_zy_interp'
+    'cut_var' : 'x',
+    'cut_val' : 4825,
+    'data_var' : 'T',
+    'movie_name' : 'T_4825_zy_interp'
 }
 plot(gif_args)
 
 gif_args = {
-	'cut_var' : 'y',
-	'cut_val' : 975,
-	'data_var' : 'T',
-	'movie_name' : 'T_975_zx_interp'
+    'cut_var' : 'y',
+    'cut_val' : 975,
+    'data_var' : 'T',
+    'movie_name' : 'T_975_zx_interp'
 }
 plot(gif_args)
 
 #gif_args = {
-#	'cut_var' : 'z',
-#	'cut_val' : 0,
-#	'data_var' : 'V',
-#	'movie_name' : 'V_0_xy'
+#    'cut_var' : 'z',
+#    'cut_val' : 0,
+#    'data_var' : 'V',
+#    'movie_name' : 'V_0_xy'
 #}
 #plot(gif_args)
 

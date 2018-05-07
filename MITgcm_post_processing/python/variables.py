@@ -14,11 +14,11 @@ sec_per_iter = 10
 sec_per_file = 600
 #plot type
 #options :  None = pcolormesh no shading,
-#	    'gs' = pcolormesh w shading,
-#	    'interp' = imshow interpolation 
-#	    'contour' = contourf with automatic shading levels chosen
+#        'gs' = pcolormesh w shading,
+#        'interp' = imshow interpolation
+#        'contour' = contourf with automatic shading levels chosen
 plot_type = 'contour'
     #if type is interp set interpolation type, see python imshow docs for options
 interp_type = 'bilinear'
     #if type is contour, set max number of contour levels
-contour_max = 50 
+contour_max = 50
