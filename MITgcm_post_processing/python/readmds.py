@@ -1,6 +1,6 @@
 """
 
-    readmds.py (version 2)
+    readmds.py
 
     Module for reading MITgcm binary output into python data structures.
 
