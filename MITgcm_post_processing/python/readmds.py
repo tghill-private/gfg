@@ -141,12 +141,10 @@ def _test():
     parser = argparse.ArgumentParser()
     parser.add_argument('filename')
     args = parser.parse_args()
-    vals = readmeta(args.filename, None)
-
-    valsold = readmetaold(args.filename, None)
-
-    print(vals)
-    print(valsold)
+    data = rdmds(args.filename, None)
+    return data
 
 if __name__ == "__main__":
-    _test()
+    data = _test()
+    print(data)
+    print(data.shape)
