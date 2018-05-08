@@ -54,6 +54,7 @@ gif_args = {
     'cut_val' : 0,
     'data_var' : 'T',
     'movie_name' : 'T_0_xy_interp'
+    'bathy_file_name':None
 }
 plot(gif_args)
 
@@ -62,7 +63,8 @@ gif_args = {
     'cut_var' : 'x',
     'cut_val' : 4825,
     'data_var' : 'T',
-    'movie_name' : 'T_4825_zy_interp'
+    'movie_name' : 'T_4825_zy_interp',
+    'bathy_file_name':None
 }
 plot(gif_args)
 
@@ -71,6 +73,7 @@ gif_args = {
     'cut_val' : 975,
     'data_var' : 'T',
     'movie_name' : 'T_975_zx_interp'
+    'bathy_file_name':None
 }
 plot(gif_args)
 
