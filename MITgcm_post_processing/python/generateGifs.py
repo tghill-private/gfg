@@ -53,27 +53,33 @@ gif_args = {
     'cut_var' : 'z',
     'cut_val' : 0,
     'data_var' : 'T',
-    'movie_name' : 'T_0_xy_interp'
-    'bathy_file_name':None
+    'movie_name' : 'T_0_xy_interp',
+    'bathy_file_name':None,
+    'iter_start':1,
+    'iter_end':10
 }
 plot(gif_args)
 
 
 gif_args = {
     'cut_var' : 'x',
-    'cut_val' : 4825,
+    'cut_val' : 1,
     'data_var' : 'T',
-    'movie_name' : 'T_4825_zy_interp',
-    'bathy_file_name':None
+    'movie_name' : 'T_1_zy_interp',
+    'bathy_file_name':None,
+    'iter_start':1,
+    'iter_end':10
 }
 plot(gif_args)
 
 gif_args = {
     'cut_var' : 'y',
-    'cut_val' : 975,
+    'cut_val' : 10,
     'data_var' : 'T',
-    'movie_name' : 'T_975_zx_interp'
-    'bathy_file_name':None
+    'movie_name' : 'T_10_zx_interp',
+    'bathy_file_name':None,
+    'iter_start':1,
+    'iter_end':10
 }
 plot(gif_args)
 

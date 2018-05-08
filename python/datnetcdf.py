@@ -1,3 +1,15 @@
+"""
+
+    Convert MITgcm binary model output to netCDF4 format.
+
+    This script is originally from the fluids wiki
+    https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=NetCDF_Converter
+
+    I have modified it to work with 2D variables (ex. ice_fract), which is
+    the conditional statement at line 107.
+
+"""
+
 import MITgcmutils as mgu
 import numpy as np
 from netCDF4 import Dataset
@@ -10,18 +22,18 @@ import glob, sys
 #indices = ['0000017040']
 
 # Extract for all times
-fields  = ['T', 'Rho']
+fields  = ['T', 'UICE', 'VICE']
 names = glob.glob(fields[0] + '.*.data')
 indices = [nm[len(fields[0])+1:-5] for nm in names]
 
 print("Preparing to convert {0:d} outputs to netcdf.".format(len(indices)))
 
 # Manually extract the grids
-Rho = mgu.rdmds('Rho.0000000000')
+refdata = mgu.rdmds('T.0000000001')
 
-Nx = Rho.shape[2]
-Ny = Rho.shape[1]
-Nz = Rho.shape[0]
+Nx = refdata.shape[2]
+Ny = refdata.shape[1]
+Nz = refdata.shape[0]
 
 print("(Nx, Ny, Nz) = ({0:d}, {1:d}, {2:d})".format(Nx, Ny, Nz))
 
@@ -91,19 +103,24 @@ for index in indices:
     # Create and write fields
     field_objs = []
     for f in fields:
-        f_var = fp.createVariable(f, np.float64, ('z','y','x'))
         data = mgu.rdmds(f + '.' + index)
+        if data.ndim == 2:
+            f_var = fp.createVariable(f, np.float64, ('y', 'x'))
+            f_var[:, :] = data
 
-        dat_min = 0*np.min(data[myZ >= -myDepth])
+        else:
+            f_var = fp.createVariable(f, np.float64, ('z','y','x'))
 
-        # Screw with the data to make topography work nicely
-        for jj in range(Ny):
-            for ii in range(Nx):
-                if (int(myInds[jj,ii]) == 0):
-                    data[:,jj,ii] = dat_min
-                elif int(myInds[jj,ii]) < Nz:
-                    data[int(myInds[jj,ii]):,jj,ii] = data[int(myInds[jj,ii]),jj,ii]
+            dat_min = 0*np.min(data[myZ >= -myDepth])
 
-        f_var[:,:,:] = data
+            # Screw with the data to make topography work nicely
+            for jj in range(Ny):
+                for ii in range(Nx):
+                    if (int(myInds[jj,ii]) == 0):
+                        data[:,jj,ii] = dat_min
+                    elif int(myInds[jj,ii]) < Nz:
+                        data[int(myInds[jj,ii]):,jj,ii] = data[int(myInds[jj,ii]),jj,ii]
+
+            f_var[:,:,:] = data
 
     fp.close()

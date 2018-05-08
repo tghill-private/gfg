@@ -1,17 +1,17 @@
 ##Set parameters##
 #grid dimensions
-nx = 360
-ny = 210
-nz = 40
+nx = 20
+ny = 16
+nz = 23
 #grid resolutions
-dx = "50"
-dy = "50"
-dz = "0.5"
+dx = "2"
+dy = "3"
+dz = "5"
 #time information
-start_time = 0
-end_time = 21600
-sec_per_iter = 10
-sec_per_file = 600
+start_time = 3600
+end_time = 36000
+sec_per_iter = 3600
+sec_per_file = 3600
 #plot type
 #options :  None = pcolormesh no shading,
 #        'gs' = pcolormesh w shading,

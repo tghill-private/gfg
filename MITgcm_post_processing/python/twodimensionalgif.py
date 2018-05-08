@@ -188,12 +188,16 @@ def twodimensionalgif (gif_args):
         figsize_x = round(figsize_y*ratio)
         figsize_x = max(3,figsize_x)
 
-    # Create a mask of land values
-    land_area = utils.getland(gif_args['cut_var'], grid_cut_val, nx, ny, nz, dz, gif_args['bathy_file_name'])
-    # Take the land area slice associated with the plotting range
-    land_area = utils.zoommask(land_area, xis, xie, yis, yie, zoom)
-    # Transpose land_area so it's orientation matches data
-    land_area = numpy.transpose(land_area)
+    if gif_args['bathy_file_name']:
+        # Create a mask of land values
+        land_area = utils.getland(gif_args['cut_var'], grid_cut_val, nx, ny, nz, dz, gif_args['bathy_file_name'])
+        # Take the land area slice associated with the plotting range
+        land_area = utils.zoommask(land_area, xis, xie, yis, yie, zoom)
+        # Transpose land_area so it's orientation matches data
+        land_area = numpy.transpose(land_area)
+
+    else:
+        land_area = None
 
     print ("----------")
     num_made = 0
@@ -308,6 +312,6 @@ def twodimensionalgif (gif_args):
         gif_filename = "{0}/{1}.gif".format(gif_args['gif_folder_name'], gif_args['movie_name'])
         img_files = "{0}/{1}.*.{2}".format(gif_args['image_folder_name'], gif_args['movie_name'], gif_args['file_type'])
 #        sp.call(["convert", "-delay", "14", "-depth", "8", "-loop", "1", img_files, gif_filename])
-        sp.call(["convert", "-delay", "4", "-depth", "8", "-loop", "1", img_files, gif_filename])
+        sp.call(["convert", "-delay", "40", "-depth", "8", "-loop", "1", img_files, gif_filename])
         # TODO: fix this call
         #sp.call(["gifscile", "-b", "-O1", "--colors", "256", "--careful", gif_filename])

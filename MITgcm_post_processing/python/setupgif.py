@@ -86,23 +86,24 @@ def check_types (gif_args):
 
     Raises Exceptions for any invalid types..
     """
-    for k in types.keys():
-        if types[k] == 'number':
-            if type(gif_args[k]) not in [int, float]:
-                print ("Error: {0} must be a number. Make sure it is not surrounded in quotes".format(k))
-                sys.exit(1)
-        elif types[k] == 'number, None':
-            if type(gif_args[k]) not in [int, float, type(None)]:
-                print ("Error: {0} must be a number. Make sure it is not surrounded in quotes".format(k))
-                sys.exit(1)
-        elif types[k] == 'string':
-            if type(gif_args[k]) is not str:
-                print ("Error: {0} must a string".format(k))
-                sys.exit(1)
-        elif types[k] == 'boolean':
-            if type(gif_args[k]) not in [int, bool]:
-                print ("Error: {0} must be a boolean. Remember that True and False must be capitalized".format(k))
-                sys.exit(1)
+    # for k in types.keys():
+    #     if types[k] == 'number':
+    #         if type(gif_args[k]) not in [int, float]:
+    #             print ("Error: {0} must be a number. Make sure it is not surrounded in quotes".format(k))
+    #             sys.exit(1)
+    #     elif types[k] == 'number, None':
+    #         if type(gif_args[k]) not in [int, float, type(None)]:
+    #             print ("Error: {0} must be a number. Make sure it is not surrounded in quotes".format(k))
+    #             sys.exit(1)
+    #     elif types[k] == 'string':
+    #         if type(gif_args[k]) is not str:
+    #             print ("Error: {0} must a string".format(k))
+    #             sys.exit(1)
+    #     elif types[k] == 'boolean':
+    #         if type(gif_args[k]) not in [int, bool]:
+    #             print ("Error: {0} must be a boolean. Remember that True and False must be capitalized".format(k))
+    #             sys.exit(1)
+    pass
 
 # This function prints out the parameters being used to generate the gif
 def print_params(gif_args):
