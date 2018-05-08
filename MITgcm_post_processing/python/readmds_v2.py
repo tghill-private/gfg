@@ -1,13 +1,19 @@
 """
 
-    module readmds.py
+    readmds.py (version 2)
 
-    Reads MITgcm model binary output into python data structures.
+    Module for reading MITgcm binary output into python data structures.
 
-    Jonathan Barenboin, October 2016
+    Original version from Jonathan Barenboim, 2016.
+
     Tim Hill, 2018
 
 """
+
+## for testing purposes
+import argparse
+
+import os
 
 import numpy
 import sys
@@ -43,7 +49,7 @@ def readmeta (name_var, iteration):
             'zdim':         (int)     Dimension in z
     """
     fields = {}
-
+    name_var = os.path.splitext(name_var)[0]
     if iteration is None:
         filename = name_var + ".meta"
     else:
@@ -100,6 +106,7 @@ def readdata(name_var, iteration, fields):
     Returns:
      *  numpy array with the data from the corresponding binary file
     """
+    name_var = os.path.splitext(name_var)[0]
     if iteration is None:
         filename = name_var + ".data"
     else:
@@ -126,3 +133,12 @@ def readdata(name_var, iteration, fields):
 
     fid.close()
     return data
+
+def _test():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filename')
+    args = parser.parse_args()
+    vals = readmeta(args.filename)
+
+if __name__ == "__main__":
+    _test()

@@ -14,6 +14,9 @@
 
     Call the plot(gif_args) function with a dictionary containing these args.
 
+    Specify any parameters common to all the animations in the global_gif_args
+    dictionary.
+
     Optional parameters:
 
     # vmin and vmax: Desired min and max for the colourbar scale. If not given, scale will likely be inconsistent. Not required for temperature
@@ -33,6 +36,9 @@
 from twodimensionalgif import twodimensionalgif
 
 def plot(gif_args):
+    """Creates an animated gif with the specified parameters.
+    See parameter descriptions in the header of this file.
+    """
     d = global_gif_args.copy()
     d.update(gif_args)
     twodimensionalgif(d)
@@ -67,13 +73,5 @@ gif_args = {
     'movie_name' : 'T_975_zx_interp'
 }
 plot(gif_args)
-
-#gif_args = {
-#    'cut_var' : 'z',
-#    'cut_val' : 0,
-#    'data_var' : 'V',
-#    'movie_name' : 'V_0_xy'
-#}
-#plot(gif_args)
 
 print ("\nFinished animating all the gifs")
