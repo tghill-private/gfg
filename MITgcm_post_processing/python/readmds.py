@@ -80,7 +80,6 @@ def _readmeta(name_var, iteration):
     rawmeta = {}
     # get the data into a dictionary
     for variable in metafields:
-        print(variable.split('='))
         key, val = variable.split('=')
         key = key.strip()
         val = val.strip()
@@ -88,6 +87,7 @@ def _readmeta(name_var, iteration):
         rawmeta[key] = val
 
     # post-process the dictionary
+    fields = {}
     fields['ndims'] = rawmeta['nDims'][0]
     fields['data_type'] = rawmeta['dataprec'][0].replace('float' ,'f')
     fields['xdim'] = rawmeta['dimList'][0]
