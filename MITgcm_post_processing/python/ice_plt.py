@@ -48,12 +48,13 @@ def show_ice(dataset, pngname, cmap = 'Blues'):
     cbar = fig.colorbar(pcolor)
     cbar.set_label('Ice fraction')
 
+    iceufield = ax.quiver(X[::2, ::2], Y[::2, ::2], uice[::2, ::2], vice[::2, ::2], angles = 'uv')
     ax.set_xlabel('X [m]')
     ax.set_ylabel('Y [m]')
     ax.set_title('Variable ice_fract from %s' % dataset.filepath())
 
-    iceufield = ax.quiver(X[::2, ::2], Y[::2, ::2], uice[::2, ::2], vice[::2, ::2], angles = 'uv')
-    fig.savefig(pngname, dpi = 500)
+    plt.tight_layout()
+    fig.savefig(pngname, dpi = 300)
 
 def show_ice_velo_field(dataset):
     """Make a png figure of ice velocity field for one timestep.
@@ -62,7 +63,7 @@ def show_ice_velo_field(dataset):
     background (no ice fraction).
 
     Required Arguments:
-     *  datatset:   the netcdf$ Dataset object to plot from
+     *  datatset:   the netcdf4 Dataset object to plot from
     """
     print("Processing file %s" % dataset.filepath())
     X, Y = np.meshgrid(dataset['x'], dataset['y'])
