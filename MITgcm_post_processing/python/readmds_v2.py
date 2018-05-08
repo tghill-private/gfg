@@ -57,7 +57,18 @@ def readmeta (name_var, iteration):
         filename = "{0}.{1:010}.meta".format(name_var, iteration)
 
     # read in the meta file as text
-    with open(filename) as metafile:
+    with open(filename, r') as metafile:
+        metadata = metafile.read()
+
+    metadata = metadata.replace('\n', '')
+    metadata = metadata.replace('{', '[')
+    metadata = metadata.replace('}', ']')
+
+    metafields = metadata.split(';')
+
+    print(metafields)
+
+    """
     f = open(filename)
     text = f.read()
     f.close()
@@ -80,7 +91,7 @@ def readmeta (name_var, iteration):
     if fields['ndims'] > 2:
         fields['zdim'] = dimList[6]
     return fields
-
+    """
 
 # This function reads a data file based on information from the associated meta file
 # Note: MITgcm data is always written in big endian byteorder and Fortran memory order
