@@ -57,11 +57,11 @@ def check_requireds(gif_args):
         raise ValueError('"cut_var" must be one of "x", "y", or "z"')
 
     gif_args['movie_name'] = str(gif_args['movie_name'])
-    if gif_args['movie_name'] = '':
+    if gif_args['movie_name'] == '':
         raise ValueError('"movie_name" must be a non-empty string')
 
     gif_args['data_var'] = str(gif_args['data_var'])
-    if gif_args['data_var'] = '':
+    if gif_args['data_var'] == '':
         raise ValueError('"data_var" must be a non-empty string')
 
 
