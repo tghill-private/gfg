@@ -10,6 +10,9 @@
 
 """
 
+# TODO: separate axes settings (ie set_xlabel, ...) to its own function
+# and use this function to make animations. Share as much as possible.
+
 import argparse
 import glob
 import os
