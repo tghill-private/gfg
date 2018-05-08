@@ -1,19 +1,36 @@
 """
 
-    data processing for the offline seaice verification example
+    module ice_plt.py
 
-    This should act as a prototype for some actual analysis
+    Plot sea ice fraction with overlaid wind direction field from MITgcm
+    model runs.
+
+    This module makes plots from converted netCDF4 files, which should have
+    been converted from the binary .data files from datnetcdf.py
 
 """
 
 import argparse
 import glob
+import os
 
 import netCDF4 as nc
 import numpy as np
 from matplotlib import pyplot as plt
 
-def show_ice(dataset):
+def show_ice(dataset, pngname, cmap = 'Blues'):
+    """Make a png figure of ice fraction and velocity field for one timestep.
+
+    Shows a colour plot of variable 'ice_fract', with the ice velocity
+    field (taken from 'UICE' and 'VICE') overlaid as a direction field.
+
+    Required Arguments:
+     *  dataset:    the netcdf4 Dataset object to plot from
+     *  pngname:    filepath to save the png image as.
+
+    Optional Arguments:
+     *  cmap:       string specifying the colormap to use (default 'Blues')
+    """
     print("Processing file %s" % dataset.filepath())
 
     X, Y = np.meshgrid(dataset['x'], dataset['y'])
@@ -26,7 +43,7 @@ def show_ice(dataset):
     vmax = 1
 
     fig, ax = plt.subplots()
-    pcolor = ax.pcolormesh(X, Y, icefract, cmap = 'Blues', vmin = vmin, vmax = vmax)
+    pcolor = ax.pcolormesh(X, Y, icefract, cmap = cmap, vmin = vmin, vmax = vmax)
 
     cbar = fig.colorbar(pcolor)
     cbar.set_label('Ice fraction')
@@ -36,9 +53,17 @@ def show_ice(dataset):
     ax.set_title('Variable ice_fract from %s' % dataset.filepath())
 
     iceufield = ax.quiver(X[::2, ::2], Y[::2, ::2], uice[::2, ::2], vice[::2, ::2], angles = 'uv')
-    fig.savefig('img_%s.png' % dataset.filepath(), dpi = 500)
+    fig.savefig(pngname, dpi = 500)
 
-def show_icevelo(dataset):
+def show_ice_velo_field(dataset):
+    """Make a png figure of ice velocity field for one timestep.
+
+    Shows the ice velocity field as a direction field over a plain
+    background (no ice fraction).
+
+    Required Arguments:
+     *  datatset:   the netcdf$ Dataset object to plot from
+    """
     print("Processing file %s" % dataset.filepath())
     X, Y = np.meshgrid(dataset['x'], dataset['y'])
 
@@ -53,13 +78,30 @@ def show_icevelo(dataset):
 
 
 def main():
+    """Command line interface to make png figures.
+
+    python ice_plt.py file
+
+    Arguments:
+     *  ncfile:   Filepath to the netcdf4 data
+     *  pngfile:  Filepath to save the pngs as. Will append the iteration
+                    number before the file extension.
+    """
     parser = argparse.ArgumentParser()
-    parser.add_argument('file', help = 'input .nc file to visualize')
+    parser.add_argument('ncfile', help = 'input .nc file to visualize or pattern'
+                                       ' to match file names to')
+    parser.add_argument('pngfile', help = 'output filepath to save png'
+                                         ' image as')
     args = parser.parse_args()
-    paths = glob.glob(args.file)
+    paths = glob.glob(args.ncfile)
     for file in paths:
+        iter = os.path.splitext(file)[0][-10:]
+        print(file)
+        print(iter)
         data = nc.Dataset(file)
-        show_ice(data)
+        newpngname = os.path.splitext(args.pngfile)[0] + iter + '.png'
+        print(newpngname)
+        show_ice(data, newpngname)
 
 if __name__ == '__main__':
     main()
