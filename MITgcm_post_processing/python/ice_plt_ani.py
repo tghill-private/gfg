@@ -59,9 +59,11 @@ def animate(iters, gifname, namespec = 'output_{iter}.nc', vmin = 0.2, vmax = 1,
     gs = gridspec.GridSpec(1, 1)
     ax = plt.subplot(gs[0, 0])
 
+    step = 3
     pcolor = ax.pcolormesh(X, Y, icefract, cmap = cmap, vmin = vmin, vmax = vmax)
-    quiverplot = ax.quiver(X[::10, ::10], Y[::10, ::10],
-                            uice[::10, ::10], vice[::10, ::10], scale = 0.001, pivot = "middle")
+    quiverplot = ax.quiver(X[::step, ::step], Y[::step, ::step],
+                            uice[::step, ::step], vice[::step, ::step],
+                            pivot ='mid', scale = 20)
     ###########
 
     ax.set_xlabel('X [m]')
@@ -88,8 +90,8 @@ def animate(iters, gifname, namespec = 'output_{iter}.nc', vmin = 0.2, vmax = 1,
         pcolor.set_array(iter_icefract.ravel())
         U = iter_uice
         V = iter_vice
-        U = U[::10, ::10]
-        V = V[::10, ::10]
+        U = U[::step, ::step]
+        V = V[::step, ::step]
         quiverplot.set_UVC(U, V)
         # quiverplot.set_UVC( iter_uice[::2, ::2].ravel(), iter_vice[::2, ::2].ravel())
         return (pcolor, quiverplot)
