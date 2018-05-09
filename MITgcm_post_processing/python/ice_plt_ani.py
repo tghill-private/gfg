@@ -30,37 +30,67 @@ from matplotlib import pyplot as plt
 from matplotlib import animation
 from matplotlib import gridspec
 
-writer = animation.ImageMagickFileWriter(fps = 5)
+import netCDF4
 
-y, x = np.meshgrid(np.linspace(-10, 10,100), np.linspace(-10, 10,100))
-z = np.sin(x)*np.sin(x)+np.sin(y)*np.sin(y)
-###########
+def _getdataset(iter, namespec):
+    """Helper function to return the netCDF4 Dataset object corresponding
+    to iteration iter, with name format namespec
+    """
+    ncfilename = namespec.format(iter)
+    ncdata = netCDF4.Dataset(ncfile, 'r')
+    return ncdata
 
-fig = plt.figure(facecolor='white')
-gs = gridspec.GridSpec(1, 1)
-ax1 = plt.subplot(gs[0,0])
+def animate(iters, gifname, namespec = 'output_{iter}.nc', vmin = 0.2, vmax = 1):
+    #pre-process iters list to make sure they are 10-digit strings
+    iters = [str(i).zfill(1) for i in iters]
 
-pcolor = ax1.pcolormesh(x, y, z,)
-ax1.set_xlim(-10,10)
-ax1.set_ylim(0,1)
-ax1.set_xlabel('time')
-ax1.set_ylabel('amplitude')
-ax1.set_title('Oscillationsssss')
-time_text = ax1.text(0.02, 0.95, '', transform=ax1.transAxes)
+    # get the grids from the first nc file
+    ncdata = _getdataset(iters[0], namespec)
+    X, Y = np.meshgrid(np.array(ncdata['x']), np.array(ncdata['y']))
 
-def init():
-    pcolor.set_array([])
-    return pcolor
+    icefract = np.array(ncdata['ice_fract']).reshape(X.shape)
+    uice = np.array(ncdata['UICE']).reshape(X.shape)
+    vice = np.array(ncdata['VICE']).reshape(X.shape)
+    ncdata.close()
 
-def animate(iter):
-    z = np.sin(x-iter/(2*np.pi))*np.sin(x-iter/(2*np.pi))+np.sin(y)*np.sin(y)
-    # see https://stackoverflow.com/questions/18797175/animation-with-pcolormesh-routine-in-matplotlib-how-do-i-initialize-the-data
-    z = z[:-1, :-1]
-    pcolor.set_array(z.ravel())
-    return pcolor
+    fig = plt.figure()
+    gs = gridspec.GridSpec(1, 1)
+    ax = plt.subplot(gs[0, 0])
 
-gs.tight_layout(fig)
+    pcolor = ax.pcolormesh(X, Y, icefract, cmap = cmap, vmin = vmin, vmax = vmax)
+    quiverplot = ax.quiver(X[::2, ::2], Y[::2, ::2],
+                            uice[::2, ::2], vice[::2, ::2], angles = 'uv')
+    ###########
 
-anim = animation.FuncAnimation(fig,animate,frames=100,interval=50,blit=False,repeat=False)
+    ax.set_xlabel('X [m]')
+    ax.set_ylabel('Y [m]')
+    ax.set_title('Variable ice_fract from %s' % ncdata.filepath())
 
-anim.save('image.gif', writer=writer)
+    def init():
+        """Initialize an empty plot
+        """
+        pcolor.set_array([])
+        quiverplot.set_UVC([], [])
+        return pcolor
+
+    def animate(iter):
+        iterdata = _getdataset(iter, namespec)
+        iter_icefract = np.array(iterdata['ice_frac']).reshape(X.shape)
+        iter_uice = np.array(iterdata['UICE']).reshape(X.shape)
+        iter_vice = np.array(iterdata['VICE']).reshape(X.shape)
+        iterdata.close()
+
+        # see https://stackoverflow.com/questions/18797175/animation-with-pcolormesh-routine-in-matplotlib-how-do-i-initialize-the-data
+        iter_icefract = iter_icefract[:-1, :-1]
+
+        pcolor.set_array(iter_icefract.ravel())
+        quiverplot.set_UVC( iter_uice[::2, ::2], iter_vice[::2, ::2])
+        return (pcolor, quiverplot)
+
+    gs.tight_layout(fig)
+
+    anim = animation.FuncAnimation(fig,animate,frames=iters,interval=50,blit=False,repeat=False)
+
+    # Then save the gif using ImageMagick writer
+    writer = animation.ImageMagickFileWriter(fps = 5)
+    anim.save(gifname, writer=writer)
