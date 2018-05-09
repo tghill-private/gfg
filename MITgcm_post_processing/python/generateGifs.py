@@ -15,7 +15,7 @@
 
      =====================================================================
 
-     3dplot:
+    plot3d:
 
     For each animation set parameters
 
@@ -43,7 +43,7 @@
 
     =====================================================================
 
-    2dplot:
+    plot2d:
 
     For each animation set parameters
 
@@ -54,13 +54,21 @@
 
 from twodimensionalgif import twodimensionalgif
 
-def plot(gif_args):
+def plot3d(gif_args):
     """Creates an animated gif with the specified parameters.
     See parameter descriptions in the header of this file.
     """
     d = global_gif_args.copy()
     d.update(gif_args)
     twodimensionalgif(d)
+
+
+def plot2d(gif_args):
+    """
+    """
+    args = global_gif_args.copy()
+    args.update(gif_args)
+    twodimensionalgif.twodimensionalgif(args)
 
 global_gif_args = {
 
@@ -77,7 +85,7 @@ gif_args = {
     'iter_start':1,
     'iter_end':10
 }
-plot(gif_args)
+plot3d(gif_args)
 
 
 gif_args = {
@@ -89,7 +97,7 @@ gif_args = {
     'iter_start':1,
     'iter_end':10
 }
-plot(gif_args)
+plot3d(gif_args)
 
 gif_args = {
     'cut_var' : 'y',
@@ -100,6 +108,6 @@ gif_args = {
     'iter_start':1,
     'iter_end':10
 }
-plot(gif_args)
+plot3d(gif_args)
 
 print ("\nFinished animating all the gifs")
