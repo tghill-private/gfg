@@ -60,6 +60,9 @@ def _getstillname(iter, pngname):
     return ''.join([stillname, iter, stillext])
 
 def _adjustsubplots(fig):
+    """Helper function to set the spacing around the figure to make
+    sure no axes or titles are cut off
+    """
     fig.subplots_adjust(bottom = 0.15, top = 0.9, left = 0.15, right = 0.975)
 
 def animate(var, iters, gifname, kwargs):
