@@ -42,7 +42,6 @@ except Exception as e:
 
 def twodimensionalgif (gif_args):
     # Check input is valid and set default parameters
-    print(gif_args)
     setupgif.check_requireds(gif_args)
     gif_args = setupgif.set_default(gif_args)
     setupgif.check_types(gif_args)
