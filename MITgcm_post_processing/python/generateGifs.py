@@ -52,7 +52,8 @@
 
 """
 
-from twodimensionalgif import twodimensionalgif
+import twodimensionalgif
+import threedimensionalgif
 
 def plot3d(gif_args):
     """Creates an animated gif with the specified parameters.
@@ -60,7 +61,7 @@ def plot3d(gif_args):
     """
     d = global_gif_args.copy()
     d.update(gif_args)
-    twodimensionalgif(d)
+    twodimensionalgif.twodimensionalgif(d)
 
 
 def plot2d(gif_args):
@@ -75,7 +76,19 @@ global_gif_args = {
 }
 
 #####
+args = {
+    'var':          'ice_fract',
+    'iters':        None,
+    'movie_name':   'ice_frac_velocity_field_True.gif',
+    'image_name':   'still_.png',
+    'ice_velocity_field':   True,
+    'dpi':          200
+}
 
+
+plot2d(args)
+
+"""
 gif_args = {
     'cut_var' : 'z',
     'cut_val' : 0,
@@ -109,5 +122,5 @@ gif_args = {
     'iter_end':10
 }
 plot3d(gif_args)
-
+"""
 print ("\nFinished animating all the gifs")

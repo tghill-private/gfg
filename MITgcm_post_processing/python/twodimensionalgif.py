@@ -11,8 +11,11 @@
 """
 
 import os
+import glob
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 from matplotlib import animation
 from matplotlib import gridspec
@@ -38,12 +41,12 @@ def twodimensionalgif(gif_args):
     iters = gif_args['iters']
     gifname = gif_args['movie_name']
     kwargs = {}
-    for key, val in defaults:
+    for key, val in defaults.items():
         if key in gif_args:
             kwargs[key] = gif_args[key]
         else:
             kwargs[key] = defaults[key]
-    animate(var, iters, gifname, pngname, kwargs)
+    animate(var, iters, gifname, kwargs)
 
 def _getdataset(iter, namespec):
     """Helper function to return the netCDF4 Dataset object corresponding
@@ -94,7 +97,15 @@ def animate(var, iters, gifname, kwargs):
      *  dpi = 400:   DPI of the png frames
     """
     #pre-process iters list to make sure they are 10-digit strings
-    iters = [str(i).zfill(10) for i in iters]
+    if iters:
+        iters = [str(i).zfill(10) for i in iters]
+    else:
+        pattern = kwargs['namespec'].replace('{iter}', '*')
+        print(pattern)
+        files = glob.glob(pattern)
+        iters = [os.path.splitext(f)[0][-10:] for f in files]
+        iters = sorted(iters, key = int)
+    print(iters)
 
     # deal with directories for .gif and .png; make them if they don't exist
     if not os.path.exists(kwargs['gif_folder_name']):
@@ -119,7 +130,7 @@ def animate(var, iters, gifname, kwargs):
     gs = gridspec.GridSpec(1, 1)
     ax = plt.subplot(gs[0, 0])
 
-    pcolor = ax.pcolormesh(X, Y, var, cmap = kwargs['cmap'],
+    pcolor = ax.pcolormesh(X, Y, data, cmap = kwargs['cmap'],
                         vmin = kwargs['vmin'], vmax = kwargs['vmax'])
 
     if kwargs['ice_velocity_field']:
@@ -132,36 +143,36 @@ def animate(var, iters, gifname, kwargs):
 
     stillname = _getstillname(iters[0], imgname)
     _adjustsubplots(fig)
-    fig.savefig(stillname, dpi = dpi)
+    fig.savefig(stillname, dpi = kwargs['dpi'])
     ax.set_xlabel('X [km]')
     ax.set_ylabel('Y [km]')
     ax.set_title('Variable %s from %s' % (var, filename))
     ncdata.close()
 
     def animate(iter):
-        stillname = _getstillname(iter, pngname)
-        iterdata = _getdataset(iter, namespec)
+        stillname = _getstillname(iter, imgname)
+        iterdata = _getdataset(iter, kwargs['namespec'])
         iter_C = np.array(iterdata[var]).reshape(X.shape)
         file = iterdata.filepath()
-        ax.set_title('Variable %s from %s' % (var, filename))
+        ax.set_title('Variable %s from %s' % (var, file))
         # see https://stackoverflow.com/questions/18797175/animation-with-pcolormesh-routine-in-matplotlib-how-do-i-initialize-the-data
         iter_C = iter_C[:-1, :-1]
         pcolor.set_array(iter_C.ravel())
 
-        if ice_velocity_field:
+        if kwargs['ice_velocity_field']:
             iter_uice = np.array(iterdata['UICE']).reshape(X.shape)
             iter_vice = np.array(iterdata['VICE']).reshape(X.shape)
-            U = iter_uice[::stride, ::stride]
-            V = iter_vice[::stride, ::stride]
+            U = iter_uice[::st, ::st]
+            V = iter_vice[::st, ::st]
             quiverplot.set_UVC(U, V)
             iterdata.close()
             _adjustsubplots(fig)
-            fig.savefig(stillname, dpi = dpi)
+            fig.savefig(stillname, dpi = kwargs['dpi'])
             return (pcolor, quiverplot)
 
         iterdata.close()
         _adjustsubplots(fig)
-        fig.savefig(stillname, dpi = dpi)
+        fig.savefig(stillname, dpi = kwargs['dpi'])
         return pcolor
 
 
@@ -173,5 +184,5 @@ def animate(var, iters, gifname, kwargs):
     anim.save(gifname, writer=writer)
 
 if __name__ == "__main__":
-    animate([12, 24, 36, 48, 72, 96, 120], 'ice_frac_ice_velocity_field_True.gif',
-                'still_.png', dict(ice_velocity_field = True, dpi = 200))
+    twodimensionalgif(dict(var = 'ice_fract', iters=[12, 24, 36, 48, 72, 96, 120], movie_name='ice_frac_ice_velocity_field_True.gif',
+                image_name='still_.png', ice_velocity_field = True, dpi = 200))
