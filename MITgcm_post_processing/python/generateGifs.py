@@ -5,12 +5,24 @@
     This script generates multiple animated gif cross-sections of data
     from the MITgcm model.
 
+    There are now two functions to create gif animations (and corresponding
+    still frames):
+
+     *  3dplot: create a 2D animation of a slice of 3D data (eg. Temperature,
+                velocity field, density, ...)
+
+     *  2dplot: create a 2D animation of 2D data (eg. Ice fraction)
+
+     =====================================================================
+
+     3dplot:
+
     For each animation set parameters
 
     'cut_var':      Which coordinate cross section (one of 'x', 'y', 'z')
     'cut_val':      Value at which to cross section (in meters)
     'data_var':     Variable prefix in the .data and .meta files
-    'movie_name':   Filename of the generated movie (without extension)
+    'movie_name':   Filename of the generated movie (with or without extension)
 
     Call the plot(gif_args) function with a dictionary containing these args.
 
@@ -29,7 +41,14 @@
     # gif_folder_name: name of the folder to save gifs in. By default, "GIF_MOVIES"
     # bathy_file_name: name of the bathymetry file used as input. By default, "bathymetry.bin"
 
-    # TODO finish this list of optional parameters
+    =====================================================================
+
+    2dplot:
+
+    For each animation set parameters
+
+    'data_var':     Variable prefix in the .data and .meta files
+    'movie_name':   Filename of the generated movie (with or without extension)
 
 """
 
