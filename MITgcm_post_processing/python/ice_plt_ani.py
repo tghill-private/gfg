@@ -94,3 +94,6 @@ def animate(iters, gifname, namespec = 'output_{iter}.nc', vmin = 0.2, vmax = 1)
     # Then save the gif using ImageMagick writer
     writer = animation.ImageMagickFileWriter(fps = 5)
     anim.save(gifname, writer=writer)
+
+if __name__ == "__main__":
+    animate([0, 12, 24, 36, 48])
