@@ -10,6 +10,8 @@
 
 """
 
+import os
+
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import animation
@@ -25,9 +27,19 @@ def _getdataset(iter, namespec):
     ncdata = netCDF4.Dataset(ncfilename, 'r')
     return ncdata
 
-def animate(iters, gifname, namespec = 'output_{iter}.nc',
+def _getstillname(iter, pngname):
+    """Helper function to name the individual png frames with the iteration
+    """
+    stillname, stillext = os.path.splitext(pngname)
+    return ''.join([stillname, iter, stillext])
+
+def _adjustsubplots(fig):
+    fig.subplots_adjust(bottom = 0.15, top = 0.9, left = 0.15, right = 0.975)
+
+def animate(iters, gifname, pngname, namespec = 'output_{iter}.nc',
                 vmin = 0.2, vmax = 1, cmap = 'Blues',
-                ice_velocity_field = True, stride = 3, scale = 20):
+                ice_velocity_field = True, stride = 3, scale = 20,
+                dpi = 400):
     """Create .gif animation of sea ice fraction from MITgcm .nc files.
 
     Required Arguments:
@@ -35,7 +47,9 @@ def animate(iters, gifname, namespec = 'output_{iter}.nc',
                 of the output_00{iter}.nc files. The iteration numbers are
                 automatically zero padded to 10 digits. Can be list of
                 ints or list of strings.
-
+     *  pngname:    File name to save the individual .png frames as.
+                    The iteration number will be added between the given
+                    name and the extension
      *  gifname:    File name to save the resulting .gif animation as
 
     Optional Parameters:
@@ -51,13 +65,25 @@ def animate(iters, gifname, namespec = 'output_{iter}.nc',
      *  scale = 20:  Scale for ice velocity field arrow size. A larger
                      scale means smaller arrows; smaller scale means larger
                      arrows.
+     *  dpi = 400:   DPI of the png frames
     """
     #pre-process iters list to make sure they are 10-digit strings
     iters = [str(i).zfill(10) for i in iters]
 
+    # deal with directories for .gif and .png; make them if they don't exist
+    gifdir = os.path.split(gifname)[0]
+    if not os.path.exists(gifdir):
+        os.mkdir(gifdir)
+
+    pngdir = os.path.split(pngname)[0]
+    if not os.path.exists(pngdir):
+        os.mkdir(pngdir)
+
     # get the grids from the first nc file
     ncdata = _getdataset(iters[0], namespec)
     X, Y = np.meshgrid(np.array(ncdata['x']), np.array(ncdata['y']))
+    X /= 1000
+    Y /= 1000
 
     icefract = np.array(ncdata['ice_fract']).reshape(X.shape)
     filename = ncdata.filepath()
@@ -75,12 +101,16 @@ def animate(iters, gifname, namespec = 'output_{iter}.nc',
                                 uice[::stride, ::stride], vice[::stride, ::stride],
                                 pivot ='mid', scale = scale)
 
-    ax.set_xlabel('X [m]')
-    ax.set_ylabel('Y [m]')
+    stillname = _getstillname(iters[0], pngname)
+    _adjustsubplots(fig)
+    fig.savefig(stillname, dpi = dpi)
+    ax.set_xlabel('X [km]')
+    ax.set_ylabel('Y [km]')
     ax.set_title('Variable ice_fract from %s' % filename)
     ncdata.close()
 
     def animate(iter):
+        stillname = _getstillname(iter, pngname)
         iterdata = _getdataset(iter, namespec)
         iter_icefract = np.array(iterdata['ice_fract']).reshape(X.shape)
         file = iterdata.filepath()
@@ -97,12 +127,15 @@ def animate(iters, gifname, namespec = 'output_{iter}.nc',
             V = iter_vice[::stride, ::stride]
             quiverplot.set_UVC(U, V)
             iterdata.close()
+            _adjustsubplots(fig)
+            fig.savefig(stillname, dpi = dpi)
             return (pcolor, quiverplot)
 
         iterdata.close()
+        _adjustsubplots(fig)
+        fig.savefig(stillname, dpi = dpi)
         return pcolor
 
-    gs.tight_layout(fig)
 
     anim = animation.FuncAnimation(fig,animate,frames=iters,interval=10000,blit=False,repeat=False)
 
@@ -112,5 +145,5 @@ def animate(iters, gifname, namespec = 'output_{iter}.nc',
     anim.save(gifname, writer=writer)
 
 if __name__ == "__main__":
-    animate([12, 24, 36, 48, 72, 96, 120], 'ice_frac_ice_velocity_field_True.gif',
-                ice_velocity_field = True)
+    animate([12, 24, 36, 48, 72, 96, 120], 'GIFMOVIE/ice_frac_ice_velocity_field_True.gif',
+                'PNGIMAGES/still_.png', ice_velocity_field = True, dpi = 200)
