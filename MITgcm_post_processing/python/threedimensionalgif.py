@@ -1,15 +1,17 @@
 """
 
-    Generates a 2D gif animation and still frame images of a 3D MITgcm data set.
+    Create a gif animation and still frame images of slices of a 3D data set.
 
-    Take slices along coordinate planes to visualize a 3D dataset.
+    Uses netCDF4 files converted from MITgcm binary output (.data) files.
+    Automatically creates a .gif animation and saves each frame as a still
+    image.
 
     Parameters:
 
     Required:
         Name        |   Description
         ------------|-------------------
-        var             :   Variable prefix to plot. This is the prefix of the
+        var         :   Variable prefix to plot. This is the prefix of the
                         MITgcm binary output files. eg 'T', 'Rho'.
 
         movie_name  :   Filename to save the gif animation. This works with
@@ -120,7 +122,12 @@ def _adjustsubplots(fig):
     fig.subplots_adjust(bottom = 0.15, top = 0.9, left = 0.15, right = 0.975)
 
 def makeanimate(args):
-    """make this doc string
+    """Make gif animation and still frames.
+
+    Args is a dictionary containing all arguments specified above. Saves the
+    movies and images according to arguments in args.
+
+    TODO: support bathymetry files and proper time labelling.
     """
     # pre-process iters list to make sure they are 10-digit strings.
     iters = args['iters']
@@ -132,9 +139,6 @@ def makeanimate(args):
         files = glob.glob(pattern)
         iters = sorted([os.path.splitext(f)[0][-10:] for f in files], key = int)
 
-    print("I'm looking for iterations", iters)
-    print(iters)
-
     # deal with directories for .gif and .png; make them if they don't exist
     if not os.path.exists(args['gif_folder_name']):
         os.mkdir(args['gif_folder_name'])
@@ -142,7 +146,6 @@ def makeanimate(args):
 
     if not os.path.exists(args['image_folder_name']):
         os.mkdir(args['image_folder_name'])
-
     imgname = os.path.join(args['image_folder_name'], args['image_name'])
 
     # get the grids from the first nc file
