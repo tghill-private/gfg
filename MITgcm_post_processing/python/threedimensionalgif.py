@@ -15,18 +15,29 @@
                         MITgcm binary output files. eg 'T', 'Rho'.
 
         movie_name  :   Filename to save the gif animation. This works with
-                        or without the .gif. e
+                        or without the .gif. extension
 
         cut_var     :   Axis to take a constant slice of. One of 'x', 'y'
                         or 'z'.
 
         cut_val     :   Value to take a slice at. Must be a level in the
                         model data.
+
+        start_time  :   Time (sec) for the start of the run (or specific
+                        set of iterations)
+
+        sec_per_iter:   Seconds per model iteration.
         ------------|-------------------
 
     Optional:
         Name                |   Default     |   Description
         --------------------|---------------|--------------------
+        iters               :   None        :   If None, use all iterations for
+                                                matching file names. Otherwise,
+                                                can be a list of iteration
+                                                numbers. Iterations are
+                                                auto zero padded to 10 digits
+
         vmin                :   None (auto) :   Colour scale min
 
         vmax                :   None (auto) :   Colour scale max
@@ -71,7 +82,8 @@
                                                 Auto uses a 4:3 aspect
                                                 ratio; Passing a number
                                                 forces that aspect ratio
-        --------------------|---------------|--------------------"""
+        --------------------|---------------|--------------------
+"""
 
 import glob
 import os
@@ -121,7 +133,7 @@ def _adjustsubplots(fig):
     """
     fig.subplots_adjust(bottom = 0.15, top = 0.9, left = 0.15, right = 0.975)
 
-def makeanimate(args):
+def makeanimate(kwargs):
     """Make gif animation and still frames.
 
     Args is a dictionary containing all arguments specified above. Saves the
@@ -129,7 +141,12 @@ def makeanimate(args):
 
     TODO: support bathymetry files and proper time labelling.
     """
-    # pre-process iters list to make sure they are 10-digit strings.
+    args = defaults.copy()
+    for key,val = kwargs.items():
+        if key in defaults:
+            args[key] = val
+        else:
+            raise KeyError('Unrecognized argument "%s"' % key)    # pre-process iters list to make sure they are 10-digit strings.
     iters = args['iters']
     # if iters is None, find all matching files.
     if iters:
@@ -227,6 +244,7 @@ def makeanimate(args):
     if args['cut_var'] != 'z':
         ax.invert_yaxis()
     plt.tight_layout()
+
     def animate(iter):
         stillname = _getstillname(iter, imgname)
         iterdata = _getdataset(iter, args['namespec'])
@@ -240,8 +258,7 @@ def makeanimate(args):
         # plt.tight_layout()
         pcolor.set_array(plotdata)
 
-        # TODO fix this
-        time = iter
+        time = start_time + (int(iter) - int(iters[0]))*args['sec_per_iter']
         title = '{var} at {cut_var}={cut_val} at t=%s' % time
         title = title.format(var=args['var'], cut_var=args['cut_var'], cut_val=args['cut_val'])
         ax.set_title(title)
@@ -270,7 +287,10 @@ if __name__ == '__main__':
             'cmap':'Spectral_r',
             'vmin':11, 'vmax':13.5,
             'image_name':'still_gs_autoaspect.png',
-            'plot_type':'gs'}
+            'plot_type':'gs',
+            'start_time' : 3600,
+            'sec_per_iter' : 3600
+        }
     gifargs = defaults.copy()
     gifargs.update(args)
     makeanimate(gifargs)

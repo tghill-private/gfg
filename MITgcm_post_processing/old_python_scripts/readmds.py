@@ -1,13 +1,23 @@
 """
 
-    module readmds.py
+    readmds.py
 
-    Reads MITgcm model binary output into python data structures.
+    Module for reading MITgcm binary output into python data structures.
 
-    Jonathan Barenboin, October 2016
+    The main function is rdmds, which reads binary MITgcm output into a
+    numpy array for python analysis.
+
+    Original version from Jonathan Barenboim, 2016.
+
     Tim Hill, 2018
 
 """
+
+## for testing purposes
+import argparse
+
+import os
+import ast
 
 import numpy
 import sys
@@ -22,11 +32,11 @@ def rdmds (name_var, iteration=None):
     Returns:
      *  numpy array of the data in the corresponding binary output file
      """
-    fields = readmeta (name_var, iteration)
-    data = readdata (name_var, iteration, fields)
+    fields = _readmeta (name_var, iteration)
+    data = _readdata (name_var, iteration, fields)
     return data
 
-def readmeta (name_var, iteration):
+def _readmeta(name_var, iteration):
     """readmeta returns the dimensions and data types for a binary data file.
 
     Input:
@@ -42,7 +52,8 @@ def readmeta (name_var, iteration):
             'ydim':         (int)     Dimension in y
             'zdim':         (int)     Dimension in z
     """
-    fields = {}
+    # Remove the file extension so this works with or without extension given
+    name_var = os.path.splitext(name_var)[0]
 
     if iteration is None:
         filename = name_var + ".meta"
@@ -51,43 +62,41 @@ def readmeta (name_var, iteration):
         filename = "{0}.{1:010}.meta".format(name_var, iteration)
 
     # read in the meta file as text
-    with open(filename) as metafile:
-    f = open(filename)
-    text = f.read()
-    f.close()
+    with open(filename, 'r') as metafile:
+        metadata = metafile.read()
 
-    # remove new line characters and replace curly braces with brackets
-    text = text.replace("\n", "")
-    text = text.replace("{", "[").replace("}", "]")
-    text = text.strip()
+    # pre-process data
+    metadata = metadata.replace('\n', '')
+    metadata = metadata.replace('{', '[')
+    metadata = metadata.replace('}', ']')
 
-    # Execute the code to set all variables
-    if sys.version_info[0] < 3:
-        exec(text)
-    else:
-        exec(text, globals())
+    # fields are delimited by semicolons
+    metafields = metadata.split(';')
 
-    fields['ndims'] = nDims[0]
-    fields['data_type'] = dataprec[0].replace('float' ,'f')
-    fields['xdim'] = dimList[0]
-    fields['ydim'] = dimList[3]
+    # remove any empty strings in the list of data fields
+    if '' in metafields:
+        metafields.remove('')
+
+    rawmeta = {}
+    # get the data into a dictionary
+    for variable in metafields:
+        key, val = variable.split('=')
+        key = key.strip()
+        val = val.strip()
+        val = ast.literal_eval(val)
+        rawmeta[key] = val
+
+    # post-process the dictionary
+    fields = {}
+    fields['ndims'] = rawmeta['nDims'][0]
+    fields['data_type'] = rawmeta['dataprec'][0].replace('float' ,'f')
+    fields['xdim'] = rawmeta['dimList'][0]
+    fields['ydim'] = rawmeta['dimList'][3]
     if fields['ndims'] > 2:
-        fields['zdim'] = dimList[6]
+        fields['zdim'] = rawmeta['dimList'][6]
     return fields
 
-
-# This function reads a data file based on information from the associated meta file
-# Note: MITgcm data is always written in big endian byteorder and Fortran memory order
-# INPUT:
-#    name_var: the prefix of the data file. Example 'T' or 'Rho'
-#    iteration: the iteration to get the data from. If iteration is None, it's
-#        assumed that name_var is the full file name (without .data suffix)
-#    fields: a dictionary containing the following fields from the associated meta file:
-#        ndims: number of dimensions
-#        data_type: type and precision of the data. Ex 'f32'
-#        xdim, ydim, zdim: the number of points along each coordinate axis
-# returns a numPy array with the data
-def readdata(name_var, iteration, fields):
+def _readdata(name_var, iteration, fields):
     """readdata reads a binary data file and returns a numpy array with the data.
 
     Inputs:
@@ -100,6 +109,7 @@ def readdata(name_var, iteration, fields):
     Returns:
      *  numpy array with the data from the corresponding binary file
     """
+    name_var = os.path.splitext(name_var)[0]
     if iteration is None:
         filename = name_var + ".data"
     else:
@@ -126,3 +136,15 @@ def readdata(name_var, iteration, fields):
 
     fid.close()
     return data
+
+def _test():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filename')
+    args = parser.parse_args()
+    data = rdmds(args.filename, None)
+    return data
+
+if __name__ == "__main__":
+    data = _test()
+    print(data)
+    print(data.shape)
