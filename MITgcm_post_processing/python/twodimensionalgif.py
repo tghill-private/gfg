@@ -46,7 +46,7 @@ def twodimensionalgif(gif_args):
             kwargs[key] = gif_args[key]
         else:
             kwargs[key] = defaults[key]
-    animate(var, iters, gifname, kwargs)
+    makeanimate(var, iters, gifname, kwargs)
 
 def _getdataset(iter, namespec):
     """Helper function to return the netCDF4 Dataset object corresponding
@@ -68,7 +68,7 @@ def _adjustsubplots(fig):
     """
     fig.subplots_adjust(bottom = 0.15, top = 0.9, left = 0.15, right = 0.975)
 
-def animate(var, iters, gifname, kwargs):
+def makeanimate(var, iters, gifname, kwargs):
     """Create .gif animation of sea ice fraction from MITgcm .nc files.
 
     Required Arguments:
@@ -101,7 +101,6 @@ def animate(var, iters, gifname, kwargs):
         iters = [str(i).zfill(10) for i in iters]
     else:
         pattern = kwargs['namespec'].replace('{iter}', '*')
-        print(pattern)
         files = glob.glob(pattern)
         iters = [os.path.splitext(f)[0][-10:] for f in files]
         iters = sorted(iters, key = int)
