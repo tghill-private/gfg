@@ -82,6 +82,14 @@
                                                 Auto uses a 4:3 aspect
                                                 ratio; Passing a number
                                                 forces that aspect ratio
+
+
+        landmask            :   '#603a17'   :   None or string colour
+                                                specification. If given, the
+                                                land area is masked with the
+                                                specified colour. Default
+                                                is brown.
+
         --------------------|---------------|--------------------
 """
 
@@ -97,7 +105,10 @@ from matplotlib import animation
 
 import netCDF4
 
-defaults = {    'vmin' : None,
+import MITgcmutils as mgu
+
+defaults = {    'iters': None,
+                'vmin' : None,
                 'vmax' : None,
                 'image_folder_name' : 'PNG_IMAGES',
                 'gif_folder_name' : 'GIF_MOVIES',
@@ -106,12 +117,15 @@ defaults = {    'vmin' : None,
                 'namespec' : 'output_{iter}.nc',
                 'image_name' : 'still_.png',
                 'fps' : 2,
-                'cmap' : 'Blues',
+                'cmap' : 'Spectral_r',
                 'dpi' : 200,
                 'plot_type' : None,
                 'interp_type' : None,
-                'aspect' : 'auto'
+                'aspect' : 'auto',
+                'landmask': '#603a17'
             }
+
+requireds = ['var', 'movie_name', 'cut_var', 'cut_val', 'start_time', 'sec_per_iter']
 
 def _getdataset(iter, namespec):
     """Helper function to return the netCDF4 Dataset object corresponding
@@ -142,8 +156,10 @@ def makeanimate(kwargs):
     TODO: support bathymetry files and proper time labelling.
     """
     args = defaults.copy()
-    for key,val = kwargs.items():
+    for key,val in kwargs.items():
         if key in defaults:
+            args[key] = val
+        elif key in requireds:
             args[key] = val
         else:
             raise KeyError('Unrecognized argument "%s"' % key)    # pre-process iters list to make sure they are 10-digit strings.
@@ -189,16 +205,6 @@ def makeanimate(kwargs):
         ylabel = 'y'
 
 
-    # if args['bathy_file_name']:
-    #     # Create a mask of land values
-    #     land_area = utils.getland(gif_args['cut_var'], grid_cut_val, nx, ny, nz, dz, gif_args['bathy_file_name'])
-    #     # Take the land area slice associated with the plotting range
-    #     land_area = utils.zoommask(land_area, xis, xie, yis, yie, zoom)
-    #     # Transpose land_area so it's orientation matches data
-    #     land_area = numpy.transpose(land_area)
-    # else:
-    #     land_area = None
-    land_area = None
 
     if args['aspect'] == 'auto':
         fig = plt.figure(figsize = (8, 6))
@@ -216,12 +222,36 @@ def makeanimate(kwargs):
     initdata = _getdataset(iters[0], args['namespec'])
     print(initdata.filepath())
     initvar = np.array(initdata[args['var']])
-    print(initvar.shape)
     plotdata_var = np.take(initvar, cutindex, axis = cutaxis)
-    print(plotdata_var.shape)
+    # plotdata_var = np.ma.masked_where(landmask, data)
+    cmap = getattr(matplotlib.cm, args['cmap'])
+
+    # This won't work yet.
+    if args['landmask']:
+        depth = mgu.rdmds('Depth')
+        Nx = len(X)
+        Ny = len(Y)
+        Nz = len(Z)
+        depth = depth.reshape(Ny, Nx)
+
+        if args['cut_var'] == 'x':
+            depths = np.take(depth, cutindex, axis = 1)
+            depths = np.tile(depths, (Nz, 1))
+            print(depths.shape)
+            landmask = plotYgrid >= depth
+
+        elif args['cut_var'] == 'y':
+            depths = np.take(depth, cutindex, axis = 0)
+            depths = np.tile(depths, (Nz, 1))
+            print(plotYgrid.shape)
+            print(depths.shape)
+            landmask = plotYgrid >= depths
+        else:
+            landmask = args['cut_val'] >= depth
+        cmap.set_bad(args['landmask'], 1)
+        plotdata_var = np.ma.masked_where(landmask, plotdata_var)
     # see https://stackoverflow.com/questions/18797175/animation-with-pcolormesh-routine-in-matplotlib-how-do-i-initialize-the-data
     plotdata_var = plotdata_var[:-1, :-1]
-
 
     if args['plot_type'] == None:
         pcolor = ax.pcolormesh(plotXgrid, plotYgrid, plotdata_var,
@@ -251,6 +281,8 @@ def makeanimate(kwargs):
         print(iterdata.filepath())
         itervar = np.array(iterdata[args['var']])
         plotdata_var = np.take(itervar, cutindex, axis = cutaxis)
+        if args['landmask']:
+            plotdata_var = np.ma.masked_where(landmask, plotdata_var)
         plotdata_var = plotdata_var[:-1, :-1]
 
         plotdata = plotdata_var if args['plot_type'] == 'interp' \
@@ -258,7 +290,7 @@ def makeanimate(kwargs):
         # plt.tight_layout()
         pcolor.set_array(plotdata)
 
-        time = start_time + (int(iter) - int(iters[0]))*args['sec_per_iter']
+        time = args['start_time'] + (int(iter) - int(iters[0]))*args['sec_per_iter']
         title = '{var} at {cut_var}={cut_val} at t=%s' % time
         title = title.format(var=args['var'], cut_var=args['cut_var'], cut_val=args['cut_val'])
         ax.set_title(title)
@@ -277,20 +309,5 @@ def makeanimate(kwargs):
     gifwriter = animation.ImageMagickFileWriter(fps = args['fps'])
     anim.save(gifname, writer = gifwriter)
 
-    print('Saved animation as %s' % gifname)
-
-if __name__ == '__main__':
-    args = {'var':'T', 'iters':[20520, 20640, 20760, 20880],
-            'movie_name':'2dslice_gs_autoaspect.gif',
-            'cut_var':'z',
-            'cut_val':0,
-            'cmap':'Spectral_r',
-            'vmin':11, 'vmax':13.5,
-            'image_name':'still_gs_autoaspect.png',
-            'plot_type':'gs',
-            'start_time' : 3600,
-            'sec_per_iter' : 3600
-        }
-    gifargs = defaults.copy()
-    gifargs.update(args)
-    makeanimate(gifargs)
+    print("Saved still frames in %s" % args['image_folder_name'])
+    print("Saved animation as %s" % gifname)

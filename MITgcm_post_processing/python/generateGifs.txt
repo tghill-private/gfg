@@ -33,6 +33,12 @@ Required:
 Optional:
     Name                |   Default     |   Description
     --------------------|---------------|--------------------
+    iters               :   None        :   If None, use all iterations for
+                                            matching file names. Otherwise,
+                                            can be a list of iteration
+                                            numbers. Iterations are
+                                            auto zero padded to 10 digits
+
     vmin                :   None (auto) :   Colour scale min
 
     vmax                :   None (auto) :   Colour scale max
@@ -93,7 +99,6 @@ Optional:
                                             scale means larger arrows.
 
     --------------------|---------------|--------------------
-
 
 
 =====================================================================

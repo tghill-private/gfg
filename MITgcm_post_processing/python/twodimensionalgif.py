@@ -26,6 +26,12 @@
     Optional:
         Name                |   Default     |   Description
         --------------------|---------------|--------------------
+        iters               :   None        :   If None, use all iterations for
+                                                matching file names. Otherwise,
+                                                can be a list of iteration
+                                                numbers. Iterations are
+                                                auto zero padded to 10 digits
+
         vmin                :   None (auto) :   Colour scale min
 
         vmax                :   None (auto) :   Colour scale max
@@ -85,6 +91,11 @@
                                                 means smaller arrows; smaller
                                                 scale means larger arrows.
 
+        landmask            :   '#603a17'   :   None or string colour
+                                                specification. If given, the
+                                                land area is masked with the
+                                                specified colour. Default
+                                                is brown.
         --------------------|---------------|--------------------
 """
 
@@ -100,7 +111,10 @@ from matplotlib import gridspec
 
 import netCDF4
 
-defaults = {    'vmin':                 0.2,
+import MITgcmutils as mgu
+
+defaults = {    'iters':                None,
+                'vmin':                 0.2,
                 'vmax':                 1.0,
                 'image_folder_name':    'PNG_IMAGES',
                 'gif_folder_name':      'GIF_MOVIE',
@@ -114,8 +128,11 @@ defaults = {    'vmin':                 0.2,
                 'aspect':               'auto',
                 'ice_velocity_field':   True,
                 'stride':               3,
-                'scale':                20
+                'scale':                20,
+                'landmask':             '#603a17'
             }
+
+required = ['var', 'movie_name', 'start_time', 'sec_per_iter']
 
 def _getdataset(iter, namespec):
     """Helper function to return the netCDF4 Dataset object corresponding
@@ -142,9 +159,13 @@ def makeanimate(kwargs):
 
     args is a dictionary containing all arguments specified above.
     """
+    mask_thresh = 0.1 # Threshold where if ice fract is below this, mask the velocity
+
     args = defaults.copy()
-    for key,val = kwargs.items():
+    for key,val in kwargs.items():
         if key in defaults:
+            args[key] = val
+        elif key in required:
             args[key] = val
         else:
             raise KeyError('Unrecognized argument "%s"' % key)
@@ -173,7 +194,22 @@ def makeanimate(kwargs):
     X /= 1000
     Y /= 1000
 
+    Ny = len(np.array(ncdata['y']))
+    Nx = len(np.array(ncdata['x']))
+
+
+    cmap = getattr(matplotlib.cm, args['cmap'])
     data = np.array(ncdata[args['var']]).reshape(X.shape)
+
+    if args['landmask']:
+        # Bathymetry stuff
+        depth = mgu.rdmds('Depth')
+        depth.reshape(X.shape)
+        landmask = (depth == 0)
+
+        data = np.ma.masked_where(landmask, data)
+        cmap.set_bad(args['landmask'], 1)
+
     filename = ncdata.filepath()
 
     fig = plt.figure()
@@ -181,16 +217,16 @@ def makeanimate(kwargs):
     ax = plt.subplot(gs[0, 0])
 
     if args['plot_type'] == None:
-        pcolor = ax.pcolormesh(X, Y, data, cmap = args['cmap'],
+        pcolor = ax.pcolormesh(X, Y, data, cmap = cmap,
                             vmin = args['vmin'], vmax = args['vmax'])
 
     elif args['plot_type'] == 'gs':
-        pcolor = ax.pcolormesh(X[:-1, :-1], Y[:-1, :-1], data, cmap = args['cmap'],
+        pcolor = ax.pcolormesh(X[:-1, :-1], Y[:-1, :-1], data[:-1, :-1], cmap = cmap,
                             vmin = args['vmin'], vmax = args['vmax'],
                             shading = 'gouraud')
 
     elif args['plot_type'] == 'interp':
-        pcolor = ax.imshow(data, cmap = args['cmap'], cmin = args['vmin'],
+        pcolor = ax.imshow(data, cmap = cmap, cmin = args['vmin'],
                             vmax = args['vmax'], origin = 'lower',
                             extent = [X[0, 0], X[-1, -1], Y[0, 0], Y[-1, -1]],
                             interpolation = args['interp_type'])
@@ -198,9 +234,11 @@ def makeanimate(kwargs):
     if args['ice_velocity_field']:
         uice = np.array(ncdata['UICE']).reshape(X.shape)
         vice = np.array(ncdata['VICE']).reshape(X.shape)
+        U = np.ma.masked_where(data < mask_thresh, uice)
+        V = np.ma.masked_where(data < mask_thresh, vice)
         st = args['stride']
         quiverplot = ax.quiver(X[::st, ::st], Y[::st, ::st],
-                                uice[::st, ::st], vice[::st, ::st],
+                            U[::st, ::st], V[::st, ::st],
                                 pivot ='mid', scale = args['scale'])
 
     cbar = fig.colorbar(pcolor)
@@ -209,25 +247,31 @@ def makeanimate(kwargs):
     fig.savefig(stillname, dpi = args['dpi'])
     ax.set_xlabel('X [km]')
     ax.set_ylabel('Y [km]')
-    ax.set_title('Variable %s from %s' % (args['var'], filename))
+    ax.set_title('{0} at t = {1} s'.format(args['var'], args['start_time']))
     ncdata.close()
 
     def animate(iter):
         stillname = _getstillname(iter, imgname)
         iterdata = _getdataset(iter, args['namespec'])
+        print('Plotting file %s' % iterdata.filepath())
         iter_C = np.array(iterdata[args['var']]).reshape(X.shape)
+        if args['landmask']:
+            iter_C = np.ma.masked_where(landmask, iter_C)
         file = iterdata.filepath()
-        time = args['start_time'] + (int(iter) - int(iters[0])) * args['sec_per_iter']
+        time = args['start_time'] + (int(iter) - int(iters[1])) * args['sec_per_iter']
         title = '{0} at t = {1} s'.format(args['var'], time)
         ax.set_title(title)
         # see https://stackoverflow.com/questions/18797175/animation-with-pcolormesh-routine-in-matplotlib-how-do-i-initialize-the-data
+        mask = iter_C < mask_thresh
         iter_C = iter_C[:-1, :-1]
-        iterarr = iter_C if args['plot_type'] == interp else iter_C.ravel()
+        iterarr = iter_C if args['plot_type'] == 'interp' else iter_C.ravel()
         pcolor.set_array(iterarr)
 
         if args['ice_velocity_field']:
             iter_uice = np.array(iterdata['UICE']).reshape(X.shape)
             iter_vice = np.array(iterdata['VICE']).reshape(X.shape)
+            iter_uice = np.ma.masked_where(mask, iter_uice)
+            iter_vice = np.ma.masked_where(mask, iter_vice)
             U = iter_uice[::st, ::st]
             V = iter_vice[::st, ::st]
             quiverplot.set_UVC(U, V)
@@ -249,12 +293,5 @@ def makeanimate(kwargs):
     gifwriter = animation.ImageMagickFileWriter(fps = args['fps'])
     anim.save(gifname, writer=gifwriter)
 
-if __name__ == "__main__":
-    twodimensionalgif(dict( var = 'ice_fract',
-                            iters=[12, 24, 36, 48, 72, 96, 120],
-                            movie_name='ice_frac_ice_velocity_field_True.gif',
-                            image_name='still_.png',
-                            ice_velocity_field = True,
-                            dpi = 200,
-                            start_time = 100,
-                            sec_per_iter = 10))
+    print("Saved still frames in %s" % args['image_folder_name'])
+    print("Saved animation as %s" % gifname)

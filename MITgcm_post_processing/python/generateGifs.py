@@ -26,7 +26,7 @@ def plot3d(gif_args):
     """
     args = global_gif_args.copy()
     args.update(gif_args)
-    twodimensionalgif.makeanimate(args)
+    threedimensionalgif.makeanimate(args)
 
 
 def plot2d(gif_args):
@@ -44,52 +44,31 @@ global_gif_args = {
 
 }
 
-#####
-args = {
-    'var':          'ice_fract',
-    'iters':        None,
-    'movie_name':   'ice_frac_velocity_field_True.gif',
-    'image_name':   'still_.png',
-    'ice_velocity_field':   True,
-    'dpi':          200
-}
+args2d = {  'var'       :   'ice_fract',
+            'movie_name':   '2d_ice_fract_none.gif',
+            'start_time':   12,
+            'sec_per_iter': 1,
+            'vmin'      :   0.0,
+            'vmax'      :   1.0,
+            'image_folder_name':    'PNG_NEW',
+            'gif_folder_name':      'GIF_NEW',
+            'image_name':           '2d_T_none.png',
+            'plot_type':           None
+        }
 
+args3d = {  'var'       :   'T',
+            'movie_name':   '3d_T_gs.gif',
+            'cut_var'   :   'z',
+            'cut_val'   :   10,
+            'start_time':   20520,
+            'sec_per_iter': 1,
+            'gif_folder_name':      'GIF_NEW',
+            'image_folder_name':    'PNG_NEW',
+            'image_name':           '3d_T_gs_z=0.png',
+            'iters':                [1920, 2040]
+        }
 
-plot2d(args)
+# plot2d(args2d)
+plot3d(args3d)
 
-"""
-gif_args = {
-    'cut_var' : 'z',
-    'cut_val' : 0,
-    'data_var' : 'T',
-    'movie_name' : 'T_0_xy_interp',
-    'bathy_file_name':None,
-    'iter_start':1,
-    'iter_end':10
-}
-plot3d(gif_args)
-
-
-gif_args = {
-    'cut_var' : 'x',
-    'cut_val' : 1,
-    'data_var' : 'T',
-    'movie_name' : 'T_1_zy_interp',
-    'bathy_file_name':None,
-    'iter_start':1,
-    'iter_end':10
-}
-plot3d(gif_args)
-
-gif_args = {
-    'cut_var' : 'y',
-    'cut_val' : 10,
-    'data_var' : 'T',
-    'movie_name' : 'T_10_zx_interp',
-    'bathy_file_name':None,
-    'iter_start':1,
-    'iter_end':10
-}
-plot3d(gif_args)
-"""
 print ("\nFinished animating all the gifs")
