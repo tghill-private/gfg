@@ -185,18 +185,24 @@ def makeanimate(kwargs):
     ncdata = _getdataset(iters[0], args['namespec'])
     X = np.array(ncdata['x'])
     Y = np.array(ncdata['y'])
+
+    # variable 'z' in the netCDF data is just the number of levels
+    # variable 'zc' is the vertical coordinate
     Z = np.array(ncdata['z'])
+    Zc = np.array(ncdata['zc'])
 
     cutindex = int(np.where(np.array(ncdata[args['cut_var']]) == args['cut_val'])[0])
     if args['cut_var'] == 'x':
-        plotXgrid, plotYgrid = np.meshgrid(Y, Z)
+        plotXgrid, plotYgridlevels = np.meshgrid(Y, Z)
+        plotYgrid = np.take(Zc, cutindex, axis = 2)
         xlabel = 'y'
         ylabel = 'z'
         cutaxis = 2
     elif args['cut_var'] == 'y':
-        plotXgrid, plotYgrid = np.meshgrid(X, Z)
+        plotXgrid, plotYgridlevels = np.meshgrid(X, Z)
+        plotYgrid = np.take(Zc, cutindex, axis = 1)
         cutaxis = 1
-        xlabel = 'y'
+        xlabel = 'x'
         ylabel = 'z'
     elif args['cut_var'] == 'z':
         plotXgrid, plotYgrid = np.meshgrid(X, Y)
@@ -233,21 +239,20 @@ def makeanimate(kwargs):
         Ny = len(Y)
         Nz = len(Z)
         depth = depth.reshape(Ny, Nx)
+        print(np.max(depth))
+        print(np.min(depth))
 
         if args['cut_var'] == 'x':
             depths = np.take(depth, cutindex, axis = 1)
             depths = np.tile(depths, (Nz, 1))
-            print(depths.shape)
-            landmask = plotYgrid >= depth
+            landmask = np.abs(plotYgrid) >= depths
 
         elif args['cut_var'] == 'y':
             depths = np.take(depth, cutindex, axis = 0)
             depths = np.tile(depths, (Nz, 1))
-            print(plotYgrid.shape)
-            print(depths.shape)
-            landmask = plotYgrid >= depths
+            landmask = np.abs(plotYgrid) >= depths
         else:
-            landmask = args['cut_val'] >= depth
+            landmask = args['cut_val'] > depth
         cmap.set_bad(args['landmask'], 1)
         plotdata_var = np.ma.masked_where(landmask, plotdata_var)
     # see https://stackoverflow.com/questions/18797175/animation-with-pcolormesh-routine-in-matplotlib-how-do-i-initialize-the-data
@@ -261,7 +266,6 @@ def makeanimate(kwargs):
         pcolor = ax.pcolormesh(plotXgrid[:-1, :-1], plotYgrid[:-1, :-1], plotdata_var,
                                 cmap = args['cmap'], vmin = args['vmin'],
                                 vmax = args['vmax'], shading = 'gouraud')
-        print('interpolating')
 
     elif args['plot_type'] == 'interp':
         pcolor = ax.imshow(plotdata_var, interpolation = args['interp_type'],
@@ -271,8 +275,8 @@ def makeanimate(kwargs):
                         vmax = args['vmax'], origin = 'lower',
                         aspect = 'auto')
 
-    if args['cut_var'] != 'z':
-        ax.invert_yaxis()
+    # if args['cut_var'] != 'z':
+    #     ax.invert_yaxis()
     plt.tight_layout()
 
     def animate(iter):

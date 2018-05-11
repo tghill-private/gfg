@@ -57,15 +57,18 @@ args2d = {  'var'       :   'ice_fract',
         }
 
 args3d = {  'var'       :   'T',
-            'movie_name':   '3d_T_gs.gif',
-            'cut_var'   :   'z',
-            'cut_val'   :   10,
-            'start_time':   20520,
+            'movie_name':   'slice_x=1350_landmask_small.gif',
+            'cut_var'   :   'x',
+            'cut_val'   :   1350,
+            'start_time':   0,
             'sec_per_iter': 1,
             'gif_folder_name':      'GIF_NEW',
             'image_folder_name':    'PNG_NEW',
-            'image_name':           '3d_T_gs_z=0.png',
-            'iters':                [1920, 2040]
+            'image_name':           '3d_T_gs_x=1350_small.png',
+            'iters':                (25320, 25440),
+            'vmin':                 11,
+            'vmax':                 13.5,
+            'plot_type': 'gs',
         }
 
 # plot2d(args2d)
