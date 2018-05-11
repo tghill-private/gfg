@@ -239,17 +239,24 @@ def makeanimate(kwargs):
         Ny = len(Y)
         Nz = len(Z)
         depth = depth.reshape(Ny, Nx)
-        print(np.max(depth))
-        print(np.min(depth))
+
+        xy_mins = np.min(Zc, axis = 0)
+
 
         if args['cut_var'] == 'x':
             depths = np.take(depth, cutindex, axis = 1)
             depths = np.tile(depths, (Nz, 1))
-            landmask = np.abs(plotYgrid) >= depths
+            zmins = xy_mins[:, cutindex]
+
+            landmask = slice==zmins
 
         elif args['cut_var'] == 'y':
             depths = np.take(depth, cutindex, axis = 0)
             depths = np.tile(depths, (Nz, 1))
+
+            zmins = xy_mins[cutindex, :]
+
+
             landmask = np.abs(plotYgrid) >= depths
         else:
             landmask = args['cut_val'] > depth
