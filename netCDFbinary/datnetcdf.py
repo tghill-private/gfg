@@ -47,7 +47,13 @@ def convert(fields, indices = None, verbose = True):
         print("Preparing to convert {0:d} outputs to netcdf.".format(len(indices)))
 
     # Manually extract the grids
-    refdata = mgu.rdmds('T.0000000001')
+    if 'T' in fields:
+        refdatafile = glob.glob('T*.data')[0]
+    elif 'Rho' in fields:
+        refdatafile = glob.glob('T*.data')[0]
+    refdatafile = os.path.splitext(refdatafile)[0]
+    print("Using reference data %s" % refdatafile)
+    refdata = mgu.rdmds(refdatafile)
 
     Nx = refdata.shape[2]
     Ny = refdata.shape[1]
