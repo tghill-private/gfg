@@ -20,6 +20,4 @@ args = parser.parse_args()
 
 indices = args.iter if args.iter else None
 
-# datnetcdf.convert(args.fields, indices = indices, verbose = True)
-print(args.fields)
-print(indices)
+datnetcdf.convert(args.fields, indices = indices, verbose = True)
