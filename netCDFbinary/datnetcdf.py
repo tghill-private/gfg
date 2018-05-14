@@ -40,6 +40,8 @@ def convert(fields, indices = None, verbose = True):
      *  verbose:    Boolean. If True, status is printed to the screen. If
                     False, no output is printed.
     """
+    if fields == []:
+        return
     if indices:
         indices = [str(i).zfill(10) for i in indices]
     if indices == None:
