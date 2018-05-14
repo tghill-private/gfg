@@ -38,6 +38,8 @@ def convert(fields, indices = None, verbose = True):
      *  verbose:    Boolean. If True, status is printed to the screen. If
                     False, no output is printed.
     """
+    if indices:
+        indices = [str(i).zfill(10) for i in indices]
     if indices == None:
         names = glob.glob(fields[0] + '.*.data')
         indices = [nm[len(fields[0])+1:-5] for nm in names]
