@@ -23,6 +23,8 @@ import MITgcmutils as mgu
 import numpy as np
 from netCDF4 import Dataset
 
+_3d_ref_vars = ['T', 'Rho', 'U', 'V', 'W']
+
 def convert(fields, indices = None, verbose = True):
     """converts binary MITgcm .data files to netCDF4 .nc files.
 
@@ -47,10 +49,10 @@ def convert(fields, indices = None, verbose = True):
         print("Preparing to convert {0:d} outputs to netcdf.".format(len(indices)))
 
     # Manually extract the grids
-    if 'T' in fields:
-        refdatafile = glob.glob('T*.data')[0]
-    elif 'Rho' in fields:
-        refdatafile = glob.glob('T*.data')[0]
+    for var in _3d_ref_vars:
+        if var in fields:
+            ref_var = var
+    refdatafile = glob.glob('%s*.data'%ref_var)[0]
     refdatafile = os.path.splitext(refdatafile)[0]
     print("Using reference data %s" % refdatafile)
     refdata = mgu.rdmds(refdatafile)
