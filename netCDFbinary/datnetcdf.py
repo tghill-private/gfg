@@ -17,7 +17,7 @@
 
 """
 
-import glob, sys
+import glob, sys, os
 
 import MITgcmutils as mgu
 import numpy as np
