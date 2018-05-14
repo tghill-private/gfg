@@ -22,4 +22,4 @@ indices = args.iter if args.iter else None
 
 # datnetcdf.convert(args.fields, indices = indices, verbose = True)
 print(args.fields)
-print(args.indices)
+print(indices)
