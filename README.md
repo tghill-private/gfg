@@ -16,4 +16,4 @@ and the MITgcmutils python package should install somewhere in the virtualenv pa
 
 
 ### Install without virtualenv
-It should also be possible to install MITgcmutils without using a virtualenv by specifying the installation directory and potentially adding this to your python path. Either specify `--prefix=install/path` where `install.path` is somewhere in your python path, or add the line `export PYTHONPATH="${PYTHONPATH}:/install\path` to the `.bashrc` file.
+It should also be possible to install MITgcmutils without using a virtualenv by specifying the installation directory and potentially adding this to your python path. Either specify `--prefix=install/path` where `install/path` is somewhere in your python path, or add the line `export PYTHONPATH="${PYTHONPATH}:/install/path` to the `.bashrc` file.
