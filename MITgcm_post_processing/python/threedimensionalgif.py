@@ -232,13 +232,26 @@ def makeanimate(kwargs):
     # plotdata_var = np.ma.masked_where(landmask, data)
     cmap = getattr(matplotlib.cm, args['cmap'])
 
-    # This won't work yet.
     if args['landmask']:
         depth = mgu.rdmds('Depth')
         Nx = len(X)
         Ny = len(Y)
         Nz = len(Z)
         depth = depth.reshape(Ny, Nx)
+
+        """
+        The netcdf files put all data points that are below the bottom bed
+        at the bottom bed.
+
+        Here I find all the z grid levels and create a new variable
+        maskZ with shape (Nz, Ny, Nx) that keeps going below the
+        bottom bed.
+
+        If args['landmask'] evaluates as True, then I plot the data against
+        this grid, to mask the area below the bottom.
+        """
+        Z_levels = np.array([np.min(zslice) for zslice in Zc])
+        maskZ = np.tile(Z_levels.reshape((len(Z_levels), 1, 1)), (Ny, Nx))
 
         xy_mins = np.min(Zc, axis = 0)
 
@@ -247,14 +260,16 @@ def makeanimate(kwargs):
             depths = np.take(depth, cutindex, axis = 1)
             depths = np.tile(depths, (Nz, 1))
             zmins = xy_mins[:, cutindex]
+            plotYgrid = np.take(maskZ, cutindex, axis = 2)
 
-            landmask = slice==zmins
+            landmask = np.abs(plotYgrid) >= depths
 
         elif args['cut_var'] == 'y':
             depths = np.take(depth, cutindex, axis = 0)
             depths = np.tile(depths, (Nz, 1))
 
             zmins = xy_mins[cutindex, :]
+            plotYgrid = np.take(maskZ, cutindex, axis = 1)
 
 
             landmask = np.abs(plotYgrid) >= depths
@@ -298,7 +313,6 @@ def makeanimate(kwargs):
 
         plotdata = plotdata_var if args['plot_type'] == 'interp' \
                         else plotdata_var.ravel()
-        # plt.tight_layout()
         pcolor.set_array(plotdata)
 
         time = args['start_time'] + (int(iter) - int(iters[0]))*args['sec_per_iter']
