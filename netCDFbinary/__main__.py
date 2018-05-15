@@ -6,6 +6,10 @@
 
         python -m netCDFbinary.py
 
+
+    This file specifies the command line interface and supplies the
+    appropriate call to datnetcdf.py which does the conversion.
+
 """
 
 import argparse

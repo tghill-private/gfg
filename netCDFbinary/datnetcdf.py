@@ -6,14 +6,10 @@
     https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=NetCDF_Converter
 
     I have modified it to work with 2D variables (ex. ice_fract), which is
-    the conditional statement at line 107. I have also added the option to
-    run it as a script (__main__ loop), or to use as a module from other
-    scripts.
+    the conditional statement at line 107.
 
-    To run as a script like the original version, modify the lines in the
-    __main__ loop above the call to convert().
-
-    See docstring for function convert for how to use as a module function.
+    See docstring for function convert for how to use as a module function,
+    or documentation in the README for how to use the package
 
 """
 
@@ -164,15 +160,3 @@ def convert(fields, indices = None, verbose = True, overwrite = False):
 
         fp.close()
     return output_files
-
-if __name__ == "__main__":
-    # Extract for a specific list of times
-    #fields  = ['Rho', 'T']
-    #indices = ['0000017040']
-
-    # Extract for all times
-    fields  = ['T', 'UICE', 'VICE']
-    names = glob.glob(fields[0] + '.*.data')
-    indices = [nm[len(fields[0])+1:-5] for nm in names]
-
-    convert(fields, indices)
