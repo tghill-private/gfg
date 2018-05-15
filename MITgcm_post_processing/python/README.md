@@ -17,9 +17,8 @@ Parameters:
 Required:
 Name | Description
 ------------|-------------------
-var         |   Variable prefix to plot. This is the prefix of the MITgcm binary output files. eg 'T', 'Rho'.
-movie_name  |   Filename to save the gif animation. This works with
-                or without the .gif. extension
+var | Variable prefix to plot. This is the prefix of the MITgcm binary output files. eg 'T', 'Rho'.
+movie_name  |   Filename to save the gif animation. This works with or without the .gif. extension
 cut_var     |   Axis to take a constant slice of. One of 'x', 'y' or 'z'.
 cut_val     |   Value to take a slice at. Must be a level in the model data.
 start_time  |   Time (sec) for the start of the run (or specific set of iterations)
@@ -42,7 +41,6 @@ dpi                 |   200         |   Resolution for still frames
 plot_type           |   'gs'        |   One of None, 'gs', 'contour' or 'interp'. None: pcolormesh with no shading/interpolation. gs: pcolormesh with gouraud shading. interp: imshow with interpolation.
 interp_type         |   'bilinear'  |   Interpolation type. See [pyplotimshow documentation](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.imshow.html)
 aspect              |   'auto'      |   One of 'auto' or number. Auto uses a 4:3 aspect ratio; Passing a number forces that aspect ratio
---------------------|---------------|--------------------
 
 ### 2D Datasets
 
