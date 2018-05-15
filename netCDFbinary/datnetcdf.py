@@ -111,12 +111,12 @@ def convert(fields, indices = None, verbose = True, overwrite = False):
 
         # Create file
         outfile = 'output_{0}.nc'.format(index)
-        if.os.path.exists(outfile):
-            if overwite:
+        if os.path.exists(outfile):
+            if overwrite:
                 print("Overwriting file %s" % outfile)
             else:
                 print('Skipping file %s' % outfile)
-                break
+                continue
         output_files.append(outfile)
         fp = Dataset(outfile, 'w', format='NETCDF4')
 
