@@ -14,7 +14,13 @@ image.
 
 Parameters:
 
+First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column
+
 Required:
+
 Name | Description
 ---- | ------------------
 var | Variable prefix to plot. This is the prefix of the MITgcm binary output files. eg 'T', 'Rho'.
