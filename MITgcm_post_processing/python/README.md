@@ -15,7 +15,7 @@ image.
 Parameters:
 
 Required:
-Name        |   Description
+Name | Description
 ------------|-------------------
 var         |   Variable prefix to plot. This is the prefix of the MITgcm binary output files. eg 'T', 'Rho'.
 movie_name  |   Filename to save the gif animation. This works with
@@ -24,7 +24,6 @@ cut_var     |   Axis to take a constant slice of. One of 'x', 'y' or 'z'.
 cut_val     |   Value to take a slice at. Must be a level in the model data.
 start_time  |   Time (sec) for the start of the run (or specific set of iterations)
 sec_per_iter|   Seconds per model iteration.
-------------|-------------------
 
 Optional:
 Name                |   Default     |   Description
