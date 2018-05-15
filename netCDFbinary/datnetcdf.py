@@ -25,7 +25,7 @@ from netCDF4 import Dataset
 
 _3d_ref_vars = ['T', 'Rho', 'U', 'V', 'W']
 
-def convert(fields, indices = None, verbose = True):
+def convert(fields, indices = None, verbose = True, overwrite = False):
     """converts binary MITgcm .data files to netCDF4 .nc files.
 
     Required Arguments:
@@ -111,6 +111,12 @@ def convert(fields, indices = None, verbose = True):
 
         # Create file
         outfile = 'output_{0}.nc'.format(index)
+        if.os.path.exists(outfile):
+            if overwite:
+                print("Overwriting file %s" % outfile)
+            else:
+                print('Skipping file %s' % outfile)
+                break
         output_files.append(outfile)
         fp = Dataset(outfile, 'w', format='NETCDF4')
 
