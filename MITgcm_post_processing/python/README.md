@@ -26,6 +26,7 @@ start_time  |   Time (sec) for the start of the run (or specific set of iteratio
 sec_per_iter|   Seconds per model iteration.
 
 Optional:
+
 Name                |   Default     |   Description
 --------------------|---------------|--------------------
 iters               |   None        |   If None, use all iterations for matching file names. Otherwise,  can be a list of iteration numbers. Iterations are auto zero padded to 10 digits
@@ -57,6 +58,7 @@ image.
 Parameters:
 
 Required:
+
     Name        |   Description
     ------------|-------------------
     var         :   Variable prefix to plot. This is the prefix of the
@@ -72,6 +74,7 @@ Required:
     ------------|-------------------
 
 Optional:
+
     Name                |   Default     |   Description
     --------------------|---------------|--------------------
     iters               :   None        :   If None, use all iterations for
