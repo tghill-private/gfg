@@ -61,13 +61,13 @@ Required:
 
     Name        |   Description
     ------------|-------------------
-    var         :   Variable prefix to plot. This is the prefix of the
+    var         |   Variable prefix to plot. This is the prefix of the\
                     MITgcm binary output files. eg 'T', 'Rho'.
 
-    movie_name  :   Filename to save the gif animation. This works with
+    movie_name  |   Filename to save the gif animation. This works with\
                     or without the .gif. extension
 
-    start_time  :   Time (sec) for the start of the run (or specific
+    start_time  |   Time (sec) for the start of the run (or specific
                     set of iterations)
 
     sec_per_iter:   Seconds per model iteration.
