@@ -10,6 +10,9 @@ Clone or download and extract the code. Put the code directory on your python pa
 
 ### Requirements
 
+#### Running on Graham
+I have had an unexpected error where the script exists with a Segmentation Fault. The cause of this error is unknown, but with the modules consistent with the list in `modules.txt` the script runs.
+
 #### Python Packages
 netCDFbinary requires the following python packages
   * numpy
