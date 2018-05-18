@@ -4,7 +4,24 @@ These post-processing routines are modified from those written by J Barenboim in
 Install somewhere on your `PYTHONPATH` and use `generateGifs.py` to set parameters for plots. This version uses the Matplotlib [`FuncAnimation`](https://matplotlib.org/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation) class to make the animations, and also saves an image of each frame of the animation.
 
 ## Usage
-Specify parameters for the plots in `generateGifs.py`. Use the 2D or 3D function according to whether your dataset is 2D or 3D.
+
+The general workflow is to specify parameters in an options file, and pass the filename as a command line argument to the package.
+
+    python -m MITgcmpp gifargs.py
+
+### Specification file
+
+See the example file in the examples directory. Important variables to define are
+
+Name            |   Description
+--------------- | ---------------------
+GLOBAL_GIF_ARGS | Dictionary specifying global arguments applying to all figures
+ARGS3D          | List of dictionaries specifying arguments for each 3D figure
+ARGS2D          | List of dictionaries specifying arguments for each 2D figure
+
+Be sure to check the spelling of these variables, since the package specifically looks for these names.
+
+The specification file can be in any directory. The intended usage pattern is to make the specification file in the simulation directory.
 
 ## Plotting Parameters
 
