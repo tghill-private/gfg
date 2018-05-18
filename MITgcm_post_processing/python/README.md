@@ -1,4 +1,7 @@
 # README for python post-processing routines.
+These post-processing routines are modified from those written by J Barenboim in 2016. The interface remains largely the same, but the routines now expect [netCDF files](https://github.com/timghill/netCDFbinary) as inputs.
+
+Install somewhere on your `PYTHONPATH` and use `generateGifs.py` to set parameters for plots. This version uses the Matplotlib [`FuncAnimation`](https://matplotlib.org/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation) class to make the animations, and also saves an image of each frame of the animation.
 
 ## Usage
 Specify parameters for the plots in `generateGifs.py`. Use the 2D or 3D function according to whether your dataset is 2D or 3D.
