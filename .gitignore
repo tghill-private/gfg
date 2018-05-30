@@ -4,3 +4,6 @@
 pyenv
 .nfs*
 MITgcm_post_processing
+_build
+docs/Makefile
+
