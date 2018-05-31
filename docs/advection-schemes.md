@@ -8,7 +8,7 @@ Advection schemes are selected by a token in one of the data files. The token is
     thSIceAdvScheme = 77
 The token is 77.
 ## List of advection schemes
-These schemes are not listed anywhere in the documentation as far as I can tell, but they are listed in the header file `MITgcm/pkg/generic_advdiff/GAD.h`.
+These schemes are listed in the documentation in sections [2.17](https://mitgcm.readthedocs.io/en/latest/algorithm/algorithm.html#linear-advection-schemes) and [2.18](https://mitgcm.readthedocs.io/en/latest/algorithm/algorithm.html#non-linear-advection-schemes), and are compared in section [2.19](https://mitgcm.readthedocs.io/en/latest/algorithm/algorithm.html#comparison-of-advection-schemes).(https://mitgcm.readthedocs.io/en/latest/algorithm/algorithm.html#non-linear-advection-schemes). They are also listed in the header file `MITgcm/pkg/generic_advdiff/GAD.h`.
 
 Token | Advection Scheme
 ----- | -----------------------
