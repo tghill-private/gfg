@@ -41,7 +41,13 @@ The SEAICE package [documentation](http://mitgcm.org/public/r2_manual/latest/onl
 
 > From the various advection scheme that are available in the MITgcm, we recommend flux-limited schemes [multidimensional 2nd and 3rd-order advection scheme with flux limiter [Hundsdorfer and Trompert, 1994; Roe, 1985] to preserve sharp gradients and edges that are typical of sea ice distributions and to rule out unphysical over- and undershoots (negative thickness or concentration). These schemes conserve volume and horizontal area and are unconditionally stable, so that we can set D_X = 0
 
-For example, `SEAICEadvScheme = 33` would be a good choice according to this recommendation. This scheme is used by some of the `/verification` examples. I have also had success with `SEAICEadvScheme = 7`.
+For example, `SEAICEadvScheme = 33` would be a good choice according to this recommendation. This scheme is used by some of the `/verification` examples.
+
+Advection scheme 7 is **not recommended** for the SEAICE package. With `SEAICEadvScheme = 7` the ice can form in grids which do not advect with the velocity field.
+
+An example with advection scheme 7:
+
+![Advection Scheme 7](https://github.com/timghill/gfg/blob/master/data/ice_gridding.png "Figure text")
 
 ## thSIceAdvScheme
 The THSICE package advection scheme is constrolled by the option
