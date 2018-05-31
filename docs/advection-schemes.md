@@ -47,13 +47,11 @@ Advection scheme 7 is **not recommended** for the SEAICE package. With `SEAICEad
 
 An example with advection scheme 7:
 
-![Advection Scheme 7](https://github.com/timghill/gfg/blob/master/data/ice_gridding.png)
-[Alternatively link to image](https://github.com/timghill/gfg/blob/master/data/ice_gridding.png)
+![Advection Scheme 7 [Link to image](https://github.com/timghill/gfg/blob/master/data/ice_gridding.png)](https://github.com/timghill/gfg/blob/master/data/ice_gridding.png)
 
 Compare to advection scheme 33:
 
-![Advection Scheme 7](https://github.com/timghill/gfg/blob/master/data/ice_smooth.png)
-[Alternatively link to image](https://github.com/timghill/gfg/blob/master/data/ice_smooth.png)
+![Advection Scheme 7 [Link to image]((https://github.com/timghill/gfg/blob/master/data/ice_smooth.png))](https://github.com/timghill/gfg/blob/master/data/ice_smooth.png)
 
 The default advection scheme is 2, a 2nd-order centered difference method. This method seems to create a lot more ice than expected, and a lot more ice than the other methods. With constant air and water temperatures of 2 degrees C, the default scheme covers the entire lake in ice, schemes 33 and 77 both advect the ice with the wind for some time, and slowly the ice melts. Therefore, scheme 33 and 77 are recommended.
 
