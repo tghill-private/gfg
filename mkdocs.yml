@@ -2,6 +2,6 @@ site_name: MITgcmIce
 repo_url: https://github.com/timghill/gfg
 site_author: Tim Hill
 pages:
-    - 'Introduction':'index.md'
-    - 'Advection Schemes':'AdvSchemes.md'
-    - 'General Notes':'Notes.md'
+    - 'Introduction': 'index.md'
+    - 'Advection Schemes': 'AdvSchemes.md'
+    - 'General Notes': 'Notes.md'
