@@ -47,7 +47,11 @@ Advection scheme 7 is **not recommended** for the SEAICE package. With `SEAICEad
 
 An example with advection scheme 7:
 
-![Advection Scheme 7](https://github.com/timghill/gfg/blob/master/data/ice_gridding.png "Figure text")
+![Advection Scheme 7](https://github.com/timghill/gfg/blob/master/data/ice_gridding.png)
+
+Compare to advection scheme 33:
+
+![Advection Scheme 7](https://github.com/timghill/gfg/blob/master/data/ice_smooth.png)
 
 ## thSIceAdvScheme
 The THSICE package advection scheme is constrolled by the option
