@@ -48,13 +48,17 @@ Advection scheme 7 is **not recommended** for the SEAICE package. With `SEAICEad
 An example with advection scheme 7:
 
 ![Advection Scheme 7](https://github.com/timghill/gfg/blob/master/data/ice_gridding.png)
+[Alternatively link to image](https://github.com/timghill/gfg/blob/master/data/ice_gridding.png)
 
 Compare to advection scheme 33:
 
 ![Advection Scheme 7](https://github.com/timghill/gfg/blob/master/data/ice_smooth.png)
+[Alternatively link to image](https://github.com/timghill/gfg/blob/master/data/ice_smooth.png)
+
+The default advection scheme is 2, a 2nd-order centered difference method. This method seems to create a lot more ice than expected, and a lot more ice than the other methods. With constant air and water temperatures of 2 degrees C, the default scheme covers the entire lake in ice, schemes 33 and 77 both advect the ice with the wind for some time, and slowly the ice melts. Therefore, scheme 33 and 77 are recommended.
 
 ## thSIceAdvScheme
-The THSICE package advection scheme is constrolled by the option
+The THSICE package advection scheme is controlled by the option
 
     thSIceAdvScheme = token
 
@@ -69,3 +73,5 @@ Therefore, the following should always be in the `data.ice` file
     thSIceAdvScheme = 77,
     thSIce_diffK    = 0,
     ...
+
+However, when testing this scheme, the model reverts to NaN in the STDOUT.xxxx files after the first few time-steps. At this time, I can't recommend using the THSICE package along with ice dynamics. The good advection schemes for the SEAICE package seem to do an adequate job.
