@@ -5,3 +5,4 @@ pages:
     - 'Introduction': 'index.md'
     - 'Advection Schemes': 'AdvSchemes.md'
     - 'General Notes': 'Notes.md'
+docs_dir: 'docs'
