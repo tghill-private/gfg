@@ -4,9 +4,11 @@ The Graham modules can produce some unexpected modules with compiling and runnin
 ## Compiling on a single cpu
 This module list is relevant for compiling the MITgcm on a single cpu, using the following commands (depending on your code and optfile directories)
 
-    ../../tools/genmake2 -mods ../code -of ../../tools/build_options/graham_mpi -mpi
-    make depend
-    make
+```bash
+../../tools/genmake2 -mods ../code -of ../../tools/build_options/graham_mpi -mpi
+make depend
+make
+```
 
 * StdEnv/2016.4
 * nixpkgs/16.09
@@ -17,9 +19,11 @@ This module list is relevant for compiling the MITgcm on a single cpu, using the
 ## Compiling in parallel
 CMake uses the flag `-j` to compile in parallel. That is, to compile with the following commands
 
-    ../../tools/genmake2 -mods ../code -of ../../tools/build_options/graham_mpi -mpi
-    make depend
-    make
+```bash
+../../tools/genmake2 -mods ../code -of ../../tools/build_options/graham_mpi -mpi
+make depend
+make
+```
 
 The following modules should be loaded
 * StdEnv/2016.4
