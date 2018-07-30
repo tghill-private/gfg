@@ -1,0 +1,22 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {section}{\numberline {2}Setting up the MITgcm}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}Basic tutorial}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}SEAICE tutorial}{3}{subsection.2.2}
+\contentsline {section}{\numberline {3}More details about running MITgcm}{4}{section.3}
+\contentsline {subsection}{\numberline {3.1}Available packages}{4}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}DIAGNOSTICS}{4}{subsubsection.3.1.1}
+\contentsline {subsection}{\numberline {3.2}Core model parameters and recommendations}{6}{subsection.3.2}
+\contentsline {section}{\numberline {4}What didn't work}{6}{section.4}
+\contentsline {subsection}{\numberline {4.1}Advection schemes}{6}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Surface winds}{6}{subsection.4.2}
+\contentsline {section}{\numberline {5}Results: cases studied}{6}{section.5}
+\contentsline {section}{\numberline {6}Recurring issues}{6}{section.6}
+\contentsline {subsection}{\numberline {6.1}NetCDF/HDF5 libraries}{6}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}MITgcm python utils}{6}{subsection.6.2}
+\contentsline {section}{\numberline {7}Physics of the model}{6}{section.7}
+\contentsline {subsection}{\numberline {7.1}Radiative cooling}{6}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Water surface energy budget}{7}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Surface albedo}{7}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Thermodynamics}{8}{subsection.7.4}
+\contentsline {subsection}{\numberline {7.5}Total kinetic energy}{9}{subsection.7.5}
+\contentsline {subsection}{\numberline {7.6}Dynamical ice model}{9}{subsection.7.6}

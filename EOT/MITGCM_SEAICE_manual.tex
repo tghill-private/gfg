@@ -11,6 +11,8 @@
 \usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{siunitx}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -19,11 +21,11 @@
 
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
+    commentstyle=\tiny\color{codegreen},
+    keywordstyle=\tiny\color{magenta},
     numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\footnotesize,
+    stringstyle=\tiny\color{codepurple},
+    basicstyle=\tiny,
     breakatwhitespace=false,         
     breaklines=true,                 
     captionpos=b,                    
@@ -44,12 +46,283 @@
 \begin{document}
 \maketitle
 
-\section{First section}
+\tableofcontents{}
 
-Your text goes here.
+\section{Introduction}
 
-\subsection{A subsection}
+This document aims to serve as a starting point for running the MITgcm in configurations with ice. I have the model at a functional point and hope to leave some resources so it is easy to pick up where I left off.
 
-More text.
+The first section serves as an introduction to MITgcm and should be a good resource to carry out the first few functional model runs, including running with the ice package.
+
+The next few sections outline some specific things I learned about the model, and may be useful to someone trying to extend the model past what is outlined here. The tools I created for visualizing results are described. Some specific model configurations that did not work are explained, and problems I encountered with the model or with the Graham environment are discussed.
+
+\section{Setting up the MITgcm}
+The most useful references for the MITgcm are:
+\begin{itemize}
+\item{The \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=Main_Page}{fluids wiki} has a wealth iof information about computing resources, running on the SHARCNET cluster, and has an \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=MITgcmTutorial}{MITgcm tutorial} (discussed later).}
+\item{The \href{http://mitgcm.org}{MITgcm homepage}}
+\item{The \href{https://mitgcm.readthedocs.io/en/latest/}{new MITgcm documentation} is on read the docs, but is incomplete at the time of writing. The \href{http://mitgcm.org/public/r2_manual/final/online_documents/node1.html}{old documentation} is still accessible but has some unfortunate qualities, including embedding tabels as images so they are not searchable.}
+\item{The \href{https://github.com/MITgcm/MITgcm}{MITgcm github repo} is where I usually look at and search through the model code if I need to.}
+\end{itemize}
+
+\subsection{Basic tutorial}
+The \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=MITgcmTutorial}{Fluids wiki tutorial} is a good tutorial to start with the model. The tutorial was originally written by Emily Tyhurst, and I have corrected a few mistakes in the tutorial.
+
+The tutorial is largely self-contained, but I want to say a word about directory structure. MITgcm expects your case files to be contained in the same directory as the model. For example, if you make a folder called \verb|simulation1| for your simulation, this folder might be in the same directory as the MITgcm directories \verb|doc/|, \verb|eesupp/|, \verb|pkg/|, \verb|model/|, etc., in which case the directory structure would look like
+
+\begin{lstlisting}
+/home/user/MITgcm
+			
+			simulation1/
+
+			doc/
+			eesupp
+			jobs/
+			lsopt/
+			model/
+			optim/
+			pkg/
+			tools/
+			utils/
+			verification/
+			...
+\end{lstlisting}
+
+I had a folder I called \verb|MITgcmdata/| which was a git repo that contained all my model runs. Then my directory tree was
+
+\begin{lstlisting}
+/home/user/MITgcm
+			
+			MITgcmdata/
+					simulation1
+					simulation2
+					...
+
+			doc/
+			eesupp
+			jobs/
+			lsopt/
+			model/
+			optim/
+			pkg/
+			tools/
+			utils/
+			verification/
+			...
+\end{lstlisting}
+
+Having a structure like this makes compiling the model much easier. You can in theory compile the model from anywhere as long as you point the \verb|genmake2| script to the model directories, but in practice this has been harder than expected.
+
+\subsection{SEAICE tutorial}
+The SEAICE package \ref{sec:SEAICE} provides a dynamic and thermodynamic sea-ice model for the MITgcm. This package is general purpose enough to model freshwater and ocean ice. The package usually does a good job (at least qualitatively) of recreating dynamics and ice quantities reasonably physically.
+
+Write the rest of this up for small processor numbers (ie HOOD)
+
+
+
+
+\section{More details about running MITgcm}
+This section tries to describe aspects of running the MITgcm in more detail than the previous section. Hopefully this will be a good resource when trying to extend the model past what is included in the tutorials.
+
+MITgcm is structured as a core model + packages. The only packages within my scope are the seaice, external forcing, calendar, and diagnostic packages. In the first subsection I describe each of these packages and try to give some guidance on parameters to choose. The final subsection generally describes more features and parameters which are important to consider: equations of state, checkpoint files, binary input/output, and parameters for the core model.
+
+\subsection{Available packages}
+This section descibres the additional packages available, in particular the SEAICE, EXF/CAL, and DIAGNOSTICS packages.
+
+\subsubsection{DIAGNOSTICS}
+The diagnostics package exists to make it easier to control the output files generated by the model. It is easy to choose which fields are outputted and how frequently files are saved. As usual, the package requires compile-time and run-time options.
+
+\subsubsection*{Compile time options}
+At compile time (probably in your \verb|code| directory), you should have the file \verb|DIAGNOSTICS_SIZE.h| (example below). This can often be copied from one of the \verb|verification/| example experiments.
+
+\begin{lstlisting}[caption={Example \texttt{DIAGNOSTICS\symbol{95}SIZE.h} file}, captionpos=b]
+C     Diagnostics Array Dimension
+C     ---------------------------
+C     ndiagMax   :: maximum total number of available diagnostics
+C     numlists   :: maximum number of diagnostics list (in data.diagnostics)
+C     numperlist :: maximum number of active diagnostics per list (data.diagnostics)
+C     numLevels  :: maximum number of levels to write    (data.diagnostics)
+C     numdiags   :: maximum size of the storage array for active 2D/3D diagnostics
+C     nRegions   :: maximum number of regions (statistics-diagnostics)
+C     sizRegMsk  :: maximum size of the regional-mask (statistics-diagnostics)
+C     nStats     :: maximum number of statistics (e.g.: aver,min,max ...)
+C     diagSt_size:: maximum size of the storage array for statistics-diagnostics
+C Note : may need to increase "numdiags" when using several 2D/3D diagnostics,
+C  and "diagSt_size" (statistics-diags) since values here are deliberately small.
+      INTEGER    ndiagMax
+      INTEGER    numlists, numperlist, numLevels
+      INTEGER    numdiags
+      INTEGER    nRegions, sizRegMsk, nStats
+      INTEGER    diagSt_size
+      PARAMETER( ndiagMax = 500 )
+      PARAMETER( numlists = 25, numperlist = 50, numLevels=2*Nr )
+      PARAMETER( numdiags = 25*Nr )
+      PARAMETER( nRegions = 0 , sizRegMsk = 1 , nStats = 4 )
+      PARAMETER( diagSt_size = 10*Nr )
+
+
+CEH3 ;;; Local Variables: ***
+CEH3 ;;; mode:fortran ***
+CEH3 ;;; End: ***
+\end{lstlisting}
+
+Parameter \verb|numlists| (line 20) and \verb|numdiags| (line 21) can be adjusted if you need more diagnostics.
+
+\subsubsection*{Run time options}
+The diagnostics you want to output, and how frequently to write files are specified at runtime in file \verb|data.diagnostics|. Specify the field names in \verb|field| and \verb|filename| lines, and set the frequency. See the following example
+
+\begin{lstlisting}[caption={Example \texttt{data.diagnostics} file}, captionpos=b]
+# Diagnostic Package Choices
+#-----------------
+# for each output-stream:
+#  filename(n) : prefix of the output file name (only 8.c long) for outp.stream n
+#  frequency(n):< 0 : write snap-shot output every |frequency| seconds
+#               > 0 : write time-average output every frequency seconds
+#  timePhase(n)     : write at time = timePhase + multiple of |frequency|
+#  averagingFreq(n) : frequency (in s) for periodic averaging interval
+#  averagingPhase(n): phase     (in s) for periodic averaging interval
+#  repeatCycle(n)   : number of averaging intervals in 1 cycle
+#  levels(:,n) : list of levels to write to file (Notes: declared as REAL)
+#                 when this entry is missing, select all common levels of this list
+#  fields(:,n) : list of diagnostics fields (8.c) (see "available_diagnostics.log"
+#                 file for the list of all available diag. in this particular config)
+#-----------------
+ &DIAGNOSTICS_LIST
+# diag_mnc     = .FALSE.,
+# dumpAtLast   = .TRUE.,
+#==============================
+  frequency(1) = -3600.0,
+  timePhase(1) = 0,
+  fields(1, 1) = 'THETA',
+  filename( 1) = 'T',
+#-----------------
+  frequency(2) = -3600.0,
+  timePhase(2) = 0,
+  fields(1, 2) = 'UVEL',
+  filename( 2) = 'U',
+#-----------------
+  &
+...
+\end{lstlisting}
+For a real model run we would likely want to include more diagnostics by continuing to add to the list in the same way. The full list of diagnostics is listed in the documentation for each package, as well as in the \verb|available_diagnostics.log| file created when you run with the diagnostics package. See the examples in the tutorials for a full working example.
+
+\subsection{Core model parameters and recommendations}
+This section discusses choosing an equation of state, using checkpoint files, time-stepping, binary input/output, and other parameters for the core model.
+
+\section{What didn't work}
+\subsection{Advection schemes}
+\subsection{Surface winds}
+
+
+
+\section{Results: cases studied}
+
+
+
+
+\section{Recurring issues}
+\subsection{NetCDF/HDF5 libraries}
+\subsection{MITgcm python utils}
+
+
+
+
+
+
+\section{Physics of the model}
+The model has relatively standard physical parameterizations that are usually documented to some extent in the MITgcm documentation. As part of getting the model up and running, I looked into some of the parameterizations and compared to what we expect.
+
+\subsection{Radiative cooling}
+We looked into the radiative cooling of ice when starting to compare MITgcm ice growth rates to the 1-D model CLIMo (Canadian Lake Ice Model).
+
+The radiative cooling should follow the Stefan-Boltzmann law for total radiative power $M$
+\begin{equation}
+M = \varepsilon \sigma T^4
+\end{equation}
+Where $M$ is the radiant emittance (\si{W.m^{-2}}), $\varepsilon$ is the emissivity, and $\sigma = \SI{5.670373e-8}{W.m^{-2}.K^{-4}}$ is the Stefan-Boltzmann constant.
+
+The peak wavelength of the spectral distribution should follow Wien's law
+\begin{equation}
+\lambda_{max} = \frac{b}{T}
+\end{equation}
+Where $b = \SI{2.898e-3}{m.K}$ is Wien's displacement constant and T is the temperature. For \SI{0}{\celsius}, $\lambda_{max} \approx \SI{e-5}{m}$ is deep in the infrared (longwave). Therefore, all the radiant emittance should be captured as upward longwave radiation.
+
+The emittance will depend on the value of emissivity used. The SEAICE packages takes in ice emissivity with the variable \verb|SEAICE_emissivity| which is actually $\sigma \varepsilon$. The default value is $\sigma \varepsilon = \SI{5.50e-8}{ W.m^{-2}.K^{-4}}$.  Computing the expected emittance, 
+
+\begin{equation*}
+M = \SI{306.17}{W.m^{-2}}
+\end{equation*}
+
+The model shows very good agreement with this value (fig. \ref{fig:SB})
+
+\subsection{Water surface energy budget}
+As one way to compare the effect of parameters and meteorological forcing values, we compute the total internal energy in heat of the water, as well as the heat fluxes across the water boundary. We expect that
+
+\begin{equation}
+\frac{d Q}{d t} = \Phi_{net} = \Phi_{ice} + \Phi_{atm}
+\end{equation}
+
+The model outputs $-\Phi_{net}$ as the diagnostic \verb|SIqnet| (heat flux from the water into ice if ice covered, atmosphere if open water). To check this, we compute the internal energy of the water as
+
+\begin{equation}
+Q = c_w \sum_{x, y, z} \rho \Delta V \Delta T
+\end{equation}
+Where the sum is over all grid cells, $\Delta V$ is the volume of each cell, and $\Delta T$ is the temperature at time $t$ minus the initial temperature.
+
+The derivative is taken using the most basic scheme,
+
+\begin{equation*}
+\frac{d Q}{d t} \approx \frac{Q(t_{n+1}) - Q(t_n)}{t_{n+1} - t_n}
+\end{equation*}
+
+Finally, a plot of $\frac{d Q}{d t} + \verb|SIqnet|$ should be near zero (not identically zero because of the derivative scheme) for all times. We have found this to be the case.
+
+\subsection{Surface albedo}
+In comparing the MITgcm ice growth rate to CLIMo, I investigated the albedo parameterization of MITgcm. The model classifies ice according to the temperature of the surface water $T_{surf}$ comapred to the freezing/melting temperature $T_{melt}$
+
+\begin{equation*}
+\textrm{ice} = \begin{cases} \textrm{dry}, & T_{surf} < T_{melt} \\ \textrm{wet}, & T_{surf} \geq T_{melt} \end{cases}
+\end{equation*}
+The default ice albedo is
+\begin{equation*}
+\alpha_i = \begin{cases} 0.75, T_{surf} < T_{melt} \\ 0.66, T_{surf} \geq T_{melt} \end{cases}
+\end{equation*}
+The default snow albedo is
+\begin{equation*}
+\alpha_s = \begin{cases} 0.84, T_{surf} < T_{melt} \\ 0.70, T_{surf} \geq T_{melt} \end{cases}
+\end{equation*}
+And the values are controlled by the input variables \verb|SEAICE_dryIceAlb|, \verb|SEAICE_wetIceAlb|, \verb|SEAICE_drySnowAlb|, and \verb|SEAICE_wetSnowAlb|.
+
+\subsection{Thermodynamics}
+The SEAICE package is mainly intended for ice dynamics, but includes basic thermodynamics. The THSICE package is be fully compatible with SEAICE and include improved thermodynamics. However, the THSICE package is not well suited for freshwater simulations, so for the purpose of this document it is recommended to continue to use only the SEAICE package for dynamics and thermodynamics.
+
+The THSICE package is intended to improve the thermodynamics of saltwater ice. When ice forms over salt water, some pockets of salt water called brine pockets get trapped in the ice. These brine pockets provide interesting thermodynamics. When the ice is warmed, some of the ice around the brine pockets will be melted. This meltwater must be freshwater, so it dilutes the salt in the brine pocket. This can sufficiently dilute the brine pocket so that the pocket freezes completely, releasing latent heat to the surrounding ice \cite{Winton2000}.
+
+Clearly this process is irrelevant for freshwater lake ice. While the three-layer formulation of \cite{Winton2000} is an improvement over what is described in the \href{http://mitgcm.org/public/r2_manual/final/online_documents/node254.html}{SEAICE documentation}, the implementation does not work for freshwater. The model tends to NaN once ice starts to form. Moreover, the SEAICE documentation says ``NOTE: THIS SECTION IS TERRIBLY OUT OF DATE'' about the thermodynamics description in the documentation. Therefore, we can't really compare the packages anyways.
+
+\subsection{Total kinetic energy}
+I compute the total kinetic energy of the water as an additional way to compare the differences between different parameters and configurations. The total kinetic energy is computed as
+\begin{equation}
+\textrm{TKE} = \frac{1}{2} \sum_{x, y, z} \rho \left ( u^2 + v^2 + w^2\right ) \Delta V
+\end{equation}
+Where $\rho = \rho_0 + \rho^{\prime}$ is the total (reference + anomaly) density of the gri cell, $u, v, w$ are the $x, y, z$ velocities, and $\Delta V$ is the volume of the grid cell.
+
+\subsection{Dynamical ice model}
+The equation governing the dynamical evolution of the ice is the conservation of momentum equation
+
+\begin{equation}
+m \frac{D \mathbf{u}}{D t} = -m f \mathbf{k}\times \mathbf{u} - m\nabla \phi(0) + \mathbf{F} + \mathbf{\tau_{air}} + \mathbf{\tau_{ocean}}
+\end{equation}
+
+Where  $m = m_i + m_s$ is the total mass of ice and snow per unit area, $\phi(0)$ is the sea surface height potential, $\mathbf{F} = \nabla \cdot \sigma$ is the divergence of the ice stress tensor, and $\tau_{air}, \tau_{ocean}$ are the wind-ice and ocean-ice stresses. The wind and ocean stresses are parameterized as
+
+\begin{equation}
+\begin{aligned}
+\mathbf{\tau_{air}} &= \rho_{air}C_{air}\left \| \mathbf{U}_{air} - \mathbf{u} \right \| R_{air}\left(\mathbf{U}_{air} - \mathbf{u}\right) \\
+\mathbf{\tau_{water}} &= \rho_{water}C_{water}\left \| \mathbf{U}_{water} - \mathbf{u} \right \| R_{water}\left(\mathbf{U}_{water} - \mathbf{u}\right)
+\end{aligned}
+\end{equation}
+
+Where $\mathbf{U_i}$ are the surface winds of the atmosphere and water, $C_i$ are air and water drag coefficients, $\rho_i$ are reference densities, and $R_i$ are rotation matrices.
 
 \end{document}
