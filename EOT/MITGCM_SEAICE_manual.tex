@@ -325,4 +325,22 @@ Where  $m = m_i + m_s$ is the total mass of ice and snow per unit area, $\phi(0)
 
 Where $\mathbf{U_i}$ are the surface winds of the atmosphere and water, $C_i$ are air and water drag coefficients, $\rho_i$ are reference densities, and $R_i$ are rotation matrices.
 
+\subsection{Radiation}
+The model can be forced with net or downward shortwave and longwave radiation. Longwave radiation is absorbed by the surface layer, while shortwave radiation penetrates into the interior of the water. This section describes the penetrating shortwave radiation. The equations here come from \cite{PaulsonSimpson1977} and the source code, particularly \verb|pkg/exf/exf_radiation.F|, \verb|model/src/swfrac.F| and \verb|model/src/external_forcing.F|.
+
+First, consider the amount of shortwave radiation that is transmitted through the surface. The reflected shortwave radiation is the product of the surface albedo and the incoming shortwave radiation, $\alpha I_{down}$. Then, the amount absorbed into the water is
+
+\begin{equation}
+I_0 = (1 - \alpha) I_{down}
+\end{equation}
+
+The radiation transmission model \cite{PaulsonSimpson1977} splits the radiation into two wavelength bands. Each decays exponentially
+
+\begin{equation}
+\frac{I}{I_0} = R e^{-z/\zeta_1} + (1 - R) e^{-z/\zeta_2}
+\end{equation}
+Where $I$ is the radiation at depth $z$ (positive from the surface), and $R = 0.62$, $\zeta_1 = \SI{0.60}{m}$, $\zeta_2 = \SI{20}{m}$ are constants that come from Jerlov water type IA. This water type represents clear ocean water, and is hard-coded into MITgcm.
+
+This treatment should work well for relatively deep water, but for shallow lakes this is a problem. For example, with a 2 m deep lake approximately 37\% of the radiation makes it to the bottom of the lake. This radiation should then be absorbed by the bottom and eventually heat the lake from the bottom, but this is not accounted for.
+
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.21)  30 JUL 2018 17:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.21)  3 AUG 2018 14:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1162,26 +1162,35 @@ LaTeX Warning: Citation `Winton2000' on page 8 undefined on input line 299.
 LaTeX Warning: Citation `Winton2000' on page 8 undefined on input line 301.
 
 [8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 328.
- [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 328.
+
+LaTeX Warning: Citation `PaulsonSimpson1977' on page 9 undefined on input line 
+329.
+
+[9]
+
+LaTeX Warning: Citation `PaulsonSimpson1977' on page 10 undefined on input line
+ 337.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 346.
+[10]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 346.
  (./MITGCM_SEAICE_manual.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 328.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 328.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 346.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 346.
 Package rerunfilecheck Info: File `MITGCM_SEAICE_manual.out' has not changed.
-(rerunfilecheck)             Checksum: 11743649015DA3DBBEB4BAA4C86BC5ED;1423.
+(rerunfilecheck)             Checksum: 2975AB13BF485E7C5ABA20456B8B9203;1482.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 328.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 346.
  ) 
 Here is how much of TeX's memory you used:
- 19577 strings out of 492990
- 366521 string characters out of 6132636
+ 19585 strings out of 492990
+ 366621 string characters out of 6132636
  563935 words of memory out of 5000000
- 22846 multiletter control sequences out of 15000+600000
- 541603 words of font info for 66 fonts, out of 8000000 for 9000
+ 22849 multiletter control sequences out of 15000+600000
+ 541912 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,13n,40p,10371b,2201s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
@@ -1200,10 +1209,10 @@ ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/
 017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/201
 7/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on MITGCM_SEAICE_manual.pdf (9 pages, 221996 bytes).
+Output written on MITGCM_SEAICE_manual.pdf (10 pages, 226057 bytes).
 PDF statistics:
- 367 PDF objects out of 1000 (max. 8388607)
- 336 compressed objects within 4 object streams
- 138 named destinations out of 1000 (max. 500000)
- 177 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 379 PDF objects out of 1000 (max. 8388607)
+ 347 compressed objects within 4 object streams
+ 142 named destinations out of 1000 (max. 500000)
+ 185 words of extra memory for PDF output out of 10000 (max. 10000000)
 

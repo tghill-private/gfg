@@ -20,3 +20,4 @@
 \contentsline {subsection}{\numberline {7.4}Thermodynamics}{8}{subsection.7.4}
 \contentsline {subsection}{\numberline {7.5}Total kinetic energy}{9}{subsection.7.5}
 \contentsline {subsection}{\numberline {7.6}Dynamical ice model}{9}{subsection.7.6}
+\contentsline {subsection}{\numberline {7.7}Radiation}{9}{subsection.7.7}
