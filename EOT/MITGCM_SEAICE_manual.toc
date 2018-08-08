@@ -9,15 +9,15 @@
 \contentsline {section}{\numberline {4}What didn't work}{6}{section.4}
 \contentsline {subsection}{\numberline {4.1}Advection schemes}{6}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Surface winds}{6}{subsection.4.2}
-\contentsline {section}{\numberline {5}Results: cases studied}{6}{section.5}
-\contentsline {section}{\numberline {6}Recurring issues}{6}{section.6}
-\contentsline {subsection}{\numberline {6.1}NetCDF/HDF5 libraries}{6}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}MITgcm python utils}{6}{subsection.6.2}
-\contentsline {section}{\numberline {7}Physics of the model}{6}{section.7}
-\contentsline {subsection}{\numberline {7.1}Radiative cooling}{6}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Water surface energy budget}{7}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Surface albedo}{7}{subsection.7.3}
-\contentsline {subsection}{\numberline {7.4}Thermodynamics}{8}{subsection.7.4}
+\contentsline {section}{\numberline {5}Results: cases studied}{7}{section.5}
+\contentsline {section}{\numberline {6}Recurring issues}{7}{section.6}
+\contentsline {subsection}{\numberline {6.1}NetCDF/HDF5 libraries}{7}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}MITgcm python utils}{7}{subsection.6.2}
+\contentsline {section}{\numberline {7}Physics of the model}{7}{section.7}
+\contentsline {subsection}{\numberline {7.1}Radiative cooling}{7}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Water surface energy budget}{8}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Surface albedo}{8}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Thermodynamics}{9}{subsection.7.4}
 \contentsline {subsection}{\numberline {7.5}Total kinetic energy}{9}{subsection.7.5}
-\contentsline {subsection}{\numberline {7.6}Dynamical ice model}{9}{subsection.7.6}
-\contentsline {subsection}{\numberline {7.7}Radiation}{9}{subsection.7.7}
+\contentsline {subsection}{\numberline {7.6}Dynamical ice model}{10}{subsection.7.6}
+\contentsline {subsection}{\numberline {7.7}Radiation}{10}{subsection.7.7}

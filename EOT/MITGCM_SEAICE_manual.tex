@@ -211,9 +211,38 @@ This section discusses choosing an equation of state, using checkpoint files, ti
 
 \section{What didn't work}
 \subsection{Advection schemes}
+
 \subsection{Surface winds}
+At some point we tried running the model with no wind forcing. I specified a binary file with all points identically 0, and input this into the model by including \verb|uwindfile = 'const0.bin'| and \verb|vwindfile = 'const0.bin'| in \verb|EXF_NML_02| of \verb|data.exf|. In this case I started with an ice covered lake, and was trying to melt the ice with downward solar radiation and warm air temperature. There was no heat transfer between the atmosphere and ice, so the ice never melted. My theory about why involves the possible configurations you can use the EXF package in. The package needs certain combinations of fields to be specified to compute the heat fluxes and other fields that it couples to the core model. Of course this isn't said in the documentation, but the following table is included in the header file \verb|EXF_OPTIONS.h|.
 
+\begin{lstlisting}[caption={Available configurations for running the EXF package}]
+C    # |TEMP |DOWN |BULK |EVAP |TURB |            actions
+C   ---|-----|-----|-----|-----|-----|-------------------------------------
+C   (1)|  -  |  -  |  -  |  -  |  -  | Read-in hflux, swflux and sflux.
+C      |     |     |     |     |     |
+C   (2)|  -  | def |  -  |  -  |  -  | Read-in hflux, swdown and sflux.
+C      |     |     |     |     |     | Compute swflux.
+C      |     |     |     |     |     |
+C   (3)| def | def | def |  -  |  -  | Read-in atemp, aqh, swdown, lwdown,
+C      |     |     |     |     |     |  precip, and runoff.
+C      |     |     |     |     |     | Compute hflux, swflux and sflux.
+C      |     |     |     |     |     |
+C   (4)| def |  -  | def |  -  |  -  | Read-in atemp, aqh, swflux, lwflux,
+C      |     |     |     |     |     |  precip, and runoff.
+C      |     |     |     |     |     | Compute hflux and sflux.
+C      |     |     |     |     |     |
+C   (5)| def | def |  -  | def | def | Read-in hs, hl, swdown, lwdown,
+C      |     |     |     |     |     |  evap, precip and runoff.
+C      |     |     |     |     |     | Compute hflux, swflux and sflux.
+C      |     |     |     |     |     |
+C   (6)| def |  -  |  -  | def | def | Read-in hs, hl, swflux, lwflux,
+C      |     |     |     |     |     |  evap, precip and runoff.
+C      |     |     |     |     |     | Compute  hflux and sflux.
+C
+C   =======================================================================
+\end{lstlisting}
 
+My theory is that have zero wind speed intereferes with one of these configurations, and the package can't compute all the required fields to couple to the core model.
 
 \section{Results: cases studied}
 
