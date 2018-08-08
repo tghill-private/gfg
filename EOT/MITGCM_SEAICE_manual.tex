@@ -244,6 +244,8 @@ C   =======================================================================
 
 My theory is that have zero wind speed intereferes with one of these configurations, and the package can't compute all the required fields to couple to the core model.
 
+We got over this problem by specifying $\varepsilon$-winds. By specifying a very small wind speed $\mathcal{O}(10^{-16}) \textrm{ } \si{m.s^{-1}}$, the model behaves properly and computes all heat fluxes.
+
 \section{Results: cases studied}
 
 
@@ -371,5 +373,8 @@ The radiation transmission model \cite{PaulsonSimpson1977} splits the radiation 
 Where $I$ is the radiation at depth $z$ (positive from the surface), and $R = 0.62$, $\zeta_1 = \SI{0.60}{m}$, $\zeta_2 = \SI{20}{m}$ are constants that come from Jerlov water type IA. This water type represents clear ocean water, and is hard-coded into MITgcm.
 
 This treatment should work well for relatively deep water, but for shallow lakes this is a problem. For example, with a 2 m deep lake approximately 37\% of the radiation makes it to the bottom of the lake. This radiation should then be absorbed by the bottom and eventually heat the lake from the bottom, but this is not accounted for.
+
+\subsection{Humidity}
+The EXF package uses specific humidity, which is the ratio of the mass of water vapour to the total mass of a unit volume of air. This is very different from relative humidity, which we are more familiar with from everyday weather. [Include how to convert between them]
 
 \end{document}
