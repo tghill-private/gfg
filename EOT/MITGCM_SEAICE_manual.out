@@ -5,20 +5,46 @@
 \BOOKMARK [1][-]{section.3}{More details about running MITgcm}{}% 5
 \BOOKMARK [2][-]{subsection.3.1}{Available packages}{section.3}% 6
 \BOOKMARK [3][-]{subsubsection.3.1.1}{DIAGNOSTICS}{subsection.3.1}% 7
-\BOOKMARK [2][-]{subsection.3.2}{Core model parameters and recommendations}{section.3}% 8
-\BOOKMARK [1][-]{section.4}{What didn't work}{}% 9
-\BOOKMARK [2][-]{subsection.4.1}{Advection schemes}{section.4}% 10
-\BOOKMARK [2][-]{subsection.4.2}{Surface winds}{section.4}% 11
-\BOOKMARK [1][-]{section.5}{Results: cases studied}{}% 12
-\BOOKMARK [1][-]{section.6}{Recurring issues}{}% 13
-\BOOKMARK [2][-]{subsection.6.1}{NetCDF/HDF5 libraries}{section.6}% 14
-\BOOKMARK [2][-]{subsection.6.2}{MITgcm python utils}{section.6}% 15
-\BOOKMARK [1][-]{section.7}{Physics of the model}{}% 16
-\BOOKMARK [2][-]{subsection.7.1}{Radiative cooling}{section.7}% 17
-\BOOKMARK [2][-]{subsection.7.2}{Water surface energy budget}{section.7}% 18
-\BOOKMARK [2][-]{subsection.7.3}{Surface albedo}{section.7}% 19
-\BOOKMARK [2][-]{subsection.7.4}{Thermodynamics}{section.7}% 20
-\BOOKMARK [2][-]{subsection.7.5}{Total kinetic energy}{section.7}% 21
-\BOOKMARK [2][-]{subsection.7.6}{Dynamical ice model}{section.7}% 22
-\BOOKMARK [2][-]{subsection.7.7}{Radiation}{section.7}% 23
-\BOOKMARK [2][-]{subsection.7.8}{Humidity}{section.7}% 24
+\BOOKMARK [3][-]{subsubsection.3.1.2}{SEAICE package}{subsection.3.1}% 8
+\BOOKMARK [3][-]{subsubsection.3.1.3}{EXF package}{subsection.3.1}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Core model parameters and recommendations}{section.3}% 10
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Equation of state}{subsection.3.2}% 11
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Checkpoint files}{subsection.3.2}% 12
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Time stepping}{subsection.3.2}% 13
+\BOOKMARK [3][-]{subsubsection.3.2.4}{File input and output}{subsection.3.2}% 14
+\BOOKMARK [3][-]{subsubsection.3.2.5}{Gridding parameters}{subsection.3.2}% 15
+\BOOKMARK [1][-]{section.4}{What didn't work}{}% 16
+\BOOKMARK [2][-]{subsection.4.1}{Advection schemes}{section.4}% 17
+\BOOKMARK [2][-]{subsection.4.2}{Surface winds}{section.4}% 18
+\BOOKMARK [1][-]{section.5}{Results: cases studied}{}% 19
+\BOOKMARK [2][-]{subsection.5.1}{Ice advection}{section.5}% 20
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Results}{subsection.5.1}% 21
+\BOOKMARK [3][-]{subsubsection.5.1.2}{What was learned}{subsection.5.1}% 22
+\BOOKMARK [2][-]{subsection.5.2}{Ice melting}{section.5}% 23
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Results}{subsection.5.2}% 24
+\BOOKMARK [3][-]{subsubsection.5.2.2}{What was learned}{subsection.5.2}% 25
+\BOOKMARK [2][-]{subsection.5.3}{Solar forcing}{section.5}% 26
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Results}{subsection.5.3}% 27
+\BOOKMARK [3][-]{subsubsection.5.3.2}{What was learned}{subsection.5.3}% 28
+\BOOKMARK [2][-]{subsection.5.4}{Periodic forcing}{section.5}% 29
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Results}{subsection.5.4}% 30
+\BOOKMARK [3][-]{subsubsection.5.4.2}{Run with constant temperature}{subsection.5.4}% 31
+\BOOKMARK [2][-]{subsection.5.5}{1D comparison}{section.5}% 32
+\BOOKMARK [1][-]{section.6}{Recurring issues}{}% 33
+\BOOKMARK [2][-]{subsection.6.1}{NetCDF/HDF5 libraries}{section.6}% 34
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Disk space or quota}{subsection.6.1}% 35
+\BOOKMARK [3][-]{subsubsection.6.1.2}{Modules}{subsection.6.1}% 36
+\BOOKMARK [2][-]{subsection.6.2}{MITgcm python utils}{section.6}% 37
+\BOOKMARK [1][-]{section.7}{Physics of the model}{}% 38
+\BOOKMARK [2][-]{subsection.7.1}{Radiative cooling}{section.7}% 39
+\BOOKMARK [2][-]{subsection.7.2}{Water surface energy budget}{section.7}% 40
+\BOOKMARK [2][-]{subsection.7.3}{Surface albedo}{section.7}% 41
+\BOOKMARK [2][-]{subsection.7.4}{Thermodynamics}{section.7}% 42
+\BOOKMARK [2][-]{subsection.7.5}{Total kinetic energy}{section.7}% 43
+\BOOKMARK [2][-]{subsection.7.6}{Dynamical ice model}{section.7}% 44
+\BOOKMARK [2][-]{subsection.7.7}{Radiation}{section.7}% 45
+\BOOKMARK [2][-]{subsection.7.8}{Humidity}{section.7}% 46
+\BOOKMARK [1][-]{section.8}{Visualization tools}{}% 47
+\BOOKMARK [1][-]{section.9}{Conclusions}{}% 48
+\BOOKMARK [1][-]{section.10}{Next steps}{}% 49
+\BOOKMARK [2][-]{subsection.10.1}{Comparison to 1D model}{section.10}% 50
