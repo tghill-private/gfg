@@ -23,28 +23,34 @@
 \BOOKMARK [2][-]{subsection.5.2}{Ice melting}{section.5}% 23
 \BOOKMARK [3][-]{subsubsection.5.2.1}{Results}{subsection.5.2}% 24
 \BOOKMARK [3][-]{subsubsection.5.2.2}{What was learned}{subsection.5.2}% 25
-\BOOKMARK [2][-]{subsection.5.3}{Solar forcing}{section.5}% 26
-\BOOKMARK [3][-]{subsubsection.5.3.1}{Results}{subsection.5.3}% 27
-\BOOKMARK [3][-]{subsubsection.5.3.2}{What was learned}{subsection.5.3}% 28
-\BOOKMARK [2][-]{subsection.5.4}{Periodic forcing}{section.5}% 29
-\BOOKMARK [3][-]{subsubsection.5.4.1}{Results}{subsection.5.4}% 30
-\BOOKMARK [3][-]{subsubsection.5.4.2}{Run with constant temperature}{subsection.5.4}% 31
-\BOOKMARK [2][-]{subsection.5.5}{1D comparison}{section.5}% 32
-\BOOKMARK [1][-]{section.6}{Recurring issues}{}% 33
-\BOOKMARK [2][-]{subsection.6.1}{NetCDF/HDF5 libraries}{section.6}% 34
-\BOOKMARK [3][-]{subsubsection.6.1.1}{Disk space or quota}{subsection.6.1}% 35
-\BOOKMARK [3][-]{subsubsection.6.1.2}{Modules}{subsection.6.1}% 36
-\BOOKMARK [2][-]{subsection.6.2}{MITgcm python utils}{section.6}% 37
-\BOOKMARK [1][-]{section.7}{Physics of the model}{}% 38
-\BOOKMARK [2][-]{subsection.7.1}{Radiative cooling}{section.7}% 39
-\BOOKMARK [2][-]{subsection.7.2}{Water surface energy budget}{section.7}% 40
-\BOOKMARK [2][-]{subsection.7.3}{Surface albedo}{section.7}% 41
-\BOOKMARK [2][-]{subsection.7.4}{Thermodynamics}{section.7}% 42
-\BOOKMARK [2][-]{subsection.7.5}{Total kinetic energy}{section.7}% 43
-\BOOKMARK [2][-]{subsection.7.6}{Dynamical ice model}{section.7}% 44
-\BOOKMARK [2][-]{subsection.7.7}{Radiation}{section.7}% 45
-\BOOKMARK [2][-]{subsection.7.8}{Humidity}{section.7}% 46
-\BOOKMARK [1][-]{section.8}{Visualization tools}{}% 47
-\BOOKMARK [1][-]{section.9}{Conclusions}{}% 48
-\BOOKMARK [1][-]{section.10}{Next steps}{}% 49
-\BOOKMARK [2][-]{subsection.10.1}{Comparison to 1D model}{section.10}% 50
+\BOOKMARK [3][-]{subsubsection.5.2.3}{Next steps}{subsection.5.2}% 26
+\BOOKMARK [2][-]{subsection.5.3}{Solar forcing}{section.5}% 27
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Results}{subsection.5.3}% 28
+\BOOKMARK [3][-]{subsubsection.5.3.2}{What was learned}{subsection.5.3}% 29
+\BOOKMARK [3][-]{subsubsection.5.3.3}{Next steps}{subsection.5.3}% 30
+\BOOKMARK [2][-]{subsection.5.4}{Periodic forcing}{section.5}% 31
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Results}{subsection.5.4}% 32
+\BOOKMARK [3][-]{subsubsection.5.4.2}{Run with constant temperature}{subsection.5.4}% 33
+\BOOKMARK [3][-]{subsubsection.5.4.3}{What we learned}{subsection.5.4}% 34
+\BOOKMARK [3][-]{subsubsection.5.4.4}{Next steps}{subsection.5.4}% 35
+\BOOKMARK [2][-]{subsection.5.5}{1D comparison}{section.5}% 36
+\BOOKMARK [3][-]{subsubsection.5.5.1}{Comparison case}{subsection.5.5}% 37
+\BOOKMARK [3][-]{subsubsection.5.5.2}{Comparison results}{subsection.5.5}% 38
+\BOOKMARK [3][-]{subsubsection.5.5.3}{Next steps}{subsection.5.5}% 39
+\BOOKMARK [1][-]{section.6}{Recurring issues}{}% 40
+\BOOKMARK [2][-]{subsection.6.1}{NetCDF/HDF5 libraries}{section.6}% 41
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Disk space or quota}{subsection.6.1}% 42
+\BOOKMARK [3][-]{subsubsection.6.1.2}{Modules}{subsection.6.1}% 43
+\BOOKMARK [2][-]{subsection.6.2}{MITgcm python utils}{section.6}% 44
+\BOOKMARK [1][-]{section.7}{Physics of the model}{}% 45
+\BOOKMARK [2][-]{subsection.7.1}{Radiative cooling}{section.7}% 46
+\BOOKMARK [2][-]{subsection.7.2}{Water surface energy budget}{section.7}% 47
+\BOOKMARK [2][-]{subsection.7.3}{Surface albedo}{section.7}% 48
+\BOOKMARK [2][-]{subsection.7.4}{Thermodynamics}{section.7}% 49
+\BOOKMARK [2][-]{subsection.7.5}{Total kinetic energy}{section.7}% 50
+\BOOKMARK [2][-]{subsection.7.6}{Dynamical ice model}{section.7}% 51
+\BOOKMARK [2][-]{subsection.7.7}{Radiation}{section.7}% 52
+\BOOKMARK [2][-]{subsection.7.8}{Humidity}{section.7}% 53
+\BOOKMARK [1][-]{section.8}{Visualization tools}{}% 54
+\BOOKMARK [1][-]{section.9}{Conclusions}{}% 55
+\BOOKMARK [1][-]{section.10}{Next steps}{}% 56

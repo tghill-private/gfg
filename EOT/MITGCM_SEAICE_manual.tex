@@ -22,6 +22,9 @@
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
+
+\bibliographystyle{plain}
+
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\tiny\color{codegreen},
@@ -53,13 +56,15 @@
 
 \tableofcontents{}
 
+\pagebreak
+
 \section{Introduction}
 
 This document aims to serve as a starting point for running the MITgcm in configurations with ice. I have the model at a functional point and hope to leave some resources so it is easy to pick up where I left off.
 
 The first section serves as an introduction to MITgcm and should be a good resource to carry out the first few functional model runs, including running with the ice package.
 
-The next few sections outline some specific things I learned about the model, and may be useful to someone trying to extend the model past what is outlined here. The tools I created for visualizing results are described. Some specific model configurations that did not work are explained, and problems I encountered with the model or with the Graham environment are discussed.
+The next few sections outline some specific things I learned about the model, and may be useful to someone trying to extend the model past what is outlined here. Some specific model configurations that did not work are explained, and problems I encountered with the model or with the Graham environment are discussed. Details about the model's physical parameterizations are included in the last section.
 
 \section{Setting up the MITgcm}
 The most useful references for the MITgcm are:
@@ -119,15 +124,12 @@ I had a folder I called \verb|MITgcmdata/| which was a git repo that contained a
 Having a structure like this makes compiling the model much easier. You can in theory compile the model from anywhere as long as you point the \verb|genmake2| script to the model directories, but in practice this has been harder than expected.
 
 \subsection{SEAICE tutorial}
-The SEAICE package \ref{sec:SEAICE} provides a dynamic and thermodynamic sea-ice model for the MITgcm. This package is general purpose enough to model freshwater and ocean ice. The package usually does a good job (at least qualitatively) of recreating dynamics and ice quantities reasonably physically.
+The SEAICE package (sec \ref{sec:SEAICE}) provides a dynamic and thermodynamic sea-ice model for the MITgcm. This package is general purpose enough to model freshwater and ocean ice. The package does a good job (at least qualitatively) of recreating dynamics and ice quantities reasonably physically.
 
-Write the rest of this up for small processor numbers (ie HOOD)
-
-
-
+I have created a SEAICE tutorial that will be put on the fluids wiki. The tutorial walks you through a few cases, and has you design your own model run at the end. The data files from the tutorial should be a good starting point to base case files for more complicated experiments on.
 
 \section{More details about running MITgcm}
-This section tries to describe aspects of running the MITgcm in more detail than the previous section. Hopefully this will be a good resource when trying to extend the model past what is included in the tutorials.
+This section tries to describe aspects of running the MITgcm with more useful information than the documentaion. Hopefully this will be a good resource when trying to extend the model past what is included in the tutorials.
 
 \subsection{Available packages}
 MITgcm is structured as a core model + packages. The only packages within my scope are the seaice, external forcing, calendar, and diagnostic packages. For each package, it must be enabled at both compile-time and at run-time. At compile-time, the package must be included in the \verb|packages.conf| file. Then at run-time the package must be included in the packages namelist in \verb|data.pkg|. For example, see listing \ref{listing:data.pkg}.
@@ -232,7 +234,7 @@ The SEAICE package includes physical parameterizations for ice dynamics and simp
 SEAICE has both compile-time and run-time options, like other packages.
 
 \subsubsection*{Compile-time options}
-The compile-time options come from the two header files \verb|SEAICE_OPTIONS.h| and \verb|SEAICE_SIZE.h|. See the files in the SEAICE tutorial, verification experiments, or in the package code \verb|pkg/seaice/SEAICE_OPTIONS.h|.
+The compile-time options come from the two header files \verb|SEAICE_OPTIONS.h| and \verb|SEAICE_SIZE.h|. See the files in the SEAICE tutorial or in the package code \verb|pkg/seaice/SEAICE_OPTIONS.h| and modify as needed.
 
 \subsubsection*{Run-time options}
 Run-time options are specified in the file \verb|data.seaice|. The SEAICE package has some questionable default values (see \href{https://github.com/MITgcm/MITgcm/issues/107}{this GitHub issue}). The simplest file that fixes the default values is listing \ref{listing:seaiceDefaults}. This file would be suitable for starting a simulation with no ice, since the initial ice area fraction, thickness, and snow files are not specified.
@@ -263,6 +265,7 @@ Run-time options are specified in the file \verb|data.seaice|. The SEAICE packag
 Initial ice conditions can be specified as a constant value, or with an input file. To specify an initial constant value, set the keywords \verb|SEAICE_initialHEFF|, \verb|SEAICE_initialAREA|. To set with a file, set the input files \verb|HeffFile|, \verb|AreaFile|, \verb|HsnowFile|, \verb|HsaltFile| to initialize the initial ice thickness, fractional ice covered area, snow thickness, and salinity. Keywords should be in namelist \verb|SEAICE_PARM01|. See the SEAICE tutorial for an example with initial ice configuration (Case 2).
 
 \subsubsection{EXF package}
+\label{sec:EXF}
 The external forcing (EXF) package allows the model to be forced with real (or simulated) observations of meteorological data. This package has temporal interpolation abilities, which would be convenient when working with real observations.
 
 As with all packages, EXF requires compile-time and run-time options.
@@ -273,10 +276,10 @@ The compile-time options are specified in file \verb|EXF_OPTIONS.h|. See the fil
 \subsubsection*{Run-time options}
 The run-time options are specified in file \verb|data.exf|, see example in listing \ref{listing:data.exf}. Fields that should be included to force the model are in table \ref{table:EXFfields}
 
-\begin{table}[h!]
-\begin{tabularx}{\textwidth}{ |c|X|c| }
+\begin{table}
+\begin{tabularx}{\textwidth}{ c X c }
 \hline
-Field name &  Description & Typical range \\ \hline
+Field name &  Description & Typical range \\ \hline \hline
 \texttt{uwind}& Surface (10-m) zonal winds, $\si{m.s^{-1}}$ & $\left| \texttt{uwind} \right| \leq 10$ \\
 \texttt{vwind} & Surface (10-m) merodional winds, $\si{m.s^{-1}}$ & $\left| \texttt{vwind} \right| \leq 10$ \\
 \texttt{atemp} & Surface (2-m) air temperature, $\si{\kelvin}$ & $200 \leq \texttt{atemp} \leq 300$ \\
@@ -290,11 +293,11 @@ Field name &  Description & Typical range \\ \hline
 \label{table:EXFfields}
 \end{table}
 
-Initial state files are set in \verb|EXF_NML_02| in \verb|data.exf| with the keyword \verb|[fieldname]file|. For example, \verb|uwindfile =| to set the initial zonal winds.
+Initial state files are set in \verb|EXF_NML_02| in \verb|data.exf| with the keyword \verb|[fieldname]file|. For example, \verb|uwindfile = [filename]| to set the initial zonal winds.
 
 The EXF package has a built in method to handle different time intervals beween meteorological records and model time steps. The time interval between meteorological records in seconds is specified for each field with the namelist entry \verb|[field]period| in \verb|EXF_NML_02|, for any of the above fields. The time for the meteorological records to repeat themselves is set with the keyword \verb|repeatPeriod| in \verb|EXF_NML_01|.
 
-\begin{lstlisting}[caption={Sample \texttt{data.exf} file. This instance has meteorological records every $\SI{3600}{s}$ ($\SI{1}{h}$).}, label={listing:data.exf}]
+\begin{lstlisting}[caption={Sample \texttt{data.exf} file. This instance has meteorological records every $\SI{3600}{s}$ ($\SI{1}{h}$), and the forcing is repeated every day.}, label={listing:data.exf}]
 # *********************
 # External Forcing Data
 # *********************
@@ -362,7 +365,7 @@ Then in \verb|data.exf|, specify the start time of the meteorological records in
 This section discusses choosing an equation of state, using checkpoint files, time-stepping, binary input/output, and other parameters for the core model.
 
 \subsubsection{Equation of state}
-The equation of state relates temperature, density, and salinity of water. For freshwater, the maximum density of is at $\SI{4}{\celsius}$, so a linear equation of state is a poor choice with temperatures near $\SI{4}{\celsius}$. The equation of state of Jackett and McDougall (1995, \cite{JackettMcDougall995}) is a good compromise between simplicity (doesn't add an extra pickup file) and accuracy. Use this equation of state by including \verb|eosType='JMD95Z',| in the \verb|PARM01| namelist of \verb|data|. See the discussion in the documentation about \href{https://mitgcm.readthedocs.io/en/latest/getting_started/getting_started.html#parameters-equation-of-state}{EOS type}.
+The equation of state relates temperature, density, and salinity of water. For freshwater, the maximum density of is at $\SI{4}{\celsius}$, so a linear equation of state is a poor choice with temperatures near $\SI{4}{\celsius}$. The equation of state of Jackett and McDougall (1995, \cite{JackettMcDougall1995}) is a good compromise between simplicity (doesn't add an extra pickup file) and accuracy. Use this equation of state by including \verb|eosType='JMD95Z',| in the \verb|PARM01| namelist of \verb|data|. See the discussion in the documentation about \href{https://mitgcm.readthedocs.io/en/latest/getting_started/getting_started.html#parameters-equation-of-state}{EOS type}.
 
 \subsubsection{Checkpoint files}
 The model will inevitably fail sometimes. This can lose a lot of computation time especially when running large jobs on Graham. Therefore, it is best practice to save checkpoint files periodically. MITgcm has rolling checkpoint files and permanent checkpoint files. Rolling checkpoint files save the model current state with one of two file names ("ckptA" and "ckptB"), overwriting the oldest file to save new checkpoints. Permanent checkpoint files are saved with the model iteration numebr and therefore do not get overwritten. The frequency at which to save checkpoint files is controlled by the keywords \verb|chkptFreq| for rolling checkpoints and \verb|pchkptFreq| for permament checkpoints in the \verb|PARM03| namelist of the \verb|data| file.
@@ -396,7 +399,7 @@ T = np.fromfile("T.0000001080.data", ">f4")
 The size of the model grid must be specified at compile-time and at run-time. This includes setting the number of processors. Each compiled executable must always be run with the same number of grid points and processors, but can be run for different resolutions on the same grid.
 
 \subsubsection*{Compile-time size options}
-The model grid first must be specified in file \verb|SIZE.h|. See listing \ref{listing:SIZE.h} for an example file. The overall grid is segmented into a few different subgrids. The full domain is split into tiles in X and Y. Then you specify the number of tiles per processor in X and Y (\verb|nSx|, \verb|nSy|), and the number of X, Y points per tile (\verb|sNx|, \verb|sNy|), and the number of processors in X and Y (\verb|nPx|, \verb|nPy|). Therefore, you need to satisfy \verb|Nx = sNx * nSx * nPx| and \verb|Ny = sNy * nSy * nPy|. The amount each tile overlaps is given by \verb|OLx| and \verb|OLy|. The values you need here depend on which packages you use, and sometimes the advection schemes. The values in the example file are suitable for the SEAICE package with advection scheme 33.
+The model grid first must be specified in file \verb|SIZE.h|. See listing \ref{listing:SIZE.h} for an example file. The overall grid is segmented into a few different subgrids. The full domain is split into tiles in X and Y. Then you specify the number of tiles per processor in X and Y (\verb|nSx|, \verb|nSy|), and the number of X, Y points per tile (\verb|sNx|, \verb|sNy|), and the number of processors in X and Y (\verb|nPx|, \verb|nPy|). Therefore, you need to satisfy \verb|Nx = sNx * nSx * nPx| and \verb|Ny = sNy * nSy * nPy|. The amount each tile overlaps is given by \verb|OLx| and \verb|OLy|. The values you need here depend on which packages you use, and sometimes the advection schemes. The values in the example file are suitable for the SEAICE package with advection scheme 33. You can find the default file in \verb|model/inc/SIZE.h|, and copy this into your experiment directory and modify as needed.
 
 \begin{lstlisting}[caption={Sample SIZE.h configuration file}, label={listing:SIZE.h}]
 C $Header: /u/gcmpack/MITgcm/verification/exp0/code/SIZE.h_mpi,v 1.1 2003/09/10 02:25:46 edhill Exp $
@@ -472,38 +475,32 @@ The resolution is specified at run time in the \verb|data| file, namelist \verb|
  delZ=50*0.2,
 \end{lstlisting}
 
-
-
-
-
 \section{What didn't work}
-
-
-
+This section describes problems with advection schemes and wind forcing that were barriers to getting the model running.
 
 \subsection{Advection schemes}
 MITgcm has many choices for advection schemes for various parts of the model. The SEAICE package is particularly sensitive to the choice of advection scheme. Choosing the wrong advection scheme can cause an unphysical amount of ice to form, cause ice to form above 0 C, or fail to move ice under wind or surface current forcing. The recommended schemes are 33 and 77, with all available schemes listed in table \ref{table:advectionSchemes} and described in the \href{https://mitgcm.readthedocs.io/en/latest/algorithm/algorithm.html#comparison-of-advection-schemes}{documentation}.
 
 \begin{table}[h!]
-\begin{tabularx}{\textwidth}{ |c|X| }
+\begin{tabularx}{\textwidth}{ c X }
 \hline
-Token  &  Advection Scheme \\ \hline
-  1   & 1st-order upwind \\
-  2   & 2nd-order centered difference \\
-  3   & 3rd-order upwind \\
-  4   & 3th-order centered difference \\
-  7   & 7th-order one step method with monotonicity preserving limiter \\
-  20  & 2nd-order direct space and time (Lax-Wendroff) \\
-  30  & 3rd-order direct space and time \\
-  33  & 3rd-order flux-limited direct space and time \\
-  40  & Piecewise parabolic method with "null" limiter \\
-  41  & Piecewise parabolic method with "mono" limiter \\
-  42  & Piecewise parabolic method with "weno" limiter \\
-  50  & Piecewise quartic method with "null" limiter \\
-  51  & Piecewise quartic method with "mono" limiter \\
-  52  & Piecewise quartic method with "weno" limiter \\
-  77  & Non-linear flux limiter \\
-  80  & 2nd-order moment advection scheme (Prather, 1986) \\
+Token  &  Advection Scheme \\ \hline \hline
+  1   & 1st-order upwind \\ \hline
+  2   & 2nd-order centered difference \\ \hline
+  3   & 3rd-order upwind \\ \hline
+  4   & 3th-order centered difference \\ \hline
+  7   & 7th-order one step method with monotonicity preserving limiter \\ \hline
+  20  & 2nd-order direct space and time (Lax-Wendroff) \\ \hline
+  30  & 3rd-order direct space and time \\ \hline
+  33  & 3rd-order flux-limited direct space and time \\ \hline
+  40  & Piecewise parabolic method with "null" limiter \\ \hline
+  41  & Piecewise parabolic method with "mono" limiter \\ \hline
+  42  & Piecewise parabolic method with "weno" limiter \\ \hline
+  50  & Piecewise quartic method with "null" limiter \\ \hline
+  51  & Piecewise quartic method with "mono" limiter \\ \hline
+  52  & Piecewise quartic method with "weno" limiter \\ \hline
+  77  & Non-linear flux limiter \\ \hline
+  80  & 2nd-order moment advection scheme (Prather, 1986) \\ \hline
   81  & 2nd-order moment advection scheme, Prather Limiter \\ \hline
 \end{tabularx}
 \caption{Standard model parameters for case 1: Ice formation}
@@ -514,7 +511,7 @@ The SEAICE advection scheme is specified by including the line (for example) \ve
 
 \subsection{Surface winds}
 \label{sec:epsilonWinds}
-At some point we tried running the model with no wind forcing. I specified a binary file with all points identically 0, and input this into the model by including \verb|uwindfile = 'const0.bin'| and \verb|vwindfile = 'const0.bin'| in \verb|EXF_NML_02| of \verb|data.exf|. In this case I started with an ice covered lake, and was trying to melt the ice with downward solar radiation and warm air temperature. There was no heat transfer between the atmosphere and ice, so the ice never melted. My theory about why involves the possible configurations you can use the EXF package in. The package needs certain combinations of fields to be specified to compute the heat fluxes and other fields that it couples to the core model. Of course this isn't said in the documentation, but the following table is included in the header file \verb|EXF_OPTIONS.h|.
+At some point we tried running the model with no wind forcing. I specified a binary file with all points identically 0, and input this into the model by including \verb|uwindfile = 'const0.bin'| and \verb|vwindfile = 'const0.bin'| in \verb|EXF_NML_02| of \verb|data.exf|. In this case I started with an ice covered lake, and was trying to melt the ice with downward solar radiation and warm air temperature. There was no heat transfer between the atmosphere and ice, so the ice never melted. My theory about why involves the possible configurations you can use the EXF package in. The package needs certain combinations of fields to be specified to compute the heat fluxes and other fields that it couples to the core model. Of course this isn't said in the documentation, but the following table is included in the header file \verb|EXF_OPTIONS.h|. The last 4 configurations work with the SEAICE package. I typically have used configuration 3: specify air temperature, humidity, downward radiation, precipitation and runoff. The model uses bulk formulae to compute net fluxes.
 
 \begin{lstlisting}[caption={Available configurations for running the EXF package}]
 C    # |TEMP |DOWN |BULK |EVAP |TURB |            actions
@@ -542,10 +539,7 @@ C      |     |     |     |     |     | Compute  hflux and sflux.
 C
 C   =======================================================================
 \end{lstlisting}
-
-My theory is that have zero wind speed intereferes with one of these configurations, and the package can't compute all the required fields to couple to the core model.
-
-We got over this problem by specifying $\varepsilon$-winds. By specifying a very small wind speed $\mathcal{O}(10^{-16}) \textrm{ } \si{m.s^{-1}}$, the model behaves properly and computes all heat fluxes.
+Having truly zero wind speed may interefere with the above configurations, and the package might not compute all the required fields to couple to the core model. A work around is specifying $\varepsilon$-winds. By specifying a very small wind speed $\mathcal{O}(10^{-16}) \textrm{ } \si{m.s^{-1}}$, the model behaves properly and computes all heat fluxes.
 
 \section{Results: cases studied}
 
@@ -556,11 +550,11 @@ This case was designed to verify:
 \item{Water will be cooled by a low air temperature}
 \item{Ice will melt in warm water and form in cold water}
 \end{itemize}
-The setup for this experiment is specified in table \ref{table:iceAdvect}. A square lake (6 km x 6 km x 10 m) at initially constant $\SI{2}{\celsius}$, with air temperature $\SI{-5}{\celsius}$. There is $\SI{2.5}{m.s^{-1}}$ wind in the positive $x$ direction in the "South" half of the lake. Two small pieces of ice are initialized. One is directly in the wind, and the other is out of the wind. The chunk in the wind should be advected quickly by the wind, and the other should be slower since it needs to wait for surface currents to build up and push it.
+The setup for this experiment is specified in table \ref{table:iceAdvect}. A square lake (6 km x 6 km x 10 m) is initialized with constant temperature $\SI{2}{\celsius}$ and air temperature $\SI{-5}{\celsius}$. There is $\SI{2.5}{m.s^{-1}}$ wind in the positive $x$ direction in the "South" half of the lake. Two small pieces of ice are initialized. One is directly in the wind, and the other is out of the wind. The chunk in the wind should be advected quickly by the wind, and the other should be slower since it needs to wait for surface currents to build up and push it.
 
 \begin{longtable}{  p{.30\textwidth}  p{.30\textwidth}  p{.4\textwidth}  }
 \hline
-\textbf{Paramter Name} & \textbf{Parameter Value} & \textbf{Comment} \\ \hline
+\textbf{Paramter Name} & \textbf{Parameter Value} & \textbf{Comment} \\ \hline \hline
 \verb|Nx| & 60 & 15 x 4 processors \\ \hline
 \verb|Ny| & 60 & 15 x 4 processors \\ \hline
 \verb|tempAdvScheme|	&	33	&	High order advection scheme \\ \hline
@@ -667,7 +661,7 @@ We wanted to design a scenario which would isolate how the model melts ice. The 
 
 \begin{longtable}{  p{.30\textwidth}  p{.30\textwidth}  p{.4\textwidth}  }
 \hline
-\textbf{Paramter Name} & \textbf{Parameter Value} & \textbf{Comment} \\ \hline
+\textbf{Paramter Name} & \textbf{Parameter Value} & \textbf{Comment} \\ \hline \hline
 \verb|Nx| & 600 & 50 x 12 processors \\ \hline
 \verb|Ny| & 600 & 50 x 12 processors \\ \hline
 \verb|tempAdvScheme|	&	33	&	High order advection scheme \\ \hline
@@ -680,7 +674,7 @@ We wanted to design a scenario which would isolate how the model melts ice. The 
 \verb|uwind|		&	\begin{equation*} \begin{cases} 1.0 \text{ m/s} & y \leq 3 \text{km} \\ 0 \text{ m/s} & y > 3 \text{km}   \end{cases} \end{equation*} & \\ \hline
 \verb|vwind| 	& 0	& \\ \hline
 \verb|atemp| 	& $10^{\circ} \text{C}$		& Constant cold air temperature \\ \hline
-\verb|aqh| 		& $0.01$		&	Approximately 50\% constant humidity \\ \hline
+\verb|aqh| 		& $0.01$		&	Specific humidity \\ \hline
 \verb|swdown| 	& $300 \text{ W} \text{ m}^{-2}$	& Minimum shortwave downward radiation \\ \hline
 \verb|lwdown| 	& $300 \text{ W} \text{ m}^{-2}$	& Minimum longwave downward radiation \\ \hline
 
@@ -763,12 +757,24 @@ In each case, the ice melts most rapidly at about 5 weeks in to the simulation. 
 \label{fig:iceMeltCompareWinds}
 \end{figure}
 
+The case with no surface wind has very different qualitative ice distributions when it melts than the case with surface wind (fig \ref{fig:iceMeltNoWind}). The ice mostly melts from the edges, but still forms coherent clumps. It maintains a more even distribution throughout the domain, which may contribute to melting faster.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.9\linewidth]{iceMelt/icemeltsmooth-nowind-surface-ice-thick-0001177200}
+\caption{Surface ice thickness for case with no surface winds. The ice largely melts from the edges, with some spatial variability}
+\label{fig:iceMeltNoWind}
+\end{figure}
+
 \subsubsection{What was learned}
 From running the main case, we can say the model melts ice reasonably physically. The ice melts until it gets thin enough to break up, at which point it cracks and starts being pushed around by the wind and surface currents. The ice continues to move and melt, eventually melting entirely. The remaining water is heated by the downward radiation and warm air temperature.
 
 The total kinetic energy varies significantly between different parameter sets. In particular, the kinetic energy is significantly different between hydrostatic and non-hydrostatic configurations at lower resolutions. This could be a problem for lake scale simulations, where the resolution would be relatively large. However, we expect that for large resolutions the difference between hydrostatic and non-hydrostatic configurations should be small. Nevertheless, even with the large difference in kinetic energy, the total internal energy and average ice thickness are relatively insensitive to changing the hydrostatic flag. They are more sensitive to the inclusion of surface winds, which may be expected.
 
 Regarding running the model, I had to include a very small wind speed instead of truly 0 winds. This is discussed in more detail in section \ref{sec:epsilonWinds}. These cases were also run without all the recommended modifications to the default parameters given in listing \ref{listing:seaiceDefaults}. These results should be checked with those improved parameters and flags.
+
+\subsubsection{Next steps}
+This case with the same initial conditions has been studied thoroughly. It could be worthwhile to compare the melting rate to initial conditions with some small variability in the initial ice distribution, which is more realistic. This could also be a good case to introduce more interesting bathymetry and see what effect lake shape has on the dynamics.
 
 \subsection{Solar forcing}
 We are interested in how the model simulates solar forcing over open water and ice covered water. This is clearly important to lake dynamics, and likely needs to be studied in more detail than I have done so far.
@@ -783,7 +789,7 @@ From this case, I want to see
 
 \begin{longtable}{  p{.30\textwidth}  p{.30\textwidth}  p{.4\textwidth}  }
 \hline
-\textbf{Paramter Name} & \textbf{Parameter Value} & \textbf{Comment} \\ \hline
+\textbf{Paramter Name} & \textbf{Parameter Value} & \textbf{Comment} \\ \hline \hline
 \verb|Nx| & 600 & 50 x 12 processors \\ \hline
 \verb|Ny| & 600 & 50 x 12 processors \\ \hline
 \verb|tempAdvScheme|	&	33	&	High order advection scheme \\ \hline
@@ -796,7 +802,7 @@ From this case, I want to see
 \verb|uwind|		&	\begin{equation*} \begin{cases} 0.5 \text{ m/s} & y \leq 3 \text{km} \\ 0 \text{ m/s} & y > 3 \text{km}   \end{cases} \end{equation*} & \\ \hline
 \verb|vwind| 	& 0	& \\ \hline
 \verb|atemp| 	& $0^{\circ} \text{C}$		& Constant cold air temperature \\ \hline
-\verb|aqh| 		& $0.01$		&	Approximately 50\% constant humidity \\ \hline
+\verb|aqh| 		& $0.01$		&	Specific humidity \\ \hline
 \verb|swdown| 	& $300 \text{ W} \text{ m}^{-2}$	& Minimum shortwave downward radiation \\ \hline
 \verb|lwdown| 	& $300 \text{ W} \text{ m}^{-2}$	& Minimum longwave downward radiation \\ \hline
 
@@ -864,16 +870,48 @@ This case was also run in non-hydrostatic configuration. A comparison of the kin
 \subsubsection{What was learned}
 From this case, we see that the treatment of solar radiation is consistent with our intuition. At the resolution used, the difference between hydrostatic and non-hydrostatic configurations is very small. This was also a good test case for 3D visualization techniques (figure \ref{fig:solarForcingConstantT}).
 
-It might be worthwhile to run this case at higher resolution on Graham to see if at higher resolutions the non-hydrostatic configuration has higher kinetic energy from convection than the hydrostatic case.
-
+\subsubsection{Next steps}
+It might be worthwhile to run this case at higher resolution on Graham to see if the non-hydrostatic configuration has more kinetic energy from convection than the hydrostatic case. It would also be interesting to try to resolve the convection currents better and really study how they interact with the ice. This might require scaling the domain down to have much finer resolution.
 
 \subsection{Periodic forcing}
-So far, all cases have used a similar domain, and have had constant forcing. We try running the model with a much larger domain and daily cycles in the forcing fields.
+So far, all cases have used a similar domain, and have had constant forcing. We try running the model with a much larger domain and daily cycles in the forcing fields. We use a sinusoidal cycle as a rough approximation of the daily cycle of meteorological forcing (see figure \ref{fig:periodicForcingFields}).
 
-TALK ABOUT DOMAIN AND FORCING.
+The domain is a 25 km x 25 km square lake, modelled at 250 m resolution. The lake is 50 m deep, with 2 m vertical resolution. The sides of the lake are sloped with a constant 2\% slope (drops 50 m over 2.5 km). The meteorological forcing is shown in figure \ref{fig:periodicForcingFields}. Some more parameter details are given in table \ref{table:periodicForcing}.
 
-\subsubsection*{Meteorological forcing}
-We use a sinusoidal daily cycle in as a very rough approximation to the daily cycle of the forcing (figure \ref{fig:periodicForcingFields}).
+
+\begin{longtable}{  p{.30\textwidth}  p{.30\textwidth}  p{.4\textwidth}  }
+\hline
+\textbf{Paramter Name} & \textbf{Parameter Value} & \textbf{Comment} \\ \hline \hline
+\verb|Nx| & 100 & 25 x 4 processors \\ \hline
+\verb|Ny| & 100 & 25 x 4 processors \\ \hline
+\verb|tempAdvScheme|	&	33	&	High order advection scheme \\ \hline
+\verb|nonHydrostatic| & \verb|.FALSE.| & Non-hydrostatic model configuration \\ \hline
+\verb|eosType|		&	JMD95z	&	Polynomial approximation to true equation of state. This EOS respects the max in density at $4^{\circ} \textrm{C}$\\ \hline
+\verb|delX|			&	\verb|100*250.0|	&	25 km lake, 250 m resolution \\ \hline
+\verb|delY|			&	\verb|100*250.0|	&	25 km lake, 250 m resolution \\ \hline
+\verb|delZ|			&	\verb|25*2.0|	&	50 m deep lake, 2 m resolution \\ \hline
+
+\verb|uwind|		&	Sinusoidal between $\pm \SI{1}{m/s}$ & Daily cycle with average of $0$  \\ \hline
+\verb|vwind| 	& 0	& \\ \hline
+\verb|atemp| 	& Sinusoidal between $-5$ and $\SI{15}{\celsius}$ & Daily cycle with average of $+\SI{5}{\celsius}$ \\ \hline
+\verb|aqh| 		& $0.01$		&	Specific humidity \\ \hline
+\verb|swdown| 	& Sinusoidal between $0$ and $\SI{500}{W.m^{-2}}$	& Daily cycle of SW radiation \\ \hline
+\verb|lwdown| 	& Sinusoidal between $50$ and $\SI{550}{W.m^{-2}}$	& Daily cycle of LW radiation, respect minimum LW radiation \\ \hline
+
+\verb|SEAICEuseDYNAMICS| & \verb|.TRUE.| & Allow SEAICE dynamics \\ \hline
+\verb|SEAICE_area_reg|   & \verb|1.0E-5| & Ice fraction less than this will be treated as zero ice for next time step \\ \hline
+\verb|SEAICE_hice_reg|   & \verb|1.0E-5| & Height cutoff \\ \hline
+\verb|SEAICEadvHEFF|     & \verb|.TRUE.| & Advect effective height \\ \hline
+\verb|SEAICEadvAREA|     & \verb|.TRUE.| & Advect seaice area fraction \\ \hline
+\verb|SEAICEadvScheme|   & 33			& Advection scheme 33: Flux limited direct space and time advection scheme \\ \hline
+
+Temperature & \begin{equation*} \begin{cases} 0^{\circ} \text{C} & z = 0 \text{ m} \\ 4 ^{\circ} \text{C} & z = -10 \text{ m}   \end{cases} \end{equation*} & Temperature stratified lake, pycnocline at $\SI{25}{m}$, mid-depth \\ \hline
+Initial SEAICE area fraction   & Large chunks, $0.2 \leq \texttt{SIarea} \leq 1.0$ & Variable ice cover \\ \hline
+Initial SEAICE thickness    & Large chunks, $0.5 \leq \texttt{SIheff} \leq 1.0$ & Variable ice cover \\ \hline
+
+\caption{Parameter values for case 3: solar forcing}
+\label{table:periodicForcing}
+\end{longtable}
 
 \begin{figure}[h!]
 \includegraphics[width=\linewidth]{periodicForcing/forcing}
@@ -891,11 +929,104 @@ We use a sinusoidal daily cycle in as a very rough approximation to the daily cy
 We expect a roughly sinusoidal signal in the output fields in response to the input forcing (fig \ref{fig:periodicForcingFields}). The mean value of the output fields is shown in figure \ref{fig:periodicForcingResponse}. Notice the strange shape of the wind stress curve, and that the peak positive $U$ value occurs before midday. We would expect the peak positive surface currents to occur at or slightly after the peak positive wind speed, but the currents appear to lead the wind.
 
 \subsubsection{Run with constant temperature}
-We want to see what happens when we run this case with no temperature stratification. The response curves above have the strange "capped" structure, and we want to know if this goes away or stays when we take out the stratification. The capped structure could be due to the wind creating an internal seiche, and removing the stratification would remove the seiche.
+We want to see what happens when we run this case with no temperature stratification. The response curves above have the strange "capped" structure, and we want to know if this goes away or stays when we take out the stratification. The capped structure could be due to the wind creating an internal seiche, and removing the stratification would remove the seiche. We set the initial water to constant $\SI{0}{\celsius}$.
+
+Running this case, the response curves have the same shape (figure \ref{fig:periodicForcingResponseConstantT}).
+
+This case NaN'd before the end of the model time (1 week). The other case did not NaN. I don't know why this case broke and the other didn't.
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{periodicForcing/response-constantT-fields}
+\caption{Mean value of output fields in response to periodic forcing, with no temperature stratification. From top to bottom: mean surface U currents, mean surface temperature, mean effective ice thickness, mean heat transfer from the lake into the ice, mean surface wind stress (U direction)}
+\label{fig:periodicForcingResponseConstantT}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.48\linewidth}
+\includegraphics[width=\linewidth]{periodicForcing/forcing-TKE}
+\caption{}
+\label{fig:periodicForcingTKE}
+\end{subfigure}
+\begin{subfigure}{0.48\linewidth}
+\includegraphics[width=\linewidth]{periodicForcing/forcing-Q}
+\caption{}
+\label{fig:periodicForcingQ}
+\end{subfigure}
+\caption{Comparison of total kinetic energy (top) and internal energy (bottom) between temperature stratified and non-stratified cases.}
+\end{figure}
+
+However, the total kinetic energy is significantly higher in the constant temperature case, shown in figure \ref{fig:periodicForcingTKE}. The difference is mostly due to the vertical velocity. When a cold parcel of water near the top of the lake is heated by the sun it warms, and gets denser. This water then starts moving downward. In the stratified case, near the pycnocline there is a restoring buoyant force which should slow or stop the vertical motion. In the non-stratified case, there is no restoring force and the parcel should continue falling and accelerating. I think this is the reason for the significant difference in Kinetic energy. However, this should be computed with available/background potential energy.
+
+In the end, the kinetic energy difference might not be very significant. The internal energy (\ref{fig:periodicForcingQ}) is 7 orders of magnitude greater than the kinetic energy by the end of the simulation.
+
+\subsubsection{What we learned}
+From running this case, we learned how to include time-dependent forcing with the EXF package (see description of EXF package, section \ref{sec:EXF})
+
+\subsubsection{Next steps}
+For this case, there are some clear next steps:
+\begin{itemize}
+\item{Simulate a more realistic daily cycle in the forcing, and try to bring in real meteorological observations}
+\item{Compute the full potential/kinetic/internal energy budget}
+\item{Diagnose why the constant temperature case NaN before the stratified case}
+\end{itemize}
 
 \subsection{1D comparison}
-Show results to CLIMo, talk about what we've changed.
+\label{sec:CLIMo}
+Taken together, the results presented above show the model behaves well qualitatively. Now we want to validate the model quantitatively.
 
+One way to quantitatively validate the model is to compare to a simple 1D model which has been validated against observations. A good candiate for this is the Canadian Lake Ice Model (CLIMo) (\cite{Duguay2003}). CLIMo has a simple formulation compared to MITgcm, and is very quick to run (seconds for a year of model time).
+
+\subsubsection{Comparison case}
+We design a very simple case to compare the two models. We run MITgcm with a small, shallow square lake (2 km x 2 km x 2 m). We exclude wind forcing, and include constant air temperature, humidity, shortwave and longwave downward radiation. We run a few cases with varying downward radiation values.
+
+CLIMo had to be modified slightly for our purposes: The shortwave and longwave downward radiation were forced to a constant specified value that is a new input into the model instead of computing values from cloud cover and seasonal cycles. To better match MITgcm, CLIMo's ice emissivity is set to be $\varepsilon = \frac{\SI{5.5e-8}{}}{\SI{5.67e-8}{}} \approx 0.98$, which is exactly what MITgcm uses. CLIMo's freezing temperature is set to $\SI{-1.96}{\celsius}$, which is the value of the input \verb|SEAICE_freeze| in MITgcm.
+
+I changed CLIMo to make these changes, which in some sense is backwards. We should ideally be changing MITgcm to agree better with CLIMo since CLIMo is supposed to be the validated model. In practice it is much easier and faster to change parameters in CLIMo and see how it changes the agreement. Then once they agree better, we can revert CLIMo to its validated state and change the corresponding parameters in MITgcm. That being said, some of the changes to CLIMo are trying to explain the disagreement rather than correct it, including the suggestion to reduce CLIMo to have 1 ice layer.
+
+We run both models with four radiation cases:
+\begin{enumerate}
+\item{$\SI{0}{W.m^{-2}}$ longwave, $\SI{0}{W.m^{-2}}$ shortwave}
+\item{$\SI{75}{W.m^{-2}}$ longwave, $\SI{75}{W.m^{-2}}$ shortwave}
+\item{$\SI{125}{W.m^{-2}}$ longwave, $\SI{125}{W.m^{-2}}$ shortwave}
+\item{$\SI{0}{W.m^{-2}}$ longwave, $\SI{300}{W.m^{-2}}$ shortwave}
+\end{enumerate}
+
+\subsubsection{Comparison results}
+The mean ice thickness between the models is compared in figure \ref{fig:CLIMoCompare}. The models agree very well with no downward radiation, and the agreement gets systematically worse with increasing radiation. Considering the differences between the model formulations, the agreement is better than expected.
+
+\begin{figure}[h!]
+\begin{subfigure}{0.475\linewidth}
+\includegraphics[width=\linewidth]{climo/MITgcm-CLIMo-compare-0-0}
+\end{subfigure}
+\begin{subfigure}{0.475\linewidth}
+\includegraphics[width=\linewidth]{climo/MITgcm-CLIMo-compare-75-75}
+\end{subfigure}
+
+\begin{subfigure}{0.475\linewidth}
+\includegraphics[width=\linewidth]{climo/MITgcm-CLIMo-compare-125-125}
+\end{subfigure}
+\begin{subfigure}{0.475\linewidth}
+\includegraphics[width=\linewidth]{climo/MITgcm-CLIMo-compare-0-300}
+\end{subfigure}
+\caption{Mean ice thickness comparison between MITgcm and CLIMo for varying downward radiation values.}
+\label{fig:CLIMoCompare}
+\end{figure}
+
+\subsubsection{Next steps}
+The agreement from figure \ref{fig:CLIMoCompare} is very good, but we would like to explain why the error systematically increases with increasing radiation. Some more modifications to try are:
+\begin{itemize}
+\item{Reduce CLIMo to a 1 layer ice model. The current configuration uses 5 layers, and it may agree better with  layer. There is supposed to be radiation and heat conduction between ice layers, which may explain some of the differences.}
+\item{Make the albedo values agree better. As discussed in sec \ref{sec:MITgcmAlbedo}, the albedo used in MITgcm is very high. The CLIMo albedo is computed as $\alpha_{CLIMo} = \max(0.44 \left(h\right)^{0.28} + 0.08, \alpha_{water})$, which is lower than the MITgcm albedo until $\SI{4.5}{m}$, and then is greater. Even worse, it is suggested that CLIMo over-estimates snow-free ice albedo (\cite{Svacina2014}). However, if we decrease the MITgcm albedo we would expect that for increasing radiation it would grow ice slower, which would make the agreement worse.}
+\item{Turn off CLIMo's snow capabilities entirely by setting the number of snow layers to 0}
+\item{Investigate the shortwave radiation extinction scale in CLIMo. The MITgcm parameterization is discussed in section \ref{sec:MITgcmRadiation}. We know MITgcm is hard-coded to a clear ocean water type, maybe if we make the shortwave radiation extinction agree with CLIMo better it will be more applicable to lake modelling.}
+\item{For completeness, run a case with downward longwave radiation and no downward shortwave radiation}
+\end{itemize}
+If the comparison is still interesting, some more long term things to consider:
+\begin{itemize}
+\item{Compare seasonal ice growth between the models. Run CLIMo and MITgcm with seasonal forcing and compare ice on/off dates and maximum ice thickness.}
+\item{Keep CLIMo around, and periodically compare more complicated runs. This might point out areas where either model could be improved}
+\end{itemize}
 
 
 \section{Recurring issues}
@@ -975,6 +1106,7 @@ The derivative is taken using the most basic scheme,
 Finally, a plot of $\frac{d Q}{d t} + \verb|SIqnet|$ should be near zero (not identically zero because of the derivative scheme) for all times. We have found this to be the case.
 
 \subsection{Surface albedo}
+\label{sec:MITgcmAlbedo}
 In comparing the MITgcm ice growth rate to CLIMo, I investigated the albedo parameterization of MITgcm. The model classifies ice according to the temperature of the surface water $T_{surf}$ comapred to the freezing/melting temperature $T_{melt}$
 
 \begin{equation*}
@@ -996,6 +1128,8 @@ The SEAICE package is mainly intended for ice dynamics, but includes basic therm
 The THSICE package is intended to improve the thermodynamics of saltwater ice. When ice forms over salt water, some pockets of salt water called brine pockets get trapped in the ice. These brine pockets provide interesting thermodynamics. When the ice is warmed, some of the ice around the brine pockets will be melted. This meltwater must be freshwater, so it dilutes the salt in the brine pocket. This can sufficiently dilute the brine pocket so that the pocket freezes completely, releasing latent heat to the surrounding ice \cite{Winton2000}.
 
 Clearly this process is irrelevant for freshwater lake ice. While the three-layer formulation of \cite{Winton2000} is an improvement over what is described in the \href{http://mitgcm.org/public/r2_manual/final/online_documents/node254.html}{SEAICE documentation}, the implementation does not work for freshwater. The model tends to NaN once ice starts to form. Moreover, the SEAICE documentation says ``NOTE: THIS SECTION IS TERRIBLY OUT OF DATE'' about the thermodynamics description in the documentation. Therefore, we can't really compare the packages anyways.
+
+On a more practical note, the THSICE package breaks the model with any good advection schemes. It runs (with unphysical results, no ice motion) advection scheme 2. With 33 or 77 (77 is highly recommended for this package) it breaks the model very quickly, often after the first time step. We have enough justification to exclude the package from our simulations.
 
 \subsection{Total kinetic energy}
 I compute the total kinetic energy of the water as an additional way to compare the differences between different parameters and configurations. The total kinetic energy is computed as
@@ -1024,6 +1158,7 @@ Where  $m = m_i + m_s$ is the total mass of ice and snow per unit area, $\phi(0)
 Where $\mathbf{U_i}$ are the surface winds of the atmosphere and water, $C_i$ are air and water drag coefficients, $\rho_i$ are reference densities, and $R_i$ are rotation matrices.
 
 \subsection{Radiation}
+\label{sec:MITgcmRadiation}
 The model can be forced with net or downward shortwave and longwave radiation. Longwave radiation is absorbed by the surface layer, while shortwave radiation penetrates into the interior of the water. This section describes the penetrating shortwave radiation. The equations here come from \cite{PaulsonSimpson1977} and the source code, particularly \verb|pkg/exf/exf_radiation.F|, \verb|model/src/swfrac.F| and \verb|model/src/external_forcing.F|.
 
 First, consider the amount of shortwave radiation that is transmitted through the surface. The reflected shortwave radiation is the product of the surface albedo and the incoming shortwave radiation, $\alpha I_{down}$. Then, the amount absorbed into the water is
@@ -1042,18 +1177,91 @@ Where $I$ is the radiation at depth $z$ (positive from the surface), and $R = 0.
 This treatment should work well for relatively deep water, but for shallow lakes this is a problem. For example, with a 2 m deep lake approximately 37\% of the radiation makes it to the bottom of the lake. This radiation should then be absorbed by the bottom and eventually heat the lake from the bottom, but this is not accounted for.
 
 \subsection{Humidity}
-The EXF package uses specific humidity, which is the ratio of the mass of water vapour to the total mass of a unit volume of air. This is very different from relative humidity, which we are more familiar with from everyday weather. [Include how to convert between them]
+The EXF package uses specific humidity (input as \verb|aqhfile|), which is the ratio of the mass of water vapour to the total mass of a unit volume of air. This is different than relative humidity, which we are generally more familiar with.
+
+The comparison between relative humidity and specific humidity depends on temperature and atmospheric pressure. The conversion is outlined below. Constants are given in table \ref{table:humidityConstants}
+
+\begin{table}
+\begin{tabularx}{\textwidth}{X X X}
+\hline
+\textbf{Symbol} & \textbf{Name} & \textbf{Value} \\ \hline \hline
+$N$ & Avogadro's number & $\SI{6.022e23}{{mol}^{-1}}$ \\ \hline
+$R$ & Ideal gas constant & $\SI{8.3145}{J.{mol}^{-1}}$ \\ \hline
+$M_{H2O}$ & Molar mass of water & $\SI{18.01534}{g.{mol}^{-1}}$ \\ \hline
+$M_{dry}$ & Molar mass of dry air & $\SI{28.9644}{g.{mol}^{-1}}$ \\ \hline
+\end{tabularx}
+\caption{Constants for relative humidity calculation}
+\label{table:humidityConstants}
+\end{table}
+
+The most relevant direction is to compute specfic humidity from relative humidity. We would usually choose a relative humidity value, and want to find the corresponding specific humidity to input to the model. The specific humidity is the mass ratio of water vapor to dry air. That is,
+
+\begin{equation}
+\label{eq:specificHumidity}
+q = \frac{X_{H2O}M_{H2O}}{X_{H2O}M_{H2O} + \left(1 - X_{H2O}\right) M_{dry}}
+\end{equation}
+Where $X_{H20}$ is the molar mixing ratio (equivalent to pressure ratio), 
+\begin{equation}
+X_{H2O} = \frac{P_{H2O}}{P}
+\end{equation}
+$P_{H2O}$ is the partial pressure of water vapour, and $P$ is the atmospheric pressure (in Pa). The partial pressure of water is given by
+\begin{equation}
+P_{H2O} = \frac{R \cdot e(T)}{100}
+\end{equation}
+Where $R$ is the relative humidity (\%), $T$ is the temperature ($^{\circ}\textrm{C}$) and $e(T)$ is the vapour pressure of water (Pa),
+\begin{equation}
+e = 100 \left[a_0 + T \left( a_1 + T \left( a_2 + T \left( a_3 + T \left( a_4 + T \left( a_5 + T a_6 \right) \right) \right) \right) \right) \right]
+\label{eq:vapourPressure}
+\end{equation}
+The constants are given for water and ice in table \ref{table:vapourConstants}, and $e = \min\left({e_{water}},{e_{ice}}\right)$.
+
+\begin{table}
+\begin{tabularx}{\textwidth}{c c c}
+\hline
+\textbf{NA} & \textbf{Water} & \textbf{Ice} \\ \hline \hline
+$a_0$ & \SI{6.107799961}{} & \SI{6.109177956}{} \\ \hline
+$a_1$ & \SI{4.436518521e-1}{} & \SI{5.034698970e-1}{} \\ \hline
+$a_2$ & \SI{1.428945805e-2}{} & \SI{1.886013408e-2}{} \\ \hline
+$a_3$ & \SI{2.650648471e-4}{} & \SI{4.176223716e-4}{} \\ \hline
+$a_4$ & \SI{3.031240396e-6}{} & \SI{5.824720280e-6}{} \\ \hline
+$a_5$ & \SI{2.034080748e-8}{} & \SI{4.838803174e-8}{} \\ \hline
+$a_6$ & \SI{6.136820929e-11}{}& \SI{1.838826904e-10}{}\\ \hline
+\end{tabularx}
+\caption{Vapour pressure constants for equation \ref{eq:vapourPressure}}
+\label{table:vapourConstants}
+\end{table}
+
+All together with $e(T)$ given by \ref{eq:vapourPressure},
+
+\begin{equation}
+\label{eq:humidityConversion}
+q = \frac{1}{1 + \frac{P\cdot 100}{R\cdot e(T)} \cdot \frac{M_{dry}}{M_{H2O}}}
+\end{equation}
+
+Going the other way, we see that with $q = 0.01$, $T = \SI{-10}{\celsius}$ and $P = 101325 Pa$, the relative humidity is above 500\%. Clearly this is a problem!
+
+The model was run in the configuration from fig \ref{fig:CLIMoCompare} with $\SI{125}{W.m^{-2}}$ downward SW and LW radiation with the original humidity value ($q = 0.01$, $R \approx 580\%$) and a more realistic value ($q = \SI{8.e-4}{}$, $R = 50\%$). The output is exactly identical. Changing the humidity values has no effect on any of the output fields. This is suspicious - humidity should have some effect. This is probably worthwhile to investigate: when does humidity matter? It should matter to evaporation at least. Maybe this case just has no evaporation.
 
 \section{Visualization tools}
-Talk about VisIt scripting, or point to wiki? Figure this out!
+Visualization tools for animations of top-down views and cross-sections were developed in python. These are good to get an idea of what is happening in a case, and to compare cases. Code and documentation for these post-processing tools live on \href{https://github.com/timghill/gcmpy}{GitHub here}.
+
+Some basic scripts for 3D visualization in VisIt were also developed. These are more involved to use and develop, but produce much more interesting graphics. These will be added to the wiki as examples of VisIt scripts.
 
 \section{Conclusions}
-Talk about where I think the model is, and what went well and not so well.
+The cases presented in Results are good toy cases to validate the qualitative dynamics of the MITgcm ice model in freshwater lakes. The model clearly freezes water into ice and melts ice at physical temperatures (with the right advection scheme). The ice dynamics once it forms are intuitively correct. The ice is advected by wind forcing and surface currents, and the ice exerts surface stress on the water in response ($-\tau_{water}$ is applied to the surface layer of water).
+
+The various packages necessary for modelling freshwater lake ice have been used and documented here, and some of the physical parameterizations are examined here. It is determined that the THSICE package that is recommended to be used by the MITgcm documentation is not applicable to freshwater ice. The interesting thermodynamics it is meant to recreate do not exist in freshwater ice, and some detail of the implementation of the package does not work with freshwater.
+
+The comparison to CLIMo is very promising, but has some more work to be done before the model is well validated.
 
 \section{Next steps}
-Talk about what to do next.
+There are some clear directions to extend the cases from Results in that are dicussed within the individual sections. There are some overall directions to go from here:
+\begin{itemize}
+\item{Make the comparison to the 1D model more complete (sec \ref{sec:CLIMo}}
+\item{Include the recommendations from the SEAICE section \ref{sec:SEAICE} into the toy cases}
+\item{Learn what the thermodynamic formulation of the SEAICE package is. It might be an interesting project to write a better thermodynamics package for freshwater ice. It could be based on the layer structure of the THSICE package, but with salinity eliminated from the equations}
+\end{itemize}
 
-\subsection{Comparison to 1D model}
-Talk about what to change wit h CLIMo comparison.
+\bibliography{refs}
 
 \end{document}
