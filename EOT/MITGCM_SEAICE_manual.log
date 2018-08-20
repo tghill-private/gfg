@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.21)  14 AUG 2018 16:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.21)  17 AUG 2018 14:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -980,7 +980,7 @@ Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
 File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 ))
-(./MITGCM_SEAICE_manual.aux)
+No file MITGCM_SEAICE_manual.aux.
 \openout1 = `MITGCM_SEAICE_manual.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
@@ -998,7 +998,6 @@ LaTeX Font Info:    ... okay on input line 54.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 54.
 LaTeX Font Info:    ... okay on input line 54.
 \c@lstlisting=\count298
-
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count299
@@ -1150,13 +1149,15 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 \c__siunitx_mathtt_int=\count307
 
-(./MITGCM_SEAICE_manual.toc [1
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
+Package hyperref Warning: old toc file detected, not used; run LaTeX again.
+
 \tf@toc=\write4
 \openout4 = `MITGCM_SEAICE_manual.toc'.
 
- [2]
+[1
+
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 72.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
@@ -1164,629 +1165,915 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 72.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 81.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 82.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [3] [4] [5]
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 176.
+) [2]
 
-[6] [7]
-Overfull \hbox (12.35992pt too wide) in paragraph at lines 265--266
+LaTeX Warning: Reference `sec:SEAICE' on page 3 undefined on input line 128.
+
+[3]
+
+LaTeX Warning: Reference `listing:data.pkg' on page 4 undefined on input line 1
+36.
+
+[4]
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 177.
+ [5]
+
+LaTeX Warning: Reference `sec:iceDynamics' on page 6 undefined on input line 23
+3.
+
+
+LaTeX Warning: Reference `listing:seaiceDefaults' on page 6 undefined on input 
+line 241.
+
+[6]
+Overfull \hbox (12.35992pt too wide) in paragraph at lines 266--267
 \T1/cmr/m/n/10.95 file. To spec-ify an ini-tial con-stant value, set the key-wo
 rds [][]\T1/cmtt/m/n/10.95 SEAICE_initialHEFF[]\T1/cmr/m/n/10.95 ,
  []
 
 
-Overfull \hbox (10.02467pt too wide) in paragraph at lines 265--266
+Overfull \hbox (10.02467pt too wide) in paragraph at lines 266--267
 [][]\T1/cmtt/m/n/10.95 SEAICE_initialAREA[]\T1/cmr/m/n/10.95 . To set with a fi
 le, set the in-put files [][]\T1/cmtt/m/n/10.95 HeffFile[]\T1/cmr/m/n/10.95 , [
 ][]\T1/cmtt/m/n/10.95 AreaFile[]\T1/cmr/m/n/10.95 ,
  []
 
 
-Overfull \hbox (1.2804pt too wide) in paragraph at lines 274--275
+Overfull \hbox (1.2804pt too wide) in paragraph at lines 275--276
 \T1/cmr/m/n/10.95 the SEAICE tu-to-rial, or copy from the exf pack-age, [][]\T1
 /cmtt/m/n/10.95 pkg/exf/EXF_OPTIONS.h[]\T1/cmr/m/n/10.95 . 
  []
 
 
-Underfull \hbox (badness 4543) in paragraph at lines 291--291
+LaTeX Warning: Reference `listing:data.exf' on page 7 undefined on input line 2
+78.
+
+
+LaTeX Warning: Reference `table:EXFfields' on page 7 undefined on input line 27
+8.
+
+
+Underfull \hbox (badness 4543) in paragraph at lines 292--292
 []|\T1/cmr/m/n/10.95 Surface (10-m) mero-di-onal winds,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 291--291
+Underfull \hbox (badness 10000) in paragraph at lines 292--292
 []|\T1/cmr/m/n/10.95 Surface (2-m) spe-cific hu-mid-ity,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 291--291
+Underfull \hbox (badness 10000) in paragraph at lines 292--292
 []|\T1/cmr/m/n/10.95 Downward short-wave ra-di-a-tion,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 291--291
+Underfull \hbox (badness 10000) in paragraph at lines 292--292
 []|\T1/cmr/m/n/10.95 Downward long-wave ra-di-a-tion,
  []
 
-[8] [9]
-Overfull \hbox (0.84866pt too wide) in paragraph at lines 365--366
+[7] [8]
+Overfull \hbox (0.84866pt too wide) in paragraph at lines 366--367
 \T1/cmr/m/n/10.95 time-stepping, bi-nary in-put/out-put, and other pa-ram-e-ter
 s for the core model. 
  []
 
-[10]
-Overfull \hbox (1.77641pt too wide) in paragraph at lines 374--375
+
+LaTeX Warning: Citation `JackettMcDougall1995' on page 9 undefined on input lin
+e 369.
+
+[9]
+Overfull \hbox (1.77641pt too wide) in paragraph at lines 375--376
 \T1/cmr/m/n/10.95 The time step and sim-u-la-tion length pa-ram-e-ters are all 
 in the [][]\T1/cmtt/m/n/10.95 PARM03 []\T1/cmr/m/n/10.95 namelist
  []
 
 
-Overfull \hbox (12.51726pt too wide) in paragraph at lines 377--378
+LaTeX Warning: Reference `listing:fileInput' on page 10 undefined on input line
+ 378.
+
+
+Overfull \hbox (12.51726pt too wide) in paragraph at lines 378--379
 \T1/cmr/m/n/10.95 usu-ally use double-precision floats for in-put, by spec-i-fy
 -ing [][]\T1/cmtt/m/n/10.95 readBinaryPrec=64,
  []
 
-[11] [12] [13]
-Overfull \hbox (14.56418pt too wide) in paragraph at lines 510--511
+
+LaTeX Warning: Reference `listing:fileOutput' on page 10 undefined on input lin
+e 391.
+
+[10]
+
+LaTeX Warning: Reference `listing:SIZE.h' on page 11 undefined on input line 40
+3.
+
+[11]
+
+LaTeX Warning: Reference `listing:gridExample' on page 12 undefined on input li
+ne 468.
+
+
+LaTeX Warning: Reference `table:advectionSchemes' on page 12 undefined on input
+ line 483.
+
+[12]
+Overfull \hbox (14.56418pt too wide) in paragraph at lines 511--512
 \T1/cmr/m/n/10.95 am-ple) [][]\T1/cmtt/m/n/10.95 SEAICEadvScheme = 33 []\T1/cmr
 /m/n/10.95 in the [][]\T1/cmtt/m/n/10.95 SEAICE_PARM01 []\T1/cmr/m/n/10.95 name
 list of [][]\T1/cmtt/m/n/10.95 data.seaice[]\T1/cmr/m/n/10.95 . 
  []
 
-[14] [15]
-Underfull \hbox (badness 3029) in paragraph at lines 561--561
+[13]
+
+LaTeX Warning: Reference `table:iceAdvect' on page 14 undefined on input line 5
+54.
+
+[14]
+Underfull \hbox (badness 3029) in paragraph at lines 562--562
 []|\T1/cmr/m/n/10.95 Linear EOS with in-cor-rent
  []
 
 
-Underfull \hbox (badness 7203) in paragraph at lines 570--570
+Underfull \hbox (badness 7203) in paragraph at lines 571--571
 []|\T1/cmr/m/n/10.95 Minimum short-wave down-
  []
 
 
-Overfull \hbox (36.0pt too wide) in alignment at lines 555--579
+Overfull \hbox (36.0pt too wide) in alignment at lines 556--580
  [] [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 579
+Underfull \vbox (badness 10000) detected at line 580
  []
 
 
-Underfull \hbox (badness 2961) in paragraph at lines 580--580
+Underfull \hbox (badness 2961) in paragraph at lines 581--581
 []|\T1/cmr/m/n/10.95 Initial SEAICE area
  []
 
 
-Overfull \hbox (36.0pt too wide) in alignment at lines 579--585
+Overfull \hbox (36.0pt too wide) in alignment at lines 580--586
  [] [] [] 
  []
 
-[16]
-Overfull \hbox (28.3929pt too wide) in paragraph at lines 589--591
+[15]
+
+LaTeX Warning: Reference `fig:advScheme2' on page 16 undefined on input line 59
+0.
+
+
+LaTeX Warning: Reference `fig:advScheme7' on page 16 undefined on input line 59
+0.
+
+
+LaTeX Warning: Reference `fig:advSchemes' on page 16 undefined on input line 59
+0.
+
+
+Overfull \hbox (28.3929pt too wide) in paragraph at lines 590--592
 \T1/cmr/m/n/10.95 This case was first run with the de-fault ice ad-vec-tion sch
 eme ([][]\T1/cmtt/m/n/10.95 SEAICEadvScheme=2[]\T1/cmr/m/n/10.95 ),
  []
 
-[17]
+[16]
 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-surface-ice-hd-000002520
-0.png, id=706, 462.528pt x 346.896pt>
+0.png, id=422, 462.528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-surface-ice-hd-0000
 025200.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-surface-ice-hd-00000
 25200.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-
-surface-ice-hd-0000025200.png  used on input line 597. on input line 597.
+surface-ice-hd-0000025200.png  used on input line 598. on input line 598.
 Package pdftex.def Info: Requested size: 306.0022pt x 229.51314pt on input line
- 597.
+ 598.
 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-surface-T-hd-0000025200.
-png, id=708, 578.16pt x 433.62pt>
+png, id=424, 578.16pt x 433.62pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-surface-T-hd-000002
 5200.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-surface-T-hd-0000025
 200.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-
-surface-T-hd-0000025200.png  used on input line 601. on input line 601.
+surface-T-hd-0000025200.png  used on input line 602. on input line 602.
 Package pdftex.def Info: Requested size: 306.0022pt x 229.49991pt on input line
- 601.
+ 602.
 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-surface-ice-hd-0000025200
-.png, id=709, 462.528pt x 346.896pt>
+.png, id=425, 462.528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-surface-ice-hd-00000
 25200.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-surface-ice-hd-000002
 5200.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-s
-urface-ice-hd-0000025200.png  used on input line 610. on input line 610.
+urface-ice-hd-0000025200.png  used on input line 611. on input line 611.
 Package pdftex.def Info: Requested size: 306.0022pt x 229.51314pt on input line
- 610.
+ 611.
 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-surface-T-hd-0000025200.p
-ng, id=710, 578.16pt x 433.62pt>
+ng, id=426, 578.16pt x 433.62pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-surface-T-hd-0000025
 200.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-surface-T-hd-00000252
 00.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-s
-urface-T-hd-0000025200.png  used on input line 614. on input line 614.
+urface-T-hd-0000025200.png  used on input line 615. on input line 615.
 Package pdftex.def Info: Requested size: 306.0022pt x 229.49991pt on input line
- 614.
+ 615.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[18
+[17
 
  </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-surface-ice-hd-00000252
 00.png> </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-def-surface-T-hd-000
 0025200.png>]
 
-LaTeX Warning: Text page 19 contains only floats.
+LaTeX Warning: Text page 18 contains only floats.
 
-[19 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-surface-ice-hd-000002
+[18 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-surface-ice-hd-000002
 5200.png> </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-07-surface-T-hd-00
 00025200.png>]
 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-surface-ice-hd-0000025200
-.png, id=724, 462.528pt x 346.896pt>
+.png, id=441, 462.528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-surface-ice-hd-00000
 25200.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-surface-ice-hd-000002
 5200.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-s
-urface-ice-hd-0000025200.png  used on input line 625. on input line 625.
+urface-ice-hd-0000025200.png  used on input line 626. on input line 626.
 Package pdftex.def Info: Requested size: 161.9989pt x 121.5001pt on input line 
-625.
+626.
 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-surface-T-hd-0000025200.p
-ng, id=725, 578.16pt x 433.62pt>
+ng, id=442, 578.16pt x 433.62pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-surface-T-hd-0000025
 200.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-surface-T-hd-00000252
 00.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-s
-urface-T-hd-0000025200.png  used on input line 628. on input line 628.
+urface-T-hd-0000025200.png  used on input line 629. on input line 629.
 Package pdftex.def Info: Requested size: 161.9989pt x 121.49878pt on input line
- 628.
+ 629.
 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-surface-ice-hd-0000025200
-.png, id=726, 462.528pt x 346.896pt>
+.png, id=443, 462.528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-surface-ice-hd-00000
 25200.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-surface-ice-hd-000002
 5200.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-s
-urface-ice-hd-0000025200.png  used on input line 632. on input line 632.
+urface-ice-hd-0000025200.png  used on input line 633. on input line 633.
 Package pdftex.def Info: Requested size: 161.9989pt x 121.5001pt on input line 
-632.
+633.
 </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-surface-T-hd-0000025200.p
-ng, id=727, 578.16pt x 433.62pt>
+ng, id=444, 578.16pt x 433.62pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-surface-T-hd-0000025
 200.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-surface-T-hd-00000252
 00.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-s
-urface-T-hd-0000025200.png  used on input line 635. on input line 635.
+urface-T-hd-0000025200.png  used on input line 636. on input line 636.
 Package pdftex.def Info: Requested size: 161.9989pt x 121.49878pt on input line
- 635.
- [20
+ 636.
+
+
+LaTeX Warning: Reference `fig:advSchemes' on page 19 undefined on input line 64
+2.
+
+[19
 
  </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-surface-ice-hd-000002520
 0.png> </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-33-surface-T-hd-00000
 25200.png> </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-surface-ice-hd
 -0000025200.png> </Users/tghill/pkg/gfg/EOT/fig/iceAdvect/advScheme-77-surface-
 T-hd-0000025200.png>]
-Underfull \hbox (badness 7203) in paragraph at lines 678--678
+
+LaTeX Warning: Reference `table:iceMelt' on page 20 undefined on input line 655
+.
+
+
+Underfull \hbox (badness 7203) in paragraph at lines 679--679
 []|\T1/cmr/m/n/10.95 Minimum short-wave down-
  []
 
 
-Overfull \hbox (36.0pt too wide) in alignment at lines 662--685
+Overfull \hbox (36.0pt too wide) in alignment at lines 663--686
  [] [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 685
+Underfull \vbox (badness 10000) detected at line 686
  []
 
 
-Underfull \hbox (badness 2961) in paragraph at lines 689--689
+Underfull \hbox (badness 2961) in paragraph at lines 690--690
 []|\T1/cmr/m/n/10.95 Initial SEAICE area
  []
 
 
-Overfull \hbox (36.0pt too wide) in alignment at lines 685--694
+Overfull \hbox (36.0pt too wide) in alignment at lines 686--695
  [] [] [] 
  []
 
-[21]
-Overfull \hbox (10.37015pt too wide) in paragraph at lines 697--698
+[20]
+Overfull \hbox (10.37015pt too wide) in paragraph at lines 698--699
 []\T1/cmr/m/n/10.95 Change [][]\T1/cmtt/m/n/10.95 nonHydrostatic []\T1/cmr/m/n/
 10.95 to [][]\T1/cmtt/m/n/10.95 .TRUE. []\T1/cmr/m/n/10.95 to test sen-si-tiv-i
 ty to hydrostatic/non-
  []
 
-[22]
-</Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-icemass.png, id=750, 462.5
+
+LaTeX Warning: Reference `table:iceMelt' on page 21 undefined on input line 704
+.
+
+
+LaTeX Warning: Reference `fig:iceMelt0' on page 21 undefined on input line 704.
+
+
+
+LaTeX Warning: Reference `fig:iceMelt0IceMass' on page 21 undefined on input li
+ne 704.
+
+[21]
+</Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-icemass.png, id=467, 462.5
 28pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-icemass.png Graphic f
 ile (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-icemass.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-ic
-emass.png  used on input line 707. on input line 707.
+emass.png  used on input line 708. on input line 708.
 Package pdftex.def Info: Requested size: 288.0011pt x 216.01018pt on input line
- 707.
- [23 </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-icemass.png>]
+ 708.
+ [22 </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-icemass.png>]
 </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-surface-ice-thick-00011178
-00.png, id=761, 462.528pt x 346.896pt>
+00.png, id=475, 462.528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-surface-ice-thick-000
 1117800.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-surface-ice-thick-0001
 117800.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-su
-rface-ice-thick-0001117800.png  used on input line 716. on input line 716.
+rface-ice-thick-0001117800.png  used on input line 717. on input line 717.
 Package pdftex.def Info: Requested size: 288.0011pt x 216.01018pt on input line
- 716.
+ 717.
 </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-surface-T-0001117800.png, 
-id=762, 578.16pt x 433.62pt>
+id=476, 578.16pt x 433.62pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-surface-T-0001117800.
 png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-surface-T-0001117800.p
 ng>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-su
-rface-T-0001117800.png  used on input line 719. on input line 719.
+rface-T-0001117800.png  used on input line 720. on input line 720.
 Package pdftex.def Info: Requested size: 288.0011pt x 215.99564pt on input line
- 719.
+ 720.
 
-Underfull \hbox (badness 10000) in paragraph at lines 714--721
+Underfull \hbox (badness 10000) in paragraph at lines 715--722
 []$[]$
  []
 
-[24
+[23
 
  </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-surface-ice-thick-0001117
 800.png> </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-surface-T-0001117
 800.png>]
-Overfull \hbox (5.62746pt too wide) in paragraph at lines 732--733
+
+LaTeX Warning: Reference `fig:iceMeltCompareTKE' on page 24 undefined on input 
+line 733.
+
+
+Overfull \hbox (5.62746pt too wide) in paragraph at lines 733--734
 \T1/cmr/m/n/10.95 The model runs much faster in hy-dro-static con-fig-u-ra-tion
  than non-hydrostatic,
  []
 
-</Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaTKE.png, id=772, 462.
+</Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaTKE.png, id=484, 462.
 528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaTKE.png Graphic 
 file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaTKE.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-de
-ltaTKE.png  used on input line 736. on input line 736.
+ltaTKE.png  used on input line 737. on input line 737.
 Package pdftex.def Info: Requested size: 306.0022pt x 229.51314pt on input line
- 736.
-[25 </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaTKE.png>]
-[26]
-</Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaIce.png, id=787, 578.
+ 737.
+[24 </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaTKE.png>]
+
+LaTeX Warning: Reference `fig:iceMeltCompareWinds' on page 25 undefined on inpu
+t line 744.
+
+[25]
+</Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaIce.png, id=497, 578.
 16pt x 289.08pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaIce.png Graphic 
 file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaIce.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-de
-ltaIce.png  used on input line 751. on input line 751.
+ltaIce.png  used on input line 752. on input line 752.
 Package pdftex.def Info: Requested size: 341.9989pt x 170.99681pt on input line
- 751.
-</Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaQ.png, id=788, 578.16
+ 752.
+</Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaQ.png, id=498, 578.16
 pt x 289.08pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaQ.png Graphic fi
 le (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaQ.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-de
-ltaQ.png  used on input line 754. on input line 754.
+ltaQ.png  used on input line 755. on input line 755.
 Package pdftex.def Info: Requested size: 341.9989pt x 170.99681pt on input line
- 754.
+ 755.
 
-Underfull \hbox (badness 10000) in paragraph at lines 749--756
+Underfull \hbox (badness 10000) in paragraph at lines 750--757
 []$[]$
  []
 
+
+LaTeX Warning: Reference `fig:iceMeltNoWind' on page 26 undefined on input line
+ 761.
+
+
+LaTeX Warning: Reference `fig:iceMeltNoWind' on page 26 undefined on input line
+ 761.
+
 </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-nowind-surface-ice-thick-0
-001177200.png, id=790, 462.528pt x 346.896pt>
+001177200.png, id=499, 462.528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-nowind-surface-ice-th
 ick-0001177200.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-nowind-surface-ice-thi
 ck-0001177200.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-no
-wind-surface-ice-thick-0001177200.png  used on input line 764. on input line 76
-4.
+wind-surface-ice-thick-0001177200.png  used on input line 765. on input line 76
+5.
 Package pdftex.def Info: Requested size: 323.9978pt x 243.01079pt on input line
- 764.
+ 765.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[27
+[26
 
  </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaIce.png> </Users/tgh
-ill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaQ.png>] [28 </Users/tghill/pkg/g
-fg/EOT/fig/iceMelt/icemeltsmooth-nowind-surface-ice-thick-0001177200.png>]
-Underfull \hbox (badness 7203) in paragraph at lines 806--806
+ill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-deltaQ.png>]
+
+LaTeX Warning: Reference `sec:epsilonWinds' on page 27 undefined on input line 
+775.
+
+
+LaTeX Warning: Reference `listing:seaiceDefaults' on page 27 undefined on input
+ line 775.
+
+[27 </Users/tghill/pkg/gfg/EOT/fig/iceMelt/icemeltsmooth-nowind-surface-ice-thi
+ck-0001177200.png>]
+
+LaTeX Warning: Reference `table:solarForcing' on page 28 undefined on input lin
+e 783.
+
+
+Underfull \hbox (badness 7203) in paragraph at lines 807--807
 []|\T1/cmr/m/n/10.95 Minimum short-wave down-
  []
 
 
-Overfull \hbox (36.0pt too wide) in alignment at lines 790--813
+Overfull \hbox (36.0pt too wide) in alignment at lines 791--814
  [] [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 813
+Underfull \vbox (badness 10000) detected at line 814
  []
 
 
-Underfull \hbox (badness 2961) in paragraph at lines 817--817
+Underfull \hbox (badness 2961) in paragraph at lines 818--818
 []|\T1/cmr/m/n/10.95 Initial SEAICE area
  []
 
 
-Overfull \hbox (36.0pt too wide) in alignment at lines 813--822
+Overfull \hbox (36.0pt too wide) in alignment at lines 814--823
  [] [] [] 
  []
 
-[29] [30]
+[28] [29]
+
+LaTeX Warning: Reference `fig:solarForcingSurfaceT' on page 30 undefined on inp
+ut line 827.
+
+
+LaTeX Warning: Reference `fig:solarForcingConstantT' on page 30 undefined on in
+put line 827.
+
 </Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-surface-T-0000034380.p
-ng, id=817, 578.16pt x 433.62pt>
+ng, id=525, 578.16pt x 433.62pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-surface-T-0000034
 380.png Graphic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-surface-T-00000343
 80.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcin
-g-surface-T-0000034380.png  used on input line 830. on input line 830.
+g-surface-T-0000034380.png  used on input line 831. on input line 831.
 Package pdftex.def Info: Requested size: 306.0022pt x 229.49991pt on input line
- 830.
- [31 </Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-surface-T-0000034
-380.png>]
-</Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-constantT.jpg, id=826,
+ 831.
+[30 </Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-surface-T-00000343
+80.png>]
+</Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-constantT.jpg, id=533,
  4015.0pt x 2460.19125pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-constantT.jpg Gra
 phic file (type jpg)
 <use /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-constantT.jpg>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcin
-g-constantT.jpg  used on input line 839. on input line 839.
+g-constantT.jpg  used on input line 840. on input line 840.
 Package pdftex.def Info: Requested size: 356.40198pt x 218.36696pt on input lin
-e 839.
-</Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section01.png, id=827,
+e 840.
+</Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section01.png, id=534,
  4015.0pt x 2380.895pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section01.png Gra
 phic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section01.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcin
-g-section01.png  used on input line 843. on input line 843.
+g-section01.png  used on input line 844. on input line 844.
 Package pdftex.def Info: Requested size: 176.40198pt x 104.59259pt on input lin
-e 843.
-</Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section02.png, id=828,
+e 844.
+</Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section02.png, id=535,
  4015.0pt x 2380.895pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section02.png Gra
 phic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section02.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcin
-g-section02.png  used on input line 846. on input line 846.
+g-section02.png  used on input line 847. on input line 847.
 Package pdftex.def Info: Requested size: 176.40198pt x 104.59259pt on input lin
-e 846.
+e 847.
 
 
-LaTeX Warning: Reference `fig:solarForcingCompare' on page 32 undefined on inpu
-t line 852.
+LaTeX Warning: Reference `fig:solarForcingCompare' on page 31 undefined on inpu
+t line 853.
 
-[32
+[31
 
  </Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-constantT.jpg> </User
 s/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section01.png (PNG copy)> </
 Users/tghill/pkg/gfg/EOT/fig/solarForcing/solarforcing-section02.png (PNG copy)
 >]
-</Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaTKE.png, id=833, 462.5
+</Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaTKE.png, id=542, 462.5
 28pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaTKE.png Graphic f
 ile (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaTKE.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-del
-taTKE.png  used on input line 858. on input line 858.
+taTKE.png  used on input line 859. on input line 859.
 Package pdftex.def Info: Requested size: 352.79846pt x 264.61235pt on input lin
-e 858.
-</Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaQ.png, id=834, 462.528
+e 859.
+</Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaQ.png, id=543, 462.528
 pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaQ.png Graphic fil
 e (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaQ.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-del
-taQ.png  used on input line 862. on input line 862.
+taQ.png  used on input line 863. on input line 863.
 Package pdftex.def Info: Requested size: 176.40198pt x 132.30353pt on input lin
-e 862.
-</Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaIce.png, id=835, 462.5
+e 863.
+</Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaIce.png, id=544, 462.5
 28pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaIce.png Graphic f
 ile (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaIce.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-del
-taIce.png  used on input line 865. on input line 865.
+taIce.png  used on input line 866. on input line 866.
 Package pdftex.def Info: Requested size: 176.40198pt x 132.30353pt on input lin
-e 865.
- [33
+e 866.
+
+
+LaTeX Warning: Reference `fig:solarForcingConstantT' on page 32 undefined on in
+put line 873.
+
+[32
 
  </Users/tghill/pkg/gfg/EOT/fig/solarForcing/convect-deltaTKE.png> </Users/tghi
 ll/pkg/gfg/EOT/fig/solarForcing/convect-deltaQ.png> </Users/tghill/pkg/gfg/EOT/
 fig/solarForcing/convect-deltaIce.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 894--894
+
+LaTeX Warning: Reference `fig:periodicForcingFields' on page 33 undefined on in
+put line 879.
+
+
+LaTeX Warning: Reference `fig:periodicForcingFields' on page 33 undefined on in
+put line 881.
+
+
+LaTeX Warning: Reference `table:periodicForcing' on page 33 undefined on input 
+line 881.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 896--896
 []|\T1/cmr/m/n/10.95 Sinusoidal be-tween
  []
 
 
-Underfull \hbox (badness 1377) in paragraph at lines 898--898
+Underfull \hbox (badness 1377) in paragraph at lines 900--900
 []|\T1/cmr/m/n/10.95 Sinusoidal be-tween $\OT1/cmr/m/n/10.95 0$
  []
 
 
-Overfull \hbox (36.0pt too wide) in alignment at lines 882--905
+Overfull \hbox (36.0pt too wide) in alignment at lines 884--907
  [] [] [] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 905
+Underfull \vbox (badness 10000) detected at line 907
  []
 
 
-Underfull \hbox (badness 3148) in paragraph at lines 908--908
+Underfull \hbox (badness 3148) in paragraph at lines 910--910
 []|\T1/cmr/m/n/10.95 Temperature strat-i-fied lake,
  []
 
 
-Underfull \hbox (badness 2961) in paragraph at lines 909--909
+Underfull \hbox (badness 2961) in paragraph at lines 911--911
 []|\T1/cmr/m/n/10.95 Initial SEAICE area
  []
 
 
-Overfull \hbox (36.0pt too wide) in alignment at lines 905--914
+Overfull \hbox (36.0pt too wide) in alignment at lines 907--916
  [] [] [] 
  []
 
-[34]
-</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing.png, id=854, 578.16pt x 
+[33]
+</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing.png, id=561, 578.16pt x 
 578.16pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing.png Graphic file (t
 ype png)
 <use /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing.
-png  used on input line 917. on input line 917.
+png  used on input line 919. on input line 919.
 Package pdftex.def Info: Requested size: 360.0pt x 359.99934pt on input line 91
-7.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-fields.png, id=855, 578
-.16pt x 433.62pt>
-File: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-fields.png Graphic
- file (type png)
-<use /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-fields.png>
-Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response
--fields.png  used on input line 924. on input line 924.
-Package pdftex.def Info: Requested size: 360.0pt x 269.99951pt on input line 92
-4.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[35] [36 </Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing.png>]
-</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-constantT-fields.png, i
-d=870, 578.16pt x 433.62pt>
-File: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-constantT-fields.p
-ng Graphic file (type png)
-<use /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-constantT-fields.pn
-g>
-Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response
--constantT-fields.png  used on input line 939. on input line 939.
-Package pdftex.def Info: Requested size: 360.0pt x 269.99951pt on input line 93
 9.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-TKE.png, id=871, 462.528
+</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-fields.png, id=562, 578
+.16pt x 433.62pt>
+File: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-fields.png Graphic
+ file (type png)
+<use /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-fields.png>
+Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response
+-fields.png  used on input line 926. on input line 926.
+Package pdftex.def Info: Requested size: 360.0pt x 269.99951pt on input line 92
+6.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: Reference `fig:periodicForcingFields' on page 34 undefined on in
+put line 931.
+
+
+LaTeX Warning: Reference `fig:periodicForcingResponse' on page 34 undefined on 
+input line 931.
+
+
+LaTeX Warning: Reference `fig:periodicVisualization' on page 34 undefined on in
+put line 933.
+
+[34]
+</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/domain-results.png, id=568, 4015
+.0pt x 2413.015pt>
+File: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/domain-results.png Graphic 
+file (type png)
+<use /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/domain-results.png>
+Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/domain-r
+esults.png  used on input line 936. on input line 936.
+Package pdftex.def Info: Requested size: 360.0pt x 216.35194pt on input line 93
+6.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[35 </Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing.png>]
+
+LaTeX Warning: Reference `fig:periodicForcingResponseConstantT' on page 36 unde
+fined on input line 944.
+
+</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-constantT-fields.png, i
+d=576, 578.16pt x 433.62pt>
+File: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-constantT-fields.p
+ng Graphic file (type png)
+<use /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-constantT-fields.pn
+g>
+Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response
+-constantT-fields.png  used on input line 949. on input line 949.
+Package pdftex.def Info: Requested size: 360.0pt x 269.99951pt on input line 94
+9.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-TKE.png, id=577, 462.528
 pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-TKE.png Graphic fil
 e (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-TKE.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-
-TKE.png  used on input line 947. on input line 947.
+TKE.png  used on input line 957. on input line 957.
 Package pdftex.def Info: Requested size: 172.79846pt x 129.5987pt on input line
- 947.
-</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-Q.png, id=872, 462.528pt
+ 957.
+</Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-Q.png, id=578, 462.528pt
  x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-Q.png Graphic file 
 (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-Q.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-
-Q.png  used on input line 952. on input line 952.
+Q.png  used on input line 962. on input line 962.
 Package pdftex.def Info: Requested size: 172.79846pt x 129.5987pt on input line
- 952.
+ 962.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[37 </Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-fields.png>]
+
+LaTeX Warning: Reference `fig:periodicForcingTKE' on page 36 undefined on input
+ line 969.
+
+[36 </Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-fields.png>]
+
+LaTeX Warning: Reference `fig:periodicForcingQ' on page 37 undefined on input l
+ine 971.
+
+
+LaTeX Warning: Reference `sec:EXF' on page 37 undefined on input line 974.
+
+[37 </Users/tghill/pkg/gfg/EOT/fig/periodicForcing/domain-results.png (PNG copy
+)>]
+
+LaTeX Warning: Citation `Duguay2003' on page 38 undefined on input line 988.
+
 [38 </Users/tghill/pkg/gfg/EOT/fig/periodicForcing/response-constantT-fields.pn
 g>] [39 </Users/tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-TKE.png> </Users
 /tghill/pkg/gfg/EOT/fig/periodicForcing/forcing-Q.png>]
-</Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-0.png, id=898, 462.
+
+LaTeX Warning: Reference `fig:CLIMoCompare' on page 40 undefined on input line 
+1006.
+
+</Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-0.png, id=614, 462.
 528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-0.png Graphic 
 file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-0.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compa
-re-0-0.png  used on input line 1000. on input line 1000.
+re-0-0.png  used on input line 1010. on input line 1010.
 Package pdftex.def Info: Requested size: 171.0022pt x 128.25423pt on input line
- 1000.
-</Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-75-75.png, id=899, 46
+ 1010.
+</Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-75-75.png, id=615, 46
 2.528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-75-75.png Graphi
 c file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-75-75.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compa
-re-75-75.png  used on input line 1003. on input line 1003.
+re-75-75.png  used on input line 1013. on input line 1013.
 Package pdftex.def Info: Requested size: 171.0022pt x 128.25423pt on input line
- 1003.
-</Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-125-125.png, id=900, 
+ 1013.
+</Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-125-125.png, id=616, 
 462.528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-125-125.png Grap
 hic file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-125-125.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compa
-re-125-125.png  used on input line 1007. on input line 1007.
+re-125-125.png  used on input line 1017. on input line 1017.
 Package pdftex.def Info: Requested size: 171.0022pt x 128.25423pt on input line
- 1007.
-</Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-300.png, id=901, 46
+ 1017.
+</Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-300.png, id=617, 46
 2.528pt x 346.896pt>
 File: /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-300.png Graphi
 c file (type png)
 <use /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-300.png>
 Package pdftex.def Info: /Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compa
-re-0-300.png  used on input line 1010. on input line 1010.
+re-0-300.png  used on input line 1020. on input line 1020.
 Package pdftex.def Info: Requested size: 171.0022pt x 128.25423pt on input line
- 1010.
+ 1020.
+
+LaTeX Warning: Reference `fig:CLIMoCompare' on page 40 undefined on input line 
+1027.
+
+[40 </Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-0.png> </Users/
+tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-75-75.png> </Users/tghill/pkg
+/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-125-125.png> </Users/tghill/pkg/gfg/EOT
+/fig/climo/MITgcm-CLIMo-compare-0-300.png>]
+
+LaTeX Warning: Reference `sec:MITgcmAlbedo' on page 41 undefined on input line 
+1030.
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+LaTeX Warning: Citation `Svacina2014' on page 41 undefined on input line 1030.
 
-[40] [41 </Users/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-0-0.png> </U
-sers/tghill/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-75-75.png> </Users/tghil
-l/pkg/gfg/EOT/fig/climo/MITgcm-CLIMo-compare-125-125.png> </Users/tghill/pkg/gf
-g/EOT/fig/climo/MITgcm-CLIMo-compare-0-300.png>] [42] [43]
 
-LaTeX Warning: Reference `fig:SB' on page 44 undefined on input line 1084.
+LaTeX Warning: Reference `sec:MITgcmRadiation' on page 41 undefined on input li
+ne 1032.
 
-[44] [45] [46] [47]
-Underfull \hbox (badness 10000) in alignment at lines 1229--1229
+[41] [42] [43] [44]
+
+LaTeX Warning: Citation `Winton2000' on page 45 undefined on input line 1136.
+
+
+LaTeX Warning: Citation `Winton2000' on page 45 undefined on input line 1138.
+
+[45]
+
+LaTeX Warning: Citation `PaulsonSimpson1977' on page 46 undefined on input line
+ 1170.
+
+
+LaTeX Warning: Citation `PaulsonSimpson1977' on page 46 undefined on input line
+ 1178.
+
+[46]
+
+LaTeX Warning: Reference `table:humidityConstants' on page 47 undefined on inpu
+t line 1190.
+
+[47]
+
+LaTeX Warning: Reference `table:vapourConstants' on page 48 undefined on input 
+line 1224.
+
+
+Overfull \hbox (6.38203pt too wide) in paragraph at lines 1223--1225
+\T1/cmr/m/n/10.95 The con-stants are given for wa-ter and ice in ta-ble [], and
+ $\OML/cmm/m/it/10.95 e \OT1/cmr/m/n/10.95 = [] []$\T1/cmr/m/n/10.95 . 
+ []
+
+
+Underfull \hbox (badness 10000) in alignment at lines 1237--1237
 [][][] 
  []
 
-[48] [49] (./MITGCM_SEAICE_manual.bbl [50])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1267.
+
+LaTeX Warning: Reference `eq:vapourPressure' on page 48 undefined on input line
+ 1238.
+
+
+LaTeX Warning: Reference `eq:vapourPressure' on page 48 undefined on input line
+ 1238.
+
+
+LaTeX Warning: Reference `eq:vapourPressure' on page 48 undefined on input line
+ 1242.
+
+
+LaTeX Warning: Reference `fig:CLIMoCompare' on page 48 undefined on input line 
+1251.
+
+[48]
+
+LaTeX Warning: Reference `sec:CLIMo' on page 49 undefined on input line 1268.
+
+
+LaTeX Warning: Reference `sec:SEAICE' on page 49 undefined on input line 1269.
+
+[49]
+Underfull \hbox (badness 10000) in paragraph at lines 1298--1298
+[]|\T1/cmr/bx/n/10.95 Time ex-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1298--1298
+[]|\T1/cmr/bx/n/10.95 Approximate
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1298--1298
+\T1/cmr/bx/n/10.95 num-ber of
+ []
+
+
+Underfull \hbox (badness 1033) in paragraph at lines 1298--1298
+[]|\T1/cmr/m/n/10.95 Few days to a
+ []
+
+(./MITGCM_SEAICE_manual.bbl [50])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1307.
  [51]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1267.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1307.
  (./MITGCM_SEAICE_manual.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1267.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1267.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1307.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1307.
 
-Package rerunfilecheck Info: File `MITGCM_SEAICE_manual.out' has not changed.
-(rerunfilecheck)             Checksum: DC32D25DB38DB8D52488ED723FA11D09;3775.
 
+
+Package rerunfilecheck Warning: File `MITGCM_SEAICE_manual.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `MITGCM_SEAICE_manual.out':
+(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
+(rerunfilecheck)             After:  26B30248B99542140BB8AFD3E8DA8B6C;4193.
 
 LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1267.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1307.
  ) 
 Here is how much of TeX's memory you used:
- 20506 strings out of 492990
- 387270 string characters out of 6132636
- 640272 words of memory out of 5000000
- 23385 multiletter control sequences out of 15000+600000
+ 20460 strings out of 492990
+ 386668 string characters out of 6132636
+ 635107 words of memory out of 5000000
+ 23333 multiletter control sequences out of 15000+600000
  550792 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,23n,50p,10394b,2207s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,23n,50p,10394b,2209s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></u
@@ -1810,10 +2097,10 @@ t/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2017/texmf-dist/
 fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2017/texmf-dist/fo
 nts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2017/texmf-dist/font
 s/type1/public/cm-super/sftt1095.pfb>
-Output written on MITGCM_SEAICE_manual.pdf (51 pages, 27248685 bytes).
+Output written on MITGCM_SEAICE_manual.pdf (51 pages, 28767326 bytes).
 PDF statistics:
- 1178 PDF objects out of 1200 (max. 8388607)
- 1030 compressed objects within 11 object streams
- 454 named destinations out of 1000 (max. 500000)
- 604 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 901 PDF objects out of 1000 (max. 8388607)
+ 758 compressed objects within 8 object streams
+ 463 named destinations out of 1000 (max. 500000)
+ 161 words of extra memory for PDF output out of 10000 (max. 10000000)
 

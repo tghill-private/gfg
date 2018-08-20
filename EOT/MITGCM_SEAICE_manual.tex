@@ -69,15 +69,16 @@ The next few sections outline some specific things I learned about the model, an
 \section{Setting up the MITgcm}
 The most useful references for the MITgcm are:
 \begin{itemize}
-\item{The \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=Main_Page}{fluids wiki} has a wealth iof information about computing resources, running on the SHARCNET cluster, and has an \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=MITgcmTutorial}{MITgcm tutorial} (discussed later).}
+\item{The \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=Main_Page}{fluids wiki} has a wealth of information about computing resources, running on the SHARCNET cluster, and has an \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=MITgcm}{MITgcm section}.}
 \item{The \href{http://mitgcm.org}{MITgcm homepage}}
-\item{The \href{https://mitgcm.readthedocs.io/en/latest/}{new MITgcm documentation} is on read the docs, but is incomplete at the time of writing. The \href{http://mitgcm.org/public/r2_manual/final/online_documents/node1.html}{old documentation} is still accessible but has some unfortunate qualities, including embedding tabels as images so they are not searchable.}
+\item{The \href{https://mitgcm.readthedocs.io/en/latest/}{new MITgcm documentation} is on read the docs, but is incomplete at the time of writing. The \href{http://mitgcm.org/public/r2_manual/final/online_documents/node1.html}{old documentation} is still accessible but has some unfortunate qualities, including embedding tables as images so they are not searchable.}
 \item{The \href{https://github.com/MITgcm/MITgcm}{MITgcm github repo} is where I usually look at and search through the model code if I need to.}
 \end{itemize}
 
-\subsection{Basic tutorial}
-The \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=MITgcmTutorial}{Fluids wiki tutorial} is a good tutorial to start with the model. The tutorial was originally written by Emily Tyhurst, and I have corrected a few mistakes in the tutorial.
+\subsection{MITgcm tutorials}
+The Fluids wiki has a \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=MITgcm_Tutorials}{tutorials page}, which links to two available tutorials.
 
+\subsubsection{Tutorial 1: Gravity wave}
 The tutorial is largely self-contained, but I want to say a word about directory structure. MITgcm expects your case files to be contained in the same directory as the model. For example, if you make a folder called \verb|simulation1| for your simulation, this folder might be in the same directory as the MITgcm directories \verb|doc/|, \verb|eesupp/|, \verb|pkg/|, \verb|model/|, etc., in which case the directory structure would look like
 
 \begin{lstlisting}
@@ -123,10 +124,10 @@ I had a folder I called \verb|MITgcmdata/| which was a git repo that contained a
 
 Having a structure like this makes compiling the model much easier. You can in theory compile the model from anywhere as long as you point the \verb|genmake2| script to the model directories, but in practice this has been harder than expected.
 
-\subsection{SEAICE tutorial}
+\subsubsection{SEAICE tutorial}
 The SEAICE package (sec \ref{sec:SEAICE}) provides a dynamic and thermodynamic sea-ice model for the MITgcm. This package is general purpose enough to model freshwater and ocean ice. The package does a good job (at least qualitatively) of recreating dynamics and ice quantities reasonably physically.
 
-I have created a SEAICE tutorial that will be put on the fluids wiki. The tutorial walks you through a few cases, and has you design your own model run at the end. The data files from the tutorial should be a good starting point to base case files for more complicated experiments on.
+The \href{https://wiki.math.uwaterloo.ca/fluidswiki/index.php?title=SEAICE_tutorial}{SEAICE tutorial} walks you through a few cases, and has you design your own model run at the end. The data files from the tutorial should be a good starting point to base case files for more complicated experiments on.
 
 \section{More details about running MITgcm}
 This section tries to describe aspects of running the MITgcm with more useful information than the documentaion. Hopefully this will be a good resource when trying to extend the model past what is included in the tutorials.
@@ -187,7 +188,7 @@ CEH3 ;;; End: ***
 Parameter \verb|numlists| (line 20) and \verb|numdiags| (line 21) can be adjusted if you need more diagnostics.
 
 \subsubsection*{Run time options}
-The diagnostics you want to output, and how frequently to write files are specified at runtime in file \verb|data.diagnostics|. Specify the field names in \verb|field| and \verb|filename| lines, and set the frequency. See the following example. The file needs namelists \verb|&DIAGNOSTICS_LIST| (for writing an enitre field to file) and \verb|DIAG_STATIS_PARMS| (for writing per-level statistics), even if one of them is empty.
+The diagnostics you want to output, and how frequently to write files are specified at runtime in file \verb|data.diagnostics|. Specify the field names in \verb|field| and \verb|filename| lines, and set the frequency. See the following example. The file needs namelists \verb|&DIAGNOSTICS_LIST| (for writing an entire field to file) and \verb|DIAG_STATIS_PARMS| (for writing per-level statistics), even if one of them is empty.
 
 \begin{lstlisting}[caption={Example \texttt{data.diagnostics} file}, captionpos=b]
 # Diagnostic Package Choices
@@ -368,10 +369,10 @@ This section discusses choosing an equation of state, using checkpoint files, ti
 The equation of state relates temperature, density, and salinity of water. For freshwater, the maximum density of is at $\SI{4}{\celsius}$, so a linear equation of state is a poor choice with temperatures near $\SI{4}{\celsius}$. The equation of state of Jackett and McDougall (1995, \cite{JackettMcDougall1995}) is a good compromise between simplicity (doesn't add an extra pickup file) and accuracy. Use this equation of state by including \verb|eosType='JMD95Z',| in the \verb|PARM01| namelist of \verb|data|. See the discussion in the documentation about \href{https://mitgcm.readthedocs.io/en/latest/getting_started/getting_started.html#parameters-equation-of-state}{EOS type}.
 
 \subsubsection{Checkpoint files}
-The model will inevitably fail sometimes. This can lose a lot of computation time especially when running large jobs on Graham. Therefore, it is best practice to save checkpoint files periodically. MITgcm has rolling checkpoint files and permanent checkpoint files. Rolling checkpoint files save the model current state with one of two file names ("ckptA" and "ckptB"), overwriting the oldest file to save new checkpoints. Permanent checkpoint files are saved with the model iteration numebr and therefore do not get overwritten. The frequency at which to save checkpoint files is controlled by the keywords \verb|chkptFreq| for rolling checkpoints and \verb|pchkptFreq| for permament checkpoints in the \verb|PARM03| namelist of the \verb|data| file.
+The model will inevitably fail sometimes. This can lose a lot of computation time especially when running large jobs on Graham. Therefore, it is best practice to save checkpoint files periodically. MITgcm has rolling checkpoint files and permanent checkpoint files. Rolling checkpoint files save the model current state with one of two file names ("ckptA" and "ckptB"), overwriting the oldest file to save new checkpoints. Permanent checkpoint files are saved with the model iteration number and therefore do not get overwritten. The frequency at which to save checkpoint files is controlled by the keywords \verb|chkptFreq| for rolling checkpoints and \verb|pchkptFreq| for permament checkpoints in the \verb|PARM03| namelist of the \verb|data| file.
 
 \subsubsection{Time stepping}
-The time step and simulation length parameters are all in the \verb|PARM03| namelist of the \verb|data| file. Specify the start and end time with the \verb|startTime| and \verb|endTime| keywords. The model time step is given by the \verb|deltaT| keyword. Alternatively, different time steps can be specified for the momenutm and tracer equations by setting \verb|deltaTmom| and \verb|deltaTtracer| individually. If not using the diagnostics package, the file output frequency should be specified as \verb|dumpFreq| here too. If using the diagnostics package, set this to 0.
+The time step and simulation length parameters are all in the \verb|PARM03| namelist of the \verb|data| file. Specify the start and end time with the \verb|startTime| and \verb|endTime| keywords. The model time step is given by the \verb|deltaT| keyword. Alternatively, different time steps can be specified for the momentum and tracer equations by setting \verb|deltaTmom| and \verb|deltaTtracer| individually. If not using the diagnostics package, the file output frequency should be specified as \verb|dumpFreq| here too. If using the diagnostics package, set this to 0.
 
 \subsubsection{File input and output}
 Input and output files to the model are binary files in big-endian format. I usually use double-precision floats for input, by specifying \verb|readBinaryPrec=64,| in \verb|PARM01|. This corresponds to data type \verb|">f8"| in python's numpy package. See listing \ref{listing:fileInput} for a pythonic way to set input data for the model.
@@ -539,11 +540,11 @@ C      |     |     |     |     |     | Compute  hflux and sflux.
 C
 C   =======================================================================
 \end{lstlisting}
-Having truly zero wind speed may interefere with the above configurations, and the package might not compute all the required fields to couple to the core model. A work around is specifying $\varepsilon$-winds. By specifying a very small wind speed $\mathcal{O}(10^{-16}) \textrm{ } \si{m.s^{-1}}$, the model behaves properly and computes all heat fluxes.
+Having truly zero wind speed may interfere with the above configurations, and the package might not compute all the required fields to couple to the core model. A work around is specifying $\varepsilon$-winds. By specifying a very small wind speed $\mathcal{O}(10^{-16}) \textrm{ } \si{m.s^{-1}}$, the model behaves properly and computes all heat fluxes.
 
 \section{Results: cases studied}
 
-\subsection{Ice advection}
+\subsection{Case 1: Ice advection}
 This case was designed to verify:
 \begin{itemize}
 \item{Ice will be moved by wind and surface currents}
@@ -600,7 +601,7 @@ This case was first run with the default ice advection scheme (\verb|SEAICEadvSc
 	\begin{subfigure}{0.85\textwidth}
 		\includegraphics[width=\textwidth]{iceAdvect/advScheme-def-surface-T-hd-0000025200.png}
 	\end{subfigure}
-\caption{Ice area fraction and temperature fields for advection sceheme 2 (second order centered difference scheme). Note surface temperature much above freezing where ice has newly formed.}
+\caption{Case 1: Ice area fraction and temperature fields with advection scheme 2 (second order centered difference scheme). Note surface temperature much above freezing where ice has newly formed.}
 \label{fig:advScheme2}
 \end{figure}
 
@@ -613,7 +614,7 @@ This case was first run with the default ice advection scheme (\verb|SEAICEadvSc
 	\begin{subfigure}{0.85\textwidth}
 		\includegraphics[width=\textwidth]{iceAdvect/advScheme-07-surface-T-hd-0000025200.png}
 	\end{subfigure}
-\caption{Ice area fraction and temperature fields for advection sceheme 7. The obvious gridding pattern comes from the wrong overlap extent in X and Y.}
+\caption{Case 1: Ice area fraction and temperature fields for advection sceheme 7. The obvious gridding pattern comes from the wrong overlap extent in X and Y.}
 \label{fig:advScheme7}
 \end{figure}
 
@@ -635,7 +636,7 @@ This case was first run with the default ice advection scheme (\verb|SEAICEadvSc
 \includegraphics[width=\linewidth]{iceAdvect/advScheme-77-surface-T-hd-0000025200.png}
 \end{subfigure}
 
-\caption{Ice area fraction and temperature fields for advection scheme 33 (top row) and 77 (bottom row). These agree qualitatively very well, and agree with physical intuition. }
+\caption{Case 1: Ice area fraction and temperature fields for advection scheme 33 (top row) and 77 (bottom row). These agree qualitatively very well, and agree with physical intuition. }
 \label{fig:advSchemes}
 \end{figure}
 The difference between the top and bottom of each panel in figure \ref{fig:advSchemes} is due to the wind. Ice forms in the top half where the water is calmer (because there is no wind there), gets pushed by the surface currents, and then in the bottom half is pushed quickly by the wind. It collects in the bottom right corner.
@@ -650,8 +651,8 @@ From this simulation, we learned and see the following points
 \item{The Linear equation of state is a poor choice. Looking at temperature cross-sections the cold water falls to the bottom, and water closer to $\SI{4}{\celsius}$ rises to the top. This is opposite from what should happen. A more accurate EOS would form ice faster since cold water would stay at the top.}
 \end{itemize}
 
-\subsection{Ice melting}
-We wanted to design a scenario which would isolate how the model melts ice. The lake is initialized with constant ice cover, with warm air and moderate downward solar radiation (see complete details in table \ref{table:iceMelt}. There are Eastward winds in the South half of the lake. We expect the ice to melt and break up. In particular, we want to see:
+\subsection{Case 2: Ice melting}
+We wanted to design a scenario which would isolate how the model melts ice. The lake is initialized with constant ice cover, with warm air and moderate downward solar radiation (see complete details in table \ref{table:iceMelt}. There are eastward winds in the south half of the lake. We expect the ice to melt and break up. In particular, we want to see:
 
 \begin{itemize}
 \item{Ice to melt until it starts to break up}
@@ -700,12 +701,12 @@ The model was run with these parameters, as well as:
 \end{itemize}
 
 \subsubsection{Results}
-The first results are for the case outlined in table \ref{table:iceMelt}. This is hydrostatic with $\SI{12.5}{m}$ horizontal resolution and $\SI{0.5}{m.s^{-1}}$ winds in the South half. See pseudocolour plots of the ice thickness and temperature in figure \ref{fig:iceMelt0}, and the ice mass time-series in figure \ref{fig:iceMelt0IceMass}. Psuedocolour plots aren't presented for other cases with wind, since they are qualitatively similar.
+The first results are for the case outlined in table \ref{table:iceMelt}. This is hydrostatic with $\SI{12.5}{m}$ horizontal resolution and $\SI{0.5}{m.s^{-1}}$ winds in the south half. See pseudocolour plots of the ice thickness and temperature in figure \ref{fig:iceMelt0}, and the ice mass time-series in figure \ref{fig:iceMelt0IceMass}. Psuedocolour plots aren't presented for other cases with wind, since they are qualitatively similar.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.8\linewidth]{iceMelt/icemeltsmooth-icemass}
-\caption{Total ice mass with parameters from table \ref{table:iceMelt}. The ice initially grows in the cold water, and later is melted by the warm air temperature and solar radiation.}
+\caption{Total ice mass for case 2. The ice initially grows in the cold water, and later is melted by the warm air temperature and solar radiation.}
 \label{fig:iceMelt0IceMass}
 \end{figure}
 
@@ -718,7 +719,7 @@ The first results are for the case outlined in table \ref{table:iceMelt}. This i
 \begin{subfigure}{0.8\linewidth}
 \includegraphics[width=\linewidth]{iceMelt/icemeltsmooth-surface-T-0001117800}
 \end{subfigure}
-\caption{Effective ice thickness (top) and surface temperature (bottom) with parameters as in table \ref{table:iceMelt}. The ice has melted in the bottom left corner from the wind. Notice the ridge built up to the right of the open water, and the cracking in the ice above the open water.}
+\caption{Effective ice thickness (top) and surface temperature (bottom) for case 2. The ice has melted in the bottom left corner from the wind. Notice the ridge built up to the right of the open water, and the cracking in the ice above the open water.}
 \label{fig:iceMelt0}
 \end{figure}
 
@@ -729,12 +730,12 @@ We want to see how sensitive the results are to changes in some parameters. We c
 \item{Higher resolution}
 \item{Removing surface winds}
 \end{itemize}
-The model runs much faster in hydrostatic configuration than non-hydrostatic, and eventually we will need to use the hydrostatic configuration to run a full lake-scale model. Therefore, we'd like to know how much of a difference this approximation makes for our cases. Similarly, we want to understand what impact resolution will have in our simulations. Therefore, we run 4 cases: high and low resolution for both hydrostatic and non-hydrostatic configurations. We start with 12.5 m horizontal resolution, and increase to 6.25 m resolution. Total kinetic energy is compared in figure \ref{fig:iceMeltCompareTKE}. The case with no surface wind is not shown since the kinetic energy is significantly lower.
+The model runs much faster in hydrostatic configuration than non-hydrostatic, and eventually we will need to use the hydrostatic configuration to run a full lake-scale model. Therefore, we'd like to know how much of a difference this approximation makes for our cases. Similarly, we want to understand what impact resolution will have in our simulations. Therefore, we run 4 cases: high and low resolution for both hydrostatic and non-hydrostatic configurations. We start with 12.5 m horizontal resolution, and increase to 6.25 m resolution. Total kinetic energy in the water (not including kinetic energy of the ice) is compared in figure \ref{fig:iceMeltCompareTKE}. The case with no surface wind is not shown since the kinetic energy is significantly lower.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.85\linewidth]{iceMelt/icemeltsmooth-deltaTKE}
-\caption{Comparison of total kinetic energy for different model configurations.}
+\caption{Case 2: Comparison of total kinetic energy of the water for different model configurations.}
 \label{fig:iceMeltCompareTKE}
 \end{figure}
 
@@ -742,7 +743,7 @@ The high-resolution simulations have good agreement between hydrostatic and non-
 
 We can compare the mean ice thickness and total internal energy in the water between model configurations. We compare the above simulations, as well as the simulation with no surface winds. Intuitively removing the winds should change the rate of heat transfer and ice break-up, so we investigate this. The results are in figure \ref{fig:iceMeltCompareWinds}.
 
-In each case, the ice melts most rapidly at about 5 weeks in to the simulation. Call this the break-up time. All simulations have relatively good agreement on ice thickness until the break-up time. The case with no wind takes longer to start melting, and then melts faster, than the other cases. At break-up time the case with no wind seems to be able to transfer heat from the water into the ice to melt it more efficiently than the other cases. This might explain the dip in internal energy compared to the other cases.
+In each case, the ice melts most rapidly at about 5 weeks into the simulation. Call this the break-up time. All simulations have relatively good agreement on ice thickness until the break-up time. The case with no wind takes longer to start melting, and then melts faster, than the other cases. At break-up time the case with no wind seems to be able to transfer heat from the water into the ice to melt it more efficiently than the other cases. There could be more evaporative cooling in the water when there are now winds, which could be a possible mechanicsm for the different warming rates. This might explain the dip in internal energy compared to the other cases.
 
 \clearpage
 \begin{figure}[h!]
@@ -753,16 +754,16 @@ In each case, the ice melts most rapidly at about 5 weeks in to the simulation. 
 \begin{subfigure}{0.95\linewidth}
 \includegraphics[width=\linewidth]{iceMelt/icemeltsmooth-deltaQ}
 \end{subfigure}
-\caption{Comparison of mean ice thickness (top) and total internal energy of the water (bottom) between model configurations.}
+\caption{Case 2: Comparison of mean ice thickness (top) and total internal energy of the water (bottom) between model configurations.}
 \label{fig:iceMeltCompareWinds}
 \end{figure}
 
-The case with no surface wind has very different qualitative ice distributions when it melts than the case with surface wind (fig \ref{fig:iceMeltNoWind}). The ice mostly melts from the edges, but still forms coherent clumps. It maintains a more even distribution throughout the domain, which may contribute to melting faster.
+The case with no surface wind has very different qualitative ice distributions when it melts than the case with surface wind (fig \ref{fig:iceMeltNoWind}). The ice mostly melts from the edges, but still forms coherent clumps. It maintains a more even distribution throughout the domain, which may contribute to melting faster. The spatial variability seen in figure \ref{fig:iceMeltNoWind} is likely from noise in the numerics. MITgcm is a finite volume formulation which will introduce some noise into the solution.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.9\linewidth]{iceMelt/icemeltsmooth-nowind-surface-ice-thick-0001177200}
-\caption{Surface ice thickness for case with no surface winds. The ice largely melts from the edges, with some spatial variability}
+\caption{Surface ice thickness for case 2 with no surface winds. The ice largely melts from the edges, with some spatial variability}
 \label{fig:iceMeltNoWind}
 \end{figure}
 
@@ -776,10 +777,10 @@ Regarding running the model, I had to include a very small wind speed instead of
 \subsubsection{Next steps}
 This case with the same initial conditions has been studied thoroughly. It could be worthwhile to compare the melting rate to initial conditions with some small variability in the initial ice distribution, which is more realistic. This could also be a good case to introduce more interesting bathymetry and see what effect lake shape has on the dynamics.
 
-\subsection{Solar forcing}
+\subsection{Case 3: Solar forcing}
 We are interested in how the model simulates solar forcing over open water and ice covered water. This is clearly important to lake dynamics, and likely needs to be studied in more detail than I have done so far.
 
-To study the different solar forcing for ice-covered and open water, I initialize a lake to be completely covered in $\SI{1}{m}$ thick ice in the North half, and open water in the South half. This is an idealized interface between an ice sheet and open water in a real lake. I set the air temperature to be $\SI{0}{\celsius}$, and send down moderate solar radiation. I continue to use Eastward winds in only the South half of the lake. See more details on the setup in table \ref{table:solarForcing}.
+To study the different solar forcing for ice-covered and open water, I initialize a lake to be completely covered in $\SI{1}{m}$ thick ice in the north half and open water in the south half. This is an idealized interface between an ice sheet and open water in a real lake. I set the air temperature to be $\SI{0}{\celsius}$, and send down $\SI{300}{W.m^{-2}}$ of both shortwave and longwave radiation. I continue to use eastward winds in only the south half of the lake. See more details on the setup in table \ref{table:solarForcing}.
 
 From this case, I want to see
 \begin{itemize}
@@ -823,12 +824,12 @@ Initial SEAICE thickness    & $1.0, y \geq 3 \text{ km}$ & Constant ice in North
 This case was run in hydrostatic and non-hydrostatic configuration.
 
 \subsubsection{Results}
-A plot of the surface temperature is shown in figure \ref{fig:solarForcingSurfaceT}. Figure \ref{fig:solarForcingConstantT} shows constant temperature contours. Note the warm water pushing the $\SI{0}{\celsius}$ contour up under the ice in the East end of the lake. The ripples in the contours are cased by velocity shear. Since the wind has a smooth transition (hyperbolic tangent function), the wind at the ice edge is half the magnitude of the maximum wind in the South half. The surface currents are then in the negative X direction against the ice and positive X in the bulk of the open water, creating shear.
+A plot of the surface temperature is shown in figure \ref{fig:solarForcingSurfaceT}. Figure \ref{fig:solarForcingConstantT} shows constant temperature contours. Note the warm water pushing the $\SI{0}{\celsius}$ contour up under the ice in the east end of the lake. The ripples in the contours are cased by velocity shear. Since the wind has a smooth transition (hyperbolic tangent function), the wind at the ice edge is half the magnitude of the maximum wind in the south half. The surface currents are then in the negative X direction against the ice and positive X in the bulk of the open water, creating shear.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.85\linewidth]{solarForcing/solarforcing-surface-T-0000034380}
-\caption{Surface temperature at the end of the model run. The surface layer under the ice remains at exactly $\SI{0}{\celsius}$, while the open water is warmed by the sun.}
+\caption{Surface temperature at the end of the model run for case 3. The surface layer under the ice remains at exactly $\SI{0}{\celsius}$, while the open water is warmed by the sun.}
 \label{fig:solarForcingSurfaceT}
 \end{figure}
 
@@ -845,7 +846,7 @@ A plot of the surface temperature is shown in figure \ref{fig:solarForcingSurfac
 \begin{subfigure}{0.49\linewidth}
 \includegraphics[width=\linewidth]{solarForcing/solarforcing-section02}
 \end{subfigure}
-\caption{Constant temperature surfaces for hydrostatic configuration. The top panel shows the entire domain. The bottom panels show two perspectives of a cut of the Eastern half of the domain. The forward face in the bottom left is the center of the domain. The forward face in the bottom right is the Eastern edge of the domain.}
+\caption{Constant temperature surfaces for hydrostatic configuration of case 3. The top panel shows the entire domain. The bottom panels show two perspectives of a cut of the east half of the domain. The forward face in the bottom left is the center of the domain. The forward face in the bottom right is the Eastern edge of the domain.}
 \label{fig:solarForcingConstantT}
 \end{figure}
 
@@ -864,7 +865,8 @@ This case was also run in non-hydrostatic configuration. A comparison of the kin
 \begin{subfigure}{0.49\linewidth}
 \includegraphics[width=\linewidth]{solarForcing/convect-deltaIce}
 \end{subfigure}
-\caption{Comparison of total kinetic energy (top), internal energy in the water (bottom left) and ice mass (bottom right) for hydrostatic and non-hydrostatic configurations.}
+\caption{Case 3: comparison of total kinetic energy (top), internal energy in the water (bottom left) and ice mass (bottom right) for hydrostatic and non-hydrostatic configurations.}
+\label{fig:solarForcingCompare}
 \end{figure}
 
 \subsubsection{What was learned}
@@ -873,7 +875,7 @@ From this case, we see that the treatment of solar radiation is consistent with 
 \subsubsection{Next steps}
 It might be worthwhile to run this case at higher resolution on Graham to see if the non-hydrostatic configuration has more kinetic energy from convection than the hydrostatic case. It would also be interesting to try to resolve the convection currents better and really study how they interact with the ice. This might require scaling the domain down to have much finer resolution.
 
-\subsection{Periodic forcing}
+\subsection{Case 4: Periodic forcing}
 So far, all cases have used a similar domain, and have had constant forcing. We try running the model with a much larger domain and daily cycles in the forcing fields. We use a sinusoidal cycle as a rough approximation of the daily cycle of meteorological forcing (see figure \ref{fig:periodicForcingFields}).
 
 The domain is a 25 km x 25 km square lake, modelled at 250 m resolution. The lake is 50 m deep, with 2 m vertical resolution. The sides of the lake are sloped with a constant 2\% slope (drops 50 m over 2.5 km). The meteorological forcing is shown in figure \ref{fig:periodicForcingFields}. Some more parameter details are given in table \ref{table:periodicForcing}.
@@ -905,7 +907,7 @@ The domain is a 25 km x 25 km square lake, modelled at 250 m resolution. The lak
 \verb|SEAICEadvAREA|     & \verb|.TRUE.| & Advect seaice area fraction \\ \hline
 \verb|SEAICEadvScheme|   & 33			& Advection scheme 33: Flux limited direct space and time advection scheme \\ \hline
 
-Temperature & \begin{equation*} \begin{cases} 0^{\circ} \text{C} & z = 0 \text{ m} \\ 4 ^{\circ} \text{C} & z = -10 \text{ m}   \end{cases} \end{equation*} & Temperature stratified lake, pycnocline at $\SI{25}{m}$, mid-depth \\ \hline
+Temperature & \begin{equation*} \begin{cases} 0^{\circ} \text{C} & z = 0 \text{ m} \\ 4 ^{\circ} \text{C} & z = -50 \text{ m}   \end{cases} \end{equation*} & Temperature stratified lake, pycnocline at $\SI{25}{m}$, mid-depth \\ \hline
 Initial SEAICE area fraction   & Large chunks, $0.2 \leq \texttt{SIarea} \leq 1.0$ & Variable ice cover \\ \hline
 Initial SEAICE thickness    & Large chunks, $0.5 \leq \texttt{SIheff} \leq 1.0$ & Variable ice cover \\ \hline
 
@@ -915,18 +917,26 @@ Initial SEAICE thickness    & Large chunks, $0.5 \leq \texttt{SIheff} \leq 1.0$ 
 
 \begin{figure}[h!]
 \includegraphics[width=\linewidth]{periodicForcing/forcing}
-\caption{Time-dependent forcing values. Fields are sampled every hour (same frequency as output files are generated).}
+\caption{Time-dependent forcing values for case 4. Fields are sampled every hour (same frequency as output files are generated).}
 \label{fig:periodicForcingFields}
 \end{figure}
 
 \subsubsection{Results}
 \begin{figure}[h!]
 \includegraphics[width=\linewidth]{periodicForcing/response-fields}
-\caption{Mean value of output fields in response to periodic forcing. From top to bottom: mean surface U currents, mean surface temperature, mean effective ice thickness, mean heat transfer from the lake into the ice, mean surface wind stress (U direction)}
+\caption{Mean value of output fields in response to periodic forcing for case 4. From top to bottom: mean surface U currents, mean surface temperature, mean effective ice thickness, mean heat transfer from the lake into the ice, mean surface wind stress (U direction)}
 \label{fig:periodicForcingResponse}
 \end{figure}
 
 We expect a roughly sinusoidal signal in the output fields in response to the input forcing (fig \ref{fig:periodicForcingFields}). The mean value of the output fields is shown in figure \ref{fig:periodicForcingResponse}. Notice the strange shape of the wind stress curve, and that the peak positive $U$ value occurs before midday. We would expect the peak positive surface currents to occur at or slightly after the peak positive wind speed, but the currents appear to lead the wind.
+
+A 3D visualization of this case is shown in figure \ref{fig:periodicVisualization}. This visualization is a cut of the north half of the domain, with the open face the center of the domain. You can see some variability in the upper constant T contours, created by the initial variability in the ice cover.
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{periodicForcing/domain-results}
+\caption{3D visualization of the temperature and ice thickness for case 4 with periodic forcing.}
+\label{fig:periodicVisualization}
+\end{figure}
 
 \subsubsection{Run with constant temperature}
 We want to see what happens when we run this case with no temperature stratification. The response curves above have the strange "capped" structure, and we want to know if this goes away or stays when we take out the stratification. The capped structure could be due to the wind creating an internal seiche, and removing the stratification would remove the seiche. We set the initial water to constant $\SI{0}{\celsius}$.
@@ -953,10 +963,10 @@ This case NaN'd before the end of the model time (1 week). The other case did no
 \caption{}
 \label{fig:periodicForcingQ}
 \end{subfigure}
-\caption{Comparison of total kinetic energy (top) and internal energy (bottom) between temperature stratified and non-stratified cases.}
+\caption{Case 4: comparison of total kinetic energy (top) and internal energy (bottom) between temperature stratified and non-stratified cases.}
 \end{figure}
 
-However, the total kinetic energy is significantly higher in the constant temperature case, shown in figure \ref{fig:periodicForcingTKE}. The difference is mostly due to the vertical velocity. When a cold parcel of water near the top of the lake is heated by the sun it warms, and gets denser. This water then starts moving downward. In the stratified case, near the pycnocline there is a restoring buoyant force which should slow or stop the vertical motion. In the non-stratified case, there is no restoring force and the parcel should continue falling and accelerating. I think this is the reason for the significant difference in Kinetic energy. However, this should be computed with available/background potential energy.
+However, the total kinetic energy is significantly higher in the constant temperature case, shown in figure \ref{fig:periodicForcingTKE}. The difference is mostly due to the vertical velocity. When a cold parcel of water near the top of the lake is heated by the sun it warms, and gets denser. This water then starts moving downward. In the stratified case, near the pycnocline there is a restoring buoyant force which should slow or stop the vertical motion. In the non-stratified case, there is no restoring force and the parcel should continue falling and accelerating. I think this is the reason for the significant difference in kinetic energy. However, this should be computed with available/background potential energy.
 
 In the end, the kinetic energy difference might not be very significant. The internal energy (\ref{fig:periodicForcingQ}) is 7 orders of magnitude greater than the kinetic energy by the end of the simulation.
 
@@ -971,7 +981,7 @@ For this case, there are some clear next steps:
 \item{Diagnose why the constant temperature case NaN before the stratified case}
 \end{itemize}
 
-\subsection{1D comparison}
+\subsection{Case 5: 1D comparison}
 \label{sec:CLIMo}
 Taken together, the results presented above show the model behaves well qualitatively. Now we want to validate the model quantitatively.
 
@@ -1009,7 +1019,7 @@ The mean ice thickness between the models is compared in figure \ref{fig:CLIMoCo
 \begin{subfigure}{0.475\linewidth}
 \includegraphics[width=\linewidth]{climo/MITgcm-CLIMo-compare-0-300}
 \end{subfigure}
-\caption{Mean ice thickness comparison between MITgcm and CLIMo for varying downward radiation values.}
+\caption{Mean ice thickness comparison between MITgcm and CLIMo for varying downward radiation values for case 5.}
 \label{fig:CLIMoCompare}
 \end{figure}
 
@@ -1035,12 +1045,10 @@ If the comparison is still interesting, some more long term things to consider:
 I have periodically had problems with the NetCDF/HDF5 libraries. These problems usually came from running out of disk space or disk quotas, but sometimes show up when the wrong modules are loaded. When processing the model binary output files to netCDF files, sometimes the process fails with a generic netCDF or HDF library error. This may be caused by one of the two issues below.
 
 \subsubsection{Disk space or quota}
-The first time this issue came up, I had run out of my disk quota on Graham. Try running the bash command \verb|ls -l|. You want to see something like \verb|drwxr-s--- 3 tghill ctb-mmstastn   4096 Jul 24 14:08 include| for each line. Of the two names, the second should be \verb|ctb-mmstastn|, because then your file storage will count towards the contributed resource space, instead of your own (or elsewhere). If a file shows up with group ownership that is your username (or another supervisor who has smaller storage space), you can change the ownership by running \verb|chown [username]:ctb-mmstastn| (or a different group name).
-
-If you're running MITgcm a lot on Hood, ask Robyn for access to a larger storage drive to store your data on. The home disk is relatively small.
+The first time this issue came up, I had run out of my disk quota on Graham. Try running the bash command \verb|ls -l|. You want to see something like \verb|drwxr-s--- 3 tghill ctb-mmstastn   4096 Jul 24 14:08 include| for each line. Of the two names, the second should be \verb|ctb-mmstastn|, because then your file storage will count towards the contributed resource space, instead of your own (or elsewhere). If a file shows up with group ownership that is your username (or another supervisor who has smaller storage space), you can change the ownership by running \verb|chown [username]:ctb-mmstastn| (or a different group name). If you want to run MITgcm on Hood, ask Robyn for access to a project disk to work on.
 
 \subsubsection{Modules}
-The loaded modules on Graham can also present problems. I haven't been able to determine which modules don't work together when running or compiling the model, but to install and use NetCDF tools, the NetCDF and HDF modules should be loaded. You can seach for the current versions with  the command \verb|module spider netcdf|, \verb|module spider hdf5|. If you're compiling and running in paralle, you might need to load the mpi versions. The list of modules below has worked for me for compiling, running, and converting output to netCDF.
+The loaded modules on Graham can also present problems. I haven't been able to determine which modules don't work together when running or compiling the model, but to install and use NetCDF tools, the NetCDF and HDF modules should be loaded. You can seach for the current versions with  the command \verb|module spider netcdf|, \verb|module spider hdf5|. If you're compiling and running in parallel, you might need to load the mpi versions. The list of modules below has worked for me for compiling, running, and converting output to netCDF.
 
 \begin{itemize}
 \item{StdEnv/2016.4}
@@ -1081,7 +1089,7 @@ The emittance will depend on the value of emissivity used. The SEAICE packages t
 M = \SI{306.17}{W.m^{-2}}
 \end{equation*}
 
-The model shows very good agreement with this value (fig. \ref{fig:SB})
+The model shows very good agreement with this value.	
 
 \subsection{Water surface energy budget}
 As one way to compare the effect of parameters and meteorological forcing values, we compute the total internal energy in heat of the water, as well as the heat fluxes across the water boundary. We expect that
@@ -1194,7 +1202,7 @@ $M_{dry}$ & Molar mass of dry air & $\SI{28.9644}{g.{mol}^{-1}}$ \\ \hline
 \label{table:humidityConstants}
 \end{table}
 
-The most relevant direction is to compute specfic humidity from relative humidity. We would usually choose a relative humidity value, and want to find the corresponding specific humidity to input to the model. The specific humidity is the mass ratio of water vapor to dry air. That is,
+The most relevant direction is to compute specific humidity from relative humidity. We would usually choose a relative humidity value, and want to find the corresponding specific humidity to input to the model. The specific humidity is the mass ratio of water vapor to dry air. That is,
 
 \begin{equation}
 \label{eq:specificHumidity}
@@ -1261,6 +1269,38 @@ There are some clear directions to extend the cases from Results in that are dic
 \item{Include the recommendations from the SEAICE section \ref{sec:SEAICE} into the toy cases}
 \item{Learn what the thermodynamic formulation of the SEAICE package is. It might be an interesting project to write a better thermodynamics package for freshwater ice. It could be based on the layer structure of the THSICE package, but with salinity eliminated from the equations}
 \end{itemize}
+
+\subsection{What to expect when changing the model}
+There is lots to change in the model, and many more runs to carry out. This section gives a rough outline of how long you should expect changing the model to take, and how long some runs will take.
+
+\subsubsection{How long to change the model configurations}
+
+\subsubsection*{Minor changes}
+A minor change is something like changing the resolution of the model, change a few run time parameters, or running with different forcing files. These changes don't require recompiling the model, and should only take a few hours at most. It should be easy to estimate how long these changes should take. You shouldn't run in to too many surprise errors.
+
+\subsubsection*{Moderate change}
+A moderate change is something like changing the grid size of the model, or changing compile time options of a package. These require recompiling the model and changing run time options. Accounting for some mistakes and compile time, changes like this will probably take a few hours to a day to get running.
+
+\subsubsection*{Significant change}
+A significant change is something like adding a new package to the model that you haven't used before, or designing an entire new case from scratch: writing scripts to make the forcing files, setting model parameters, compiling, and fixing all typos and mistakes. This will likely take a few days to flush out all the bugs and weird problems that come out.
+
+\subsubsection{How long to run the model}
+The time the model needs to run for is highly dependent on how many processors you run it with. But some general guidelines are below.
+
+\begin{table}
+\begin{tabularx}{\textwidth}{X X X X}
+\hline
+\textbf{Case size} & \textbf{Example} & \textbf{Time expected} & \textbf{Approximate number of processors} \\ \hline \hline
+Small & Case 1 and 5 & About 1 to a few hours & 4 - 16 \\ \hline
+Medium & Case 3 and 4 & 2 - 12 hours & 16 - 32 \\ \hline
+Large & Case 3 hydrodynamic and case 2 hydrostatic & 12 hours to a few days & 25 - 144 \\ \hline
+Significant & Case 2 hydrodynamic & Few days to a week & $\mathcal{O}(400)$ \\ \hline
+\end{tabularx}
+\caption{Approximate case size and run time guidelines}
+\label{table:runTime}
+\end{table}
+
+A very small case like case 1 or case 5 should take somewhere around an hour to run on a handful of processors (on the order of 8 or 16).
 
 \bibliography{refs}
 
